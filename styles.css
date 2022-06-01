@@ -9,6 +9,9 @@ p {
     padding: 10px;
     font-family:'Verdana'
   }
+.nopadding {
+    padding: 0px;
+}
 /* The side navigation menu */
 .sidenav {
  height: 100%; /* 100% Full-height */
@@ -112,7 +115,7 @@ p {
 
 /* Style the back side */
 .flip-card-back {
-  background-color: dodgerblue;
+  background-color: #2C3E50;
   color: white;
   transform: rotateY(180deg);
 }
