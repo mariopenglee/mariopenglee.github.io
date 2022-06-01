@@ -55,3 +55,10 @@ body {
  .sidenav {padding-top: 15px;}
  .sidenav a {font-size: 18px;}
 }
+
+.menubar {
+  width: 35px;
+  height: 5px;
+  background-color: white;
+  margin: 6px 0;
+}
