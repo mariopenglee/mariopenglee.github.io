@@ -1,20 +1,163 @@
 <!doctype html>
 <html>
 <head>
-<title>Our Funky HTML Page</title>
-<meta name="description" content="Our first page">
-<meta name="keywords" content="html tutorial template">
+<title>Mario Peng Personal Website</title>
+<meta name="author" content="mario peng">
+<meta name="description" content="personal website">
+    
+    <script>
+        /* Set the width of the side navigation to 250px and the left margin of the page content to 250px and add a black background color to body */
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+          document.getElementById("main").style.marginLeft = "250px";
+          document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+
+        /* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+          document.getElementById("main").style.marginLeft = "0";
+          document.body.style.backgroundColor = "white";
+        }
+    </script>
+    <style>
+         body {
+           padding: 25px;
+           background-color: black;
+           color: white;
+           font-size: 16px;
+           font-family:'Courier New'
+         }
+        
+        /* The side navigation menu */
+        .sidenav {
+          height: 100%; /* 100% Full-height */
+          width: 0; /* 0 width - change this with JavaScript */
+          position: fixed; /* Stay in place */
+          z-index: 1; /* Stay on top */
+          top: 0; /* Stay at the top */
+          left: 0;
+          background-color: black; /* Black*/
+          overflow-x: hidden; /* Disable horizontal scroll */
+          padding-top: 60px; /* Place content 60px from the top */
+          transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        /* The navigation menu links */
+        .sidenav a {
+          padding: 8px 8px 8px 32px;
+          text-decoration: none;
+          font-size: 25px;
+          color: #818181;
+          display: block;
+          transition: 0.3s;
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+          color: #f1f1f1;
+        }
+
+        /* Position and style the close button (top right corner) */
+        .sidenav .closebtn {
+          position: absolute;
+          top: 0;
+          right: 25px;
+          font-size: 36px;
+          margin-left: 50px;
+        }
+
+        /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+        #main {
+          transition: margin-left .5s;
+          padding: 20px;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+          .sidenav {padding-top: 15px;}
+          .sidenav a {font-size: 18px;}
+        }
+
+       </style>
 </head>
 <body>
-    <h1>Choosing an Apple</h1>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Clients</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <!-- Use any element to open the sidenav -->
+    <span onclick="openNav()">open</span>
+
+    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+    <div id="main">
+        <h2>In the Div</h2>
+    </div>
+    
+    
+    <h1>Mario Peng Lee</h1>
     <section>
-        <h2>Introduction</h2>
-        <p>This document provides a guide to help with the important task of choosing the correct Apple.</p>
+        <h2>About Me</h2>
+        <p>I'm an international undergraduate student at UCLA, double majoring in Computational Linguistics and Psychology. I was born in Chile, grew up in China and Taiwan, formed my identity in Argentina, and found myself in Hong Kong. My interests include -- but are not limited to: Reinforcement Learning, NLP (transformers), language acquisition, code optimization. Even though I am an atheist and advocate of science, I enjoy spirituality and art, often engaging in philosophy, music, photography, and architecture. </p>
     </section>
 
+
+    
     <section>
-        <h2>Criteria</h2>
-        <p>There are many different criteria to be considered when choosing an Apple — size, color, firmness, sweetness, tartness...</p>
+        <h2>AI Related Projects</h2>
+        
+        <h3>Transformer Black Box Investigation (ongoing) </h3>
+        <p>Collaborating with Buck Shlegeris from Redwood Research, we are trying to find explanations and quantitative differences between the sizes of language models and their performance at next token prediction.</p>
+        
+        <h3>Independent Research on MARL (ongoing, 30%)</h3>
+        <p>Conducting independent research mentored by professor AAA, it is an investigation on social emergence in multi agent cooperative environments. With this project I want to contribute to the ongoing CAI conversation and also explore the idea of natural language emergence.</p>
+        
+        <h3>Distillation Circles (ongoing)</h3>
+        <p>Creating biweekly distillations of state of the art technical AI advancement papers. Drawing connection with past publications and pondering implications for the future.</p>
+        
+        <h3>AIS Knowledge Bank (ongoing, 50%)</h3>
+        <p>I am currently compiling an AI Safety knowledge bank for myself and people I want to introduce to the topic. Including summaries of relevant papers to understand the current discussion landscape</p>
     </section>
+    
+    <section>
+        <h2>Coding Projects</h2>
+        
+        <h3>Blue Light Alley (ongoing, 33%)</h3>
+        <p>2019, Branching dialogue RPG concerning mental health, relationships, and the purpose of life. Made in Unity C#</p>
+        
+        <h3>Na'Ast (ongoing, 20%)</h3>
+        <p>2022, Roguelike dungeon crawler with linguistic elements integrated into the magic system. Made in Unity C#</p>
+        
+        <h3>Journey to the dreamy Nebulae</h3>
+        <p>2020, Casual relaxation game made to help me and my friends fall asleep. Made in Unity C#</p>
+        
+        <h3>Diverse Names Generator</h3>
+        <p>2022, Fullstack app development as a Research Assistant for Maura O'Leary. Made with Unity C# and Firestore Database.</p>
+    </section>
+    
+    <section>
+        <h2>Creative Projects</h2>
+        
+        <h3>Afterblur (1/4 pieces finished)</h3>
+        <p>Classical piano album inspired by the joy that comes from looking back at sad memories.</p>
+        
+        <h3>Plaza Arcadia (2/7 pieces finished)</h3>
+        <p>Synthwave album repressenting the dystopian cyberpunk world of 'Haven'.</p>
+        
+        <h3>RGB Memories Advanced (2/? pieces finished)</h3>
+        <p>Lo-Fi album capturing nostalgia and calmness.</p>
+        
+        <h3>Brushstroke 1st Edition</h3>
+        <p>TTRPG rulebook, inspired by the stories of ancient mythical china, as seen in the Wuxia genre.</p>
+        
+        <h3>Photography Instagram</h3>
+        <p>link</p>
+        
+    </section>
+    
 </body>
 </html>
