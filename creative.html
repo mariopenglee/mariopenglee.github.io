@@ -7,6 +7,7 @@
 <meta name="description" content="personal website">
     <script src="sideMenu.js"></script>
     <link rel="stylesheet" href="styles.css">
+    <script src="audio-player.js"></script>
 </head>
 <body>
     <div id="mySidenav" class="sidenav">
@@ -42,14 +43,23 @@
         
         <h3>Midnight.</h3>
         <p>TTRPG ruleset; noir detective </p>
-        
+ 
+ 
+ 
+ <p onmouseover="PlaySound('mySound')"
+     onmouseout="StopSound('mySound')">Hover Over Me To Play</p>
+
+ <audio id='mySound' src='http://upload.wikimedia.org/wikipedia/commons/6/6f/Cello_Live_Performance_John_Michel_Tchaikovsky_Violin_Concerto_3rd_MVT_applaused_cut.ogg'/>
+
+
+ 
     </section>
     
     <section>
     <h2>Music</h2>
     <div class="row">
       <div class="column">
-          <div class="flip-card">
+          <div class="flip-card" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">
             <div class="flip-card-inner">
               <div class="flip-card-front">
                 <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
@@ -58,12 +68,13 @@
                 <h1>Afterblur</h1>
                 <p class="nopadding">(1/4 pieces finished)</p>
                 <p>Classical piano album inspired by the joy that comes from looking back at sad memories.</p>
+
               </div>
             </div>
           </div>
       </div>
       <div class="column">
-          <div class="flip-card">
+          <div class="flip-card" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">
             <div class="flip-card-inner">
               <div class="flip-card-front">
                 <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
@@ -77,7 +88,7 @@
           </div>
       </div>
       <div class="column">
-          <div class="flip-card">
+          <div class="flip-card" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">
             <div class="flip-card-inner">
               <div class="flip-card-front">
                 <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
