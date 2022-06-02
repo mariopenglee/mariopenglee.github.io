@@ -95,7 +95,7 @@ p {
 
 /* Do an horizontal flip when you move the mouse over the flip box container */
 .flip-card:hover .flip-card-inner{
-  transform: rotateY(180deg);
+  transform: rotateY(-180deg);
 }
 
 /* Position the front and back side */
@@ -115,7 +115,7 @@ p {
 
 /* Style the back side */
 .flip-card-back {
-  background-color: #2C3E50;
+  background-color: #303030;
   color: white;
   transform: rotateY(180deg);
 }
@@ -141,3 +141,5 @@ p {
     width: 100%;
   }
 }
+
+
