@@ -46,10 +46,11 @@
  
  
  
- <p onmouseover="PlaySound('mySound')"
-     onmouseout="StopSound('mySound')">Hover Over Me To Play</p>
 
- <audio id='mySound' src='http://upload.wikimedia.org/wikipedia/commons/6/6f/Cello_Live_Performance_John_Michel_Tchaikovsky_Violin_Concerto_3rd_MVT_applaused_cut.ogg'/>
+
+ <audio id='afterblur' src='afterblur2.mp3'/>
+ <audio id='plazaarcadia' src='plazaarcadia.mp3'/>
+ <audio id='rgbmemories' src='rgbmem1.mp3'/>
 
 
  
@@ -59,44 +60,50 @@
     <h2>Music</h2>
     <div class="row">
       <div class="column">
-          <div class="flip-card" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">
+          <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+                <img src="afterblurcover.png" alt="Avatar" style="width:300px;height:300px;">
               </div>
               <div class="flip-card-back">
                 <h1>Afterblur</h1>
                 <p class="nopadding">(1/4 pieces finished)</p>
                 <p>Classical piano album inspired by the joy that comes from looking back at sad memories.</p>
+                <p onmouseover="PlaySound('afterblur')"
+                    onmouseout="StopSound('afterblur')">Hover for Preview</p>
 
               </div>
             </div>
           </div>
       </div>
       <div class="column">
-          <div class="flip-card" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">
+          <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+                <img src="plazaarcadiacover.jpeg" alt="Avatar" style="width:300px;height:300px;">
               </div>
               <div class="flip-card-back">
                   <h1>Plaza Arcadia</h1>
                   <p class="nopadding">(2/7 pieces finished)</p>
                   <p>Synthwave album repressenting the dystopian cyberpunk world of 'Haven'.</p>
+                  <p onmouseover="PlaySound('plazaarcadia')"
+                      onmouseout="StopSound('plazaarcadia')">Hover for Preview</p>
               </div>
             </div>
           </div>
       </div>
       <div class="column">
-          <div class="flip-card" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">
+          <div class="flip-card">
             <div class="flip-card-inner">
               <div class="flip-card-front">
-                <img src="img_avatar.png" alt="Avatar" style="width:300px;height:300px;">
+                <img src="rgbmemcover.jpg" alt="Avatar" style="width:300px;height:300px;">
               </div>
               <div class="flip-card-back">
                 <h1>RGB Memories Advanced</h1>
                 <p class="nopadding">(2/? pieces finished)</p>
                 <p>Lo-Fi album capturing nostalgia and calmness. Focused for synesthetes.</p>
+                <p onmouseover="PlaySound('rgbmemories')"
+                    onmouseout="StopSound('rgbmemories')">Hover for Preview</p>
               </div>
             </div>
           </div>
