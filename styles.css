@@ -17,7 +17,7 @@ p {
  height: 100%; /* 100% Full-height */
  width: 0; /* 0 width - change this with JavaScript */
  position: fixed; /* Stay in place */
- z-index: 1; /* Stay on top */
+ z-index: 3; /* Stay on top */
  top: 0; /* Stay at the top */
  left: 0;
  background-color: black;
@@ -38,7 +38,7 @@ p {
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
- color: #f1f1f1;
+ color: white;
 }
 
 /* Position and style the close button (top right corner) */
@@ -143,3 +143,17 @@ p {
 }
 
 
+/*overlay effect*/
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
