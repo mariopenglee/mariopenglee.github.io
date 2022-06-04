@@ -3,7 +3,7 @@
 <head>
 <title>Mario Peng</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="mario peng">
+<meta name="author" content="mario peng lee">
 <meta name="description" content="personal website">
     <script src="sideMenu.js"></script>
     <link rel="stylesheet" href="styles.css">
@@ -15,31 +15,38 @@
       <a href="ai.html">AI Projects</a>
       <a href="coding.html">Coding Projects</a>
       <a href="creative.html">Creative Projects</a>
+      <a href="resume.html">Resume</a>
       <a href="#">Contact</a>
     </div>
 
     <!-- Use any element to open the sidenav -->
-    <span onclick="openNav()">
-        <div class='menubar'></div>
-        <div class='menubar'></div>
-        <div class='menubar'></div>
-    </span>
+    <!--<p id="langbar">EN | SP | ZH</p> -->
+    <div class="row">
+      <div class="column" id="col1">
+          <span onclick="openNav()">
+          <div class='menubar'></div>
+          <div class='menubar'></div>
+          <div class='menubar'></div>
+      </span></div>
+      <div class="column" id="col2">
+          <h1>Mario Peng Lee</h1>
+      </div>
+    </div>
+
 
     <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
     <div id="main">
     </div>
     <div id="overlay"></div>
     
-    <h1>Mario Peng Lee</h1>
-    
     <section>
         <h2>Coding Projects</h2>
         
-        <h3>Diverse Names Generator</h3>
+        <h3>Diverse Names Generator <a href = "https://random-names-generator.web.app/" target="_blank">(link to website)</a></h3>
         <p>2022, Fullstack app development as a Research Assistant for Maura O'Leary. Made with Unity C# and Firestore Database.</p>
         
         
-        <h2>Video Game Development</h2>
+        <h2>Video Game Development (previews coming soon)</h2>
         
         <h3>Blue Light Alley (ongoing, 30%)</h3>
         <p>2019, Branching dialogue RPG concerning mental health, relationships, and the purpose of life. Made in Unity C#</p>
