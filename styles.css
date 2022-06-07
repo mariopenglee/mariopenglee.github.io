@@ -3,16 +3,43 @@ body {
   background-color: black;
   color: white;
   font-size: 16px;
-  font-family:'Times New Roman'
+  font-family: matrix-ii, serif;
+  letter-spacing: 0.5px;
 }
 body, html
 {
     height: 100%;
+
+}
+
+
+h1{
+    font-family: matrix-ii, serif;
+    letter-spacing: 1.2px;
+    font-size: 32px;
 }
 p {
-    padding: 10px;
-    font-family:'Verdana'
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-top: 5px;
+    width: 500px;
   }
+
+
+
+h2{
+    padding-top: 25px;
+    
+}
+
+#nopad{
+    padding-top: 0px;
+}
+
+#fullwidth{
+    width: 100%;
+}
+
 .nopadding {
     padding: 0px;
 }
