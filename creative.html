@@ -8,7 +8,7 @@
     <script src="sideMenu.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<header>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <a href="index.html">About Me</a>
@@ -20,7 +20,7 @@
     </div>
 
     <!-- Use any element to open the sidenav -->
-    <!--<p id="langbar">EN | SP | ZH</p>-->
+    <!--<p id="langbar">EN | SP | ZH</p> -->
     <div class="row">
       <div class="column" id="col1">
           <span onclick="openNav()">
@@ -29,7 +29,7 @@
           <div class='menubar'></div>
       </span></div>
       <div class="column" id="col2">
-          <h1>Mario Peng Lee</h1>
+          <h1>MARIO PENG LEE</h1>
       </div>
     </div>
 
@@ -38,8 +38,10 @@
     <div id="main">
     </div>
     <div id="overlay"></div>
+</header>
+<body>
     <section>
-        <h2>Game Design</h2>
+        <h2 id="nopad">Game Design</h2>
         <h3>Brushstroke 1st Edition</h3>
         <p>TTRPG rulebook; inspired by the stories of ancient mythical china, as seen in the Wuxia genre.</p>
         
@@ -72,10 +74,10 @@
               </div>
               <div class="flip-card-back">
                 <h1>Afterblur</h1>
-                <p class="nopadding">(1/4 pieces finished)</p>
-                <p>Classical piano album inspired by the joy that comes from looking back at sad memories.</p>
+                <p class="nopadding" id="fullwidth">(1/4 pieces finished)</p>
+                <p id="fullwidth">Classical piano album inspired by the joy that comes from looking back at sad memories.</p>
                 <p onmouseover="PlaySound('afterblur')"
-                    onmouseout="StopSound('afterblur')">Hover for Preview</p>
+                    onmouseout="StopSound('afterblur')" id="fullwidth">Hover for Preview</p>
 
               </div>
             </div>
@@ -89,10 +91,10 @@
               </div>
               <div class="flip-card-back">
                   <h1>Plaza Arcadia</h1>
-                  <p class="nopadding">(2/7 pieces finished)</p>
-                  <p>Synthwave album repressenting the dystopian cyberpunk world of 'Haven'.</p>
+                  <p class="nopadding" id="fullwidth">(2/7 pieces finished)</p>
+                  <p id="fullwidth">Synthwave album repressenting the dystopian cyberpunk world of 'Haven'.</p>
                   <p onmouseover="PlaySound('plazaarcadia')"
-                      onmouseout="StopSound('plazaarcadia')">Hover for Preview</p>
+                      onmouseout="StopSound('plazaarcadia')" id="fullwidth">Hover for Preview</p>
               </div>
             </div>
           </div>
@@ -105,10 +107,10 @@
               </div>
               <div class="flip-card-back">
                 <h1>RGB Memories Advanced</h1>
-                <p class="nopadding">(2/? pieces finished)</p>
-                <p>Lo-Fi album capturing nostalgia and calmness. Focused for synesthetes.</p>
+                <p class="nopadding" id="fullwidth">(2/? pieces finished)</p>
+                <p id="fullwidth">Lo-Fi album capturing nostalgia and calmness. Focused for synesthetes.</p>
                 <p onmouseover="PlaySound('rgbmemories')"
-                    onmouseout="StopSound('rgbmemories')">Hover for Preview</p>
+                    onmouseout="StopSound('rgbmemories')" id="fullwidth">Hover for Preview</p>
                     
               </div>
             </div>
