@@ -173,6 +173,10 @@ h2{
   .column {
     width: 100%;
   }
+
+    p {
+        width: 100%;
+    }
 }
 
 /*special menu column and bar formats*/
