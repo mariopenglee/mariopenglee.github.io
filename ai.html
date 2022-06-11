@@ -55,6 +55,19 @@
         
         <h3>Distillation Circles (in progress) <a href = "https://drive.google.com/drive/folders/1x3kDgAAgKQUsBNaqxGbsIy-G1QC0wk5E?usp=sharing" target="_blank">(link)</a> </h3>
         <p>Creating biweekly distillations of state of the art technical AI advancement papers. Drawing connection with past publications and pondering implications for the future.</p>
+        <!-- Control buttons -->
+        <div id="myBtnContainer">
+          <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+          <button class="btn" onclick="filterSelection('al')"> Alignment</button>
+          <button class="btn" onclick="filterSelection('tech')"> Technological</button>
+          <button class="btn" onclick="filterSelection('lm')"> Language Model</button>
+        </div>
+
+        <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+        <div class="container">
+          <div class="filterDiv tech lm">Pathways Model: Asynchronous Distributed Dataflow</div>
+          <div class="filterDiv tech">Google PaLM: Pathways Language Model</div>
+        </div>
     </section>
     
 </body>
