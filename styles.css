@@ -13,6 +13,18 @@ body, html
 }
 
 
+#img_icon{
+  height: 1.5em;
+  width: auto;
+}
+#iconcol {
+  width: 20%;
+}
+#textcol {
+  padding-top: 10px;
+  width: 70%;
+}
+
 h1{
     font-family: matrix-ii, serif;
     letter-spacing: 1.2px;
@@ -31,7 +43,7 @@ a{
 
 h2{
     padding-top: 25px;
-    
+
 }
 
 #nopad{
@@ -45,6 +57,10 @@ h2{
 
 .nopadding {
     padding: 0px;
+}
+
+.sidenav div{
+  vertical-align: middle;
 }
 /* The side navigation menu */
 .sidenav {
@@ -187,7 +203,7 @@ h2{
 }
 #col2 {
   width: 300px;
-  
+
 }
 #langbar {
   text-align: right;
