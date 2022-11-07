@@ -3,7 +3,7 @@ body {
   background-color: black;
   color: white;
   font-size: 16px;
-  font-family: matrix-ii, serif;
+  font-family: 	Roboto, Sans-serif;
   letter-spacing: 0.5px;
 }
 body, html
@@ -26,7 +26,6 @@ body, html
 }
 
 h1{
-    font-family: matrix-ii, serif;
     letter-spacing: 1.2px;
     font-size: 32px;
 }
