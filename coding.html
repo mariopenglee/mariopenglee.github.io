@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<title>Mario Peng</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="mario peng lee">
+<meta name="description" content="personal website">
+    <script src="sideMenu.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<header>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="index.html">About Me</a>
+      <a href="ai.html">AI Projects</a>
+      <a href="coding.html">Coding Projects</a>
+      <a href="creative.html">Creative Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <!-- Use any element to open the sidenav -->
+    <!--<p id="langbar">EN | SP | ZH</p> -->
+    <div class="row">
+      <div class="column" id="col1">
+          <span onclick="openNav()">
+          <div class='menubar'></div>
+          <div class='menubar'></div>
+          <div class='menubar'></div>
+      </span></div>
+      <div class="column" id="col2">
+          <h1>MARIO PENG LEE</h1>
+      </div>
+    </div>
+
+
+    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+    <div id="main">
+    </div>
+    <div id="overlay"></div>
+</header>
+<body>
+
+    
+    <section>
+        <h2 id="nopad">Coding Projects</h2>
+
+        <h3>Diverse Names Generator <a href="https://random-names-generator.web.app/" target="_blank">(link)</a></h3>
+        <p>2022, Fullstack app and website development as a Research Assistant for <a href="https://www.mauraoleary.org/" target="_blank">Maura O'Leary</a>. Made with Unity C#, React.js, and Firestore Database.</p>
+
+        <h2>Video Game Development (previews coming soon)</h2>
+
+        <h3>Blue Light Alley (ongoing, 30%)</h3>
+        <p>2019, Branching dialogue RPG concerning mental health, relationships, and the purpose of life. Made in Unity C#</p>
+
+        <h3>Na'Ast (ongoing, 20%)</h3>
+        <p>2022, Roguelike dungeon crawler with linguistic elements integrated into the magic system. Made in Unity C#</p>
+        <p>Procedural Dungeon Generation Showcase</p>
+
+        <p>Features</p>
+        <ul>
+            <li>Seed system (pseudo randomization).</li>
+            <li>Big Room Formation: adjacent rooms may combine into a singular bigger room.</li>
+            <li>Variable Rooms: nested classes allow each room to be randomly chosen from its corresponding room type, resulting in variation at low cost.</li>
+            <li>Smart Trail Generation: no dead ends or inaccessible rooms, no extremely long hallways. when two lanes cross, an intersection is created.</li>
+            <li>Optimized: no overlapping rooms or unecessary computations, lightweight and fast with linked list.</li>
+            <li>Important Rooms: multiple special rooms can be created at the end of each trail.</li>
+        </ul>
+        <iframe mozallowfullscreen="true" allow="autoplay; fullscreen" src="games/index.html" style="border:0px #000000 none;" name="PDG" scrolling="yes" frameborder="0" height="500px" width="500px"></iframe>
+
+        <h3>Journey to the dreamy Nebulae</h3>
+        <p>2020, Casual relaxation game made to help me and my friends fall asleep. Made in Unity C#</p>
+
+        <h3>Chronondrum <a href="https://ldjam.com/events/ludum-dare/49/chronondrum" target="_blank">(link)</a></h3>
+        <p>2021, Ludum Dare 49 submission. Top down shooter with A* pathfinding, weapon variance, timers, and 'skill' features.</p>
+
+    </section>
+    
+</body>
+</html>
