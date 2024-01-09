@@ -1,0 +1,78 @@
+.home{
+    background-color: white;
+}
+#home {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    mix-blend-mode: difference;
+    
+    /* Apply mix-blend-mode to blend with the background */
+    .mix-blend {
+        width: 100%;
+        height: 100%;
+        
+
+        .canvas {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            mix-blend-mode: difference;
+            
+            }
+          
+            .myname {
+            
+            position: absolute;
+            text-align: left;
+            z-index: -3;
+            width: 50%;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 2em;
+
+            
+
+            
+            }
+    }
+
+
+  .myname h1 {
+    margin: 0px;
+  }
+    
+  
+   
+  }
+  
+  @media (max-width: 734px) {
+    #home {
+      .mix-blend {
+          
+            
+              .myname {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+              
+              }
+      }
+      
+    
+     
+    }
+    .myname h1 {
+      font-size: 2em;
+    }
+  }

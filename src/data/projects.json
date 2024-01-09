@@ -1,0 +1,66 @@
+[
+    {
+      "id": 1,
+      "title": "The Diverse Names Generator",
+      "description": "User-contributed, linguist curated database and software for generating diverse names to reduce bias in data. Paper published at the LSA 2023.",
+      "skills": ["Full-Stack", "Mobile", "Web Dev", "React", "Firebase", "Unity", "Praat"],
+      "image": "/project-images/1.png",
+      "links":
+        [
+          {
+          "name": "Paper",
+          "link": "https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view"
+          },
+          {
+          "name": "Try it out!",
+          "link": "https://diversenamesgenerator.com/"
+          }
+        ]
+    },
+    {
+      "id": 2,
+      "title": "PhoneTic5",
+      "description": "Transfer Learning for Grapheme to Phoneme Conversion, published at the Undergraduate Science Journal Vol. 36.",
+      "image": "/project-images/2.png",
+      "skills": ["Transformers", "Pytorch", "Data Augmentation", "LoRA", "Wug Test", "Neural Machine Translation"],
+      "links": 
+        [
+          {
+          "name": "Preprint",
+          "link": "https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view"
+          },
+          {
+          "name": "Try it out!",
+          "link": "https://phonetic5.streamlit.app/"
+          }
+        ]
+    },
+    {
+      "id": 3,
+      "title": "Multitask Training Evaluation",
+      "description": "A multitask training experiment that evaluates parameter sharing on a recommender system using Matrix Factorization and Neural Collaborative Filtering algorithms.",
+      "image": "/project-images/3.png",
+      "skills": ["Pytorch", "Recommender Systems", "Matrix Factorization", "Neural Collaborative Filtering", "Multitask Learning"],
+      "links":
+        [
+          {
+          "name": "Code & Results",
+          "link": "https://github.com/mariopenglee/multitask-training-evaluation/tree/main"
+          }
+        ]
+    },
+    {
+      "id": 4,
+      "title": "Proxy Herd w asyncio",
+      "description": "A research report exploring the tradeoffs between asynchronous programming and multithreading for a proxy herd.",
+      "image": "/project-images/4.png",
+      "skills": ["Python", "Asyncio", "Multithreading", "Proxy Herd", "Concurrency", "Java", "Node.js", "Programming Languages"],
+      "links":
+        [
+          {
+          "name": "Report Paper & Analysis",
+          "link": "https://drive.google.com/file/d/1ktSA6QeJ67fUonhk4U_dmG_z36Q3vLl2/view?usp=sharing"
+          }
+        ]
+    }
+]

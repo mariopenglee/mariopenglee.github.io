@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+:root {
+  /*font-family: 'Share Tech', monospace;*/
+  font-family: 'VT323', monospace;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: max(2vw, 20px);
+
+  color-scheme: light dark;
+
+  background-color: black;
+
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  cursor: none;
+
+}
+
+
+
+
+a {
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+
+}
+a:hover {
+  color: white;
+}
+
+html, body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  max-width: 100vw;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 12vw;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 6vw;
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: 4vw;
+  line-height: 1.1;
+}
+
+h4 {
+  font-size: 3vw;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 5px;
+  border: 1px solid white;
+  padding: 0.6em 1.2em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: black;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+b{
+  background-color: white;
+  color: black;
+
+}
+
+
+@media (max-width: 734px) {
+  :root {
+    font-size: 3em;
+  }
+  p {
+    font-size: 1em;
+  }
+ 
+}

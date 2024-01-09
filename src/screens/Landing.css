@@ -1,0 +1,20 @@
+
+.scroll-arrow {
+  cursor: pointer;
+  position: absolute; /* Adjust as needed */
+  bottom: 20px; /* Adjust as needed */
+  right: 50%; /* Adjust for centering */
+  /* Add more styles for your arrow */
+}
+
+
+
+
+
+
+@media (prefers-reduced-motion: no-preference) {
+
+}
+
+
+
