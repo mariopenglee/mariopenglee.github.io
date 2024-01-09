@@ -1,0 +1,100 @@
+[
+    {
+      "id": 11,
+      "title": "Blue Light Alley",
+      "description": 
+                "A story of introspection, mental health, identity, and relationships: In the cyberpunk city of Sunset Neon, life is hard, technology meets most of our needs, yet not all of them. You play as ‘The Advisor’, a mysterious, impartial, and identity-less figure that offers ‘advising sessions’ to their clients. You must help your clients succeed in life and learn valuable lessons.\nChange their life and the course of the story through your words. Guide them towards the right path, if there is one. Gain experience after each session and become better at your job. Be their inner voice in this journey of self-discovery… and who knows, maybe you’ll learn something about yourself too. But remember, at the end of the day, you’re just an advisor.",
+      "image": "/project-images/o1.png",
+      "skills": [
+        "Watch your choices: multiple endings", 
+      "Interactive character development", 
+      "Earn experience and upgrade skills",
+      "Minigames and cinematics"
+    ],
+      "links":
+        [
+          {
+            "name": "Coming Soon...",
+            "link": "n/a"
+          }
+        ]
+    },
+    {
+      "id": 12,
+      "title": "Chronondrum",
+      "description": "A timeless battle… or time-full shall I say?: You’re a hero in an epic inter-tempo-spatial battle against your arch-nemesis. The thing is, messing with the space-time continuum is a tricky business. You’ll have to use your wits and your weapons to save the world.",
+      "image": "/project-images/o2.png",
+      "skills": [
+        "Smart AI that adapts to your playstyle",
+        "Different weapons with unique abilities",
+        "An Unstable Time Loop"
+      ],
+      "links": 
+        [
+          {
+          "name": "Play it here!",
+          "link": "https://mariopng.itch.io/chronondrum"
+          }
+        ]
+    },
+    {
+      "id": 13,
+      "title": "Journey to the Dreamy Nebula",
+      "description": "Welcome to DR-34M! A galaxy so peaceful you are meant to fall asleep: Your astronaut is collecting stars, you have to supervise them. Here’s the catch, they collect one star at a time. Try to not fall asleep...",
+      "image": "/project-images/o3.png",
+      "skills": [
+        "Upgrade system",
+        "Collect stars and unlock new galaxies",
+        "Cosmetics and vanity items",
+        "Achievements",
+        "A relaxing experience to fall asleep to"
+      ],
+      "links":
+        [
+          {
+            "name": "Coming Soon...",
+            "link": "n/a"
+          }
+        ]
+    },
+    {
+      "id": 14,
+      "title": "Kylus’s Guide to the Wildlands",
+      "description": "Arcana in a Forgotten World: You play as Kylus, a young arcana apprentice that was sent to the ‘Wildlands’ by his Master.  Explore this forgotten world, survive  the mystical dangers, make friends, and remember that you are here to learn.",    
+      "image": "/project-images/o4.png",
+      "skills": [
+        "A modular language that acts as a magic system: learn the language while learning arcana",
+        "Crafting system with arcana cards",
+        "Rogue-like RPG with a real-time combat system",
+        "Procedural Dungeon Generation",
+        "Boss fights and special enemies",
+        "2 player CO-OP"
+      ],
+      "links":
+        [
+          {
+            "name": "Coming Soon...",
+            "link": "n/a"
+          }
+        ]
+    },
+    {
+      "id": 15,
+      "title": "Perfect Crime",
+      "description": "7 days... Someone’s gonna kill someone in 7 days. You know one thing: they frequent this bar. Your job as the detective is to figure out both who’s the killer and who’s the victim. Converse with the patrons, gather clues, build rapport over the week, and choose who’s going to jail. If you fail, don’t worry, you can always try again!",
+      "image": "/project-images/o5.png",
+      "skills": [
+        "replayability, randomized killer and victim",
+        "multiple endings",
+        "25 unique characters",
+        "branching dialog"
+      ],
+      "links":
+      [
+        {
+          "name": "Coming Soon...",
+          "link": "n/a"
+        }
+      ]
+    }
+]

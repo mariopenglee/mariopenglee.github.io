@@ -1,0 +1,143 @@
+.project-panel {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 0;
+}
+
+.project-panel-content {
+  width: calc(100vw - 30vw);
+  height: calc(100vh - 4em);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: smaller;
+  overflow-y: scroll;
+  padding: 1em;
+  text-align: left;
+
+}
+
+
+.project-panel-image {
+  height: 100vh;
+  width: 35vw;
+  min-width: 35vw;
+  
+  object-fit: cover;
+
+}
+
+.project-panel-skills {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 1em;
+  gap: 0;
+  z-index: 1;
+}
+
+.project-panel-skill {
+  margin: 7px 7px;
+  color: white;
+  border: white 1px solid;
+  box-shadow: 5px 5px white;
+  padding: 0.5em;
+  text-align: center;
+  font-size: smaller;
+}
+
+
+
+
+
+
+.project-panel-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 1em, 1em, 1em, 1em;
+  gap: 0em;
+  z-index: 1;
+}
+
+.project-panel-button {
+  margin: 0 0.5em;
+  color: white;
+  border: white 1px solid;
+  box-shadow: 5px 5px white;
+  padding: 0.5em;
+  text-align: center;
+  font-size: smaller;
+  text-decoration: none;
+}
+
+@media (max-width: 734px) {
+  .project-panel {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 0;
+  }
+  
+.project-panel-content {
+  width: calc(100vw - 2em);
+  height: calc(100vh - 30vh);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  padding: 1em;
+  text-align: center;
+
+}
+
+
+.project-panel-image {
+  height: 30vh;
+  width: 100vw;
+  min-height: 30vh;
+  
+  object-fit: cover;
+
+}
+
+.project-panel-skills {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  gap: 0;
+  z-index: 1;
+}
+
+.project-panel-skill {
+  margin: 4px 4px;
+  color: white;
+  border: white 1px solid;
+  box-shadow: 5px 5px white;
+  padding: 0 0.5em;
+  text-align: center;
+  font-size: smaller;
+}
+
+
+
+}
