@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <title>Redirecting...</title>
   <script>
-    // Parses the URL to get the path
-    var path = window.location.pathname;
-    // Redirects to the index.html while preserving the path
-    window.location.replace('/index.html' + path);
+    (function() {
+      // Get the full URL path including search and hash
+      var path = window.location.pathname + window.location.search + window.location.hash;
+      // Redirect to the root while preserving the path, search, and hash
+      window.location.replace('/' + path);
+    })();
   </script>
 </head>
 <body>
