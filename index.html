@@ -1,13 +1,60 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/harmony.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mario Peng Lee</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html>
+<head>
+<title>Mario Peng</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="mario peng lee">
+<meta name="description" content="personal website">
+    <script src="sideMenu.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<header>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="index.html">About Me</a>
+      <a href="ai.html">AI Projects</a>
+      <a href="coding.html">Coding Projects</a>
+      <a href="creative.html">Creative Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <!-- Use any element to open the sidenav -->
+    <!--<p id="langbar">EN | SP | ZH</p> -->
+    <div class="row">
+      <div class="column" id="col1">
+          <span onclick="openNav()">
+          <div class='menubar'></div>
+          <div class='menubar'></div>
+          <div class='menubar'></div>
+      </span></div>
+      <div class="column" id="col2">
+          <h1>MARIO PENG LEE</h1>
+      </div>
+    </div>
+
+
+    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+    <div id="main">
+    </div>
+    <div id="overlay"></div>
+</header>
+<body>
+    <section>
+        <p>Disclaimer: website in progress.</p>
+    </section>
+    <section>
+        <h2 id="nopad">About Me</h2>
+        <p>Hi, I'm Mario. Currently, I'm an international undergraduate student at UCLA, double majoring in Computational Linguistics and Psychology. (expected June 2024)</p>
+        <p>In 2019, I received the Electromechanical Technician diploma from Philips Technical School (ITPA)</p>
+        <p>I was born in Chile, but I grew up travelling between China, Taiwan, and Argentina. I did my first year of UCLA online in Hong Kong and am now studying in the US.</p>
+        <p>My interests include -- but are not limited to: Reinforcement Learning, NLP, optimization (in coding but also overall in life), learning languages, art, philosophy, and Effective Altruism. </p>
+    </section>
+    <section>
+        <h2>What I'm Doing</h2>
+        <p>As of Summer 2022, I'm being funded by the FTX Future Fund Regrant Program to work on the Transformer Black Box Project, make connections in the field of AI safety, and create biweekly distillations (see more in my AI projects section). I am also enrolled in the Stanford AI Professional Program. Here's my notes and progress: <a href="https://docs.google.com/document/d/1hWylYtp5eZQScl_sTCV9l5o0vBeKBAyZwHG-8ZtRipw/edit?usp=sharing" target="blank"> (link) </a></p>
+        <p>Also, I'm working on this next.js app with openAI API integrations. <a href="https://lmperformance.herokuapp.com/" target="blank"> (link) </a> </p>
+    </section>
+
+</body>
 </html>
