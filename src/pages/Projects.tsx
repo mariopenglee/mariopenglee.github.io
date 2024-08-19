@@ -2,8 +2,8 @@ import { useLayoutEffect, useState } from "react";
 import "./Projects.css";
 import { motion } from "framer-motion";
 import TickerItem from "../components/TickerItem";
-import projects from "../data/projects.json";
-import otherprojects from "../data/other_projects.json";
+import research from "../data/research.json";
+import gamedev from "../data/gamedev.json";
 import ProjectPanel from "../components/ProjectPanel";
 import { gsap } from "gsap";
 
@@ -84,7 +84,7 @@ function Projects() {
         <div className="titles">
         <p className="project-category-title">Research</p>
         <div className="ticker">
-        {projects.map((project) => (
+        {research.map((project) => (
         <div key={project.id.toString()}>
             <TickerItem 
                 project={project} 
@@ -96,7 +96,7 @@ function Projects() {
         </div>
         <p className="project-category-title">Game Dev</p>
         <div className="ticker">
-        {otherprojects.map((project) => (
+        {gamedev.map((project) => (
         <div key={project.id.toString()}>
             <TickerItem 
                 project={project} 

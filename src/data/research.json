@@ -62,5 +62,19 @@
           "link": "https://drive.google.com/file/d/1ktSA6QeJ67fUonhk4U_dmG_z36Q3vLl2/view?usp=sharing"
           }
         ]
+    },
+    {
+      "id": 5,
+      "title": "CycleDiffusion",
+      "description": "A text-to-text autoencoder that uses a cycle-consistent adversarial network to learn a latent space of text representations.", 
+      "image": "/project-images/5.png",
+      "skills": ["Python", "Pytorch", "NLP", "Text-to-Text", "Autoencoder", "Diffusion", "Adversarial Networks"],
+      "links":
+        [
+          {
+          "name": "Code & Results",
+          "link": "https://github.com/mariopenglee/cyclediffusion"
+          }
+        ]
     }
 ]
