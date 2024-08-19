@@ -55,17 +55,27 @@ function Story() {
           My name is Mario. I'm a Taiwanese descendant, but my heart is in Argentina, where I grew up.
           </div>
           <div className = "statement-item">
-          I've studied in 5 countries, and this June 2024 I'll be obtaining my bachelor's degrees in Linguistics & Computer Science, Psychology, and Data Science at UCLA. 
-          </div>
-          <div className = "statement-item">
-          My academic path has been marked by an interdisciplinary approach, merging linguistics, psychology, and computer science to explore the intricate tapestry of human cognition. 
-          </div>
-          <div className = "statement-item">
-            I've acquired a passion for language, cognition, culture, and artificial intelligence. And I wish to pursue graduate studies to expand my knowledge.
-          </div>
-          <div className = "statement-item">
           I aim to create technology that is accessible, inclusive, understandable, and safe. Therefore I'm also juggling multiple initiatives and start-ups to make a positive impact in the world. 
           </div>
+          <div className = "statement-item">
+          I'm a recent graduate from UCLA, where I studied Linguistics, Computer Science, and Psychology. I've also been involved in research in AI safety and ethics. Check out
+          {' '}
+          <a 
+              href="https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024"
+              
+              >
+                this artcle
+                
+              </a>
+          {' '}
+              
+          to learn more about my journey.
+          </div>
+          <div className = "statement-item">
+            I'm currently looking for a full-time position in software engineering, product management, or data science.
+            </div>
+         
+
         </div>
     </div>
 

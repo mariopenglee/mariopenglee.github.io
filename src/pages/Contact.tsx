@@ -85,7 +85,7 @@ function Contact() {
         className="contact-button" 
         whileHover={{ scale: 1.1 }} 
         whileTap={{ scale: 0.9 }} 
-        onClick={() => window.open('https://drive.google.com/file/d/1LVTITOHqUuJ5mO1W9ETH94bov9PoR3AU/view?usp=sharing', "_blank")}>
+        onClick={() => window.open('https://drive.google.com/file/d/1iMqFVWe2bbiVVxuoxsXdHfDLJeahqtRg/view?usp=sharing', "_blank")}>
                                 {'resume'}
         </motion.button>
         <motion.button 

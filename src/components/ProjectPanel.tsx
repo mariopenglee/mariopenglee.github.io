@@ -1,8 +1,8 @@
 // ProjectDetailPanel.tsx
 import "./ProjectPanel.css"; // Ensure this CSS file is created for styling
 import { AnimatePresence, motion } from "framer-motion";
-import projects from "../data/projects.json";
-import otherprojects from "../data/other_projects.json";
+import research from "../data/research.json";
+import gamedev from "../data/gamedev.json";
 
 type ProjectPanelProps = {
   projectId: number;
@@ -10,7 +10,7 @@ type ProjectPanelProps = {
 };
 
 export default function ProjectPanel({ projectId, otherProject }: ProjectPanelProps) {
-  const project = otherProject ? otherprojects.find((project) => project.id === projectId) : projects.find((project) => project.id === projectId);
+  const project = otherProject ? gamedev.find((project) => project.id === projectId) : research.find((project) => project.id === projectId);
     // If no project is selected, don't render the component
     if (!project) return null;
 

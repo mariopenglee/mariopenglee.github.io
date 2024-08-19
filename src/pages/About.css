@@ -12,6 +12,12 @@
     height: 100%;
     gap: 10em;
 
+    a {
+      color: black;
+      text-decoration: none;
+      background-color: white;
+    }
+
   }
 
 
