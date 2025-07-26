@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Landing from './screens/Landing';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
@@ -11,21 +11,21 @@ import { AnimatePresence } from 'framer-motion';
 import './index.css';
 
 const App = () => {
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
 
-
-  
   return (
     <>
-      <Navbar />
-      <CustomCursor />
-      <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<Landing />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </AnimatePresence>
+      <Sidebar />
+      <div className="content">
+        <CustomCursor />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Landing />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </AnimatePresence>
+      </div>
     </>
   );
 };
