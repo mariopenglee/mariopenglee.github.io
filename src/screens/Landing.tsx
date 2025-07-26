@@ -50,13 +50,14 @@ function Landing() {
         <main>
           <Home />
             <motion.div 
-              className="scroll-arrow" 
+              className="scroll-pill" 
               onClick={scrollToAbout} 
               ref={arrowRef}
-              >
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 9L12 1L20 9" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+            >
+              <span className="scroll-pill-emoji" role="img" aria-label="wave">👋</span>
+              <span className="scroll-pill-text">
+                Let me introduce myself
+              </span>
             </motion.div>
           <About />
         </main>

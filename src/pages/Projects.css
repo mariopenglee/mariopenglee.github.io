@@ -1,13 +1,36 @@
+/* Apple/FANG-inspired, glassy, modern, minimal */
 #projects {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: 1fr;
-  gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  padding: 3rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  justify-items: center;
+  align-items: stretch;
+  background: none;
+}
+
+#projects > * {
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 }
 
 @media (min-width: 768px) {
   #projects {
     padding-left: 260px; /* account for sidebar */
+  }
+}
+@media (max-width: 734px) {
+  #projects {
+    padding: 1.2rem 0.5rem;
+    gap: 1.2rem;
+  }
+  #projects > * {
+    max-width: 98vw;
   }
 }

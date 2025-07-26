@@ -5,7 +5,7 @@ import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const ContactBackground: React.FC = () => {
-  const gltf = useLoader(GLTFLoader, '/models/scene.gltf');
+  const gltf = useLoader(GLTFLoader, '/models/cube/scene.gltf');
   const mesh = useRef<any>();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const mouseDampeningFactor = 0.5; // Adjust this value for more or less dampening
