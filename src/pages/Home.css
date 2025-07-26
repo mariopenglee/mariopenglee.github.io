@@ -65,7 +65,7 @@
     padding: 0 0.5rem;
   }
   .myname {
-    padding: 2rem 1.2rem;
+    padding: 1.2rem 0.5rem;
     max-width: 98vw;
     align-items: center;
     text-align: center;
@@ -84,10 +84,7 @@
     padding: 0 0.2rem;
   }
   .myname {
-    padding: 1.2rem 0.5rem;
+    padding: 1.2rem 1rem;
     border-radius: 1.2rem;
-  }
-  .myname h1 {
-    font-size: 2rem;
   }
 }
