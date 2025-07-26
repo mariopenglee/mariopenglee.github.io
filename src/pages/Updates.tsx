@@ -50,6 +50,7 @@ export default function Updates() {
 	};
 	return (
 		<motion.div
+			className="page-content"
 			initial="initial"
 			animate="in"
 			exit="out"
@@ -59,24 +60,34 @@ export default function Updates() {
 			<div id="updates">
 				<h1
 					style={{
-						fontWeight: 600,
-						fontSize: "2.2rem",
+						fontWeight: 700,
+						fontSize: "2.4rem",
 						marginBottom: "2.2rem",
 						letterSpacing: "-0.01em",
+						textAlign: "left",
+						lineHeight: 1.1,
+						display: "inline-block",
 					}}
 				>
-					What I've been up to
+					monthly{" "}
+					<span
+						style={{
+							background:
+								"linear-gradient(90deg, #007aff 0%, #b16cea 50%, #ff6bcb 100%)",
+							WebkitBackgroundClip: "text",
+							WebkitTextFillColor: "transparent",
+							backgroundClip: "text",
+							display: "inline-block",
+						}}
+					>
+						Updates 🚀
+					</span>
 				</h1>
 				<div className="timeline">
 					{updates.map((item, idx) => (
-						<div
-							className="timeline-node animatable"
-							key={idx}
-						>
+						<div className="timeline-node animatable" key={idx}>
 							<div className="timeline-date-col">
-								<div className={`timeline-date-dot`}>
-									<span className="timeline-date-text">{item.date}</span>
-								</div>
+								<span className="timeline-date-text">{item.date}</span>
 							</div>
 							<div className="timeline-content">
 								<div className="timeline-title">{item.title}</div>

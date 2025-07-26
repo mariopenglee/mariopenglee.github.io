@@ -58,7 +58,7 @@ export default function Projects() {
     duration: 0.7
   };
   return (
-    <motion.div initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}>
+    <motion.div className="page-content" initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}>
       <section id="projects">
         {allProjects.map((project) => (
           <ProjectCard project={project} key={project.id} onClick={() => handleCardClick(project)} />

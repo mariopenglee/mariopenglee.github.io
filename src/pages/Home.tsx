@@ -90,6 +90,7 @@ function Home() {
 
   return (
     <motion.div
+    className="page-content"
     initial="initial"
     animate="in"
     exit="out"
