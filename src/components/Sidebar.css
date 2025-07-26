@@ -13,6 +13,21 @@
   z-index: 1000;
 }
 
+.profile-name {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.profile-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.profile-tagline {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
 .profile-img {
   width: 100px;
   height: 100px;
@@ -41,8 +56,12 @@
     height: auto;
     position: static;
     justify-content: space-between;
+    padding: 1rem;
   }
   .sidebar-nav {
     flex-direction: row;
+  }
+  .profile-name {
+    font-size: 1.25rem;
   }
 }

@@ -6,7 +6,9 @@ export default function Sidebar() {
     <aside className="sidebar">
       <div className="profile">
         <img src="/harmony.png" alt="Profile" className="profile-img" />
-        <h1 className="profile-name">Mario Peng Lee</h1>
+        <h1 className="profile-name">
+          <Link to="/?section=about">Mario Peng Lee</Link>
+        </h1>
         <p className="profile-tagline">AI Engineer</p>
       </div>
       <nav className="sidebar-nav">
