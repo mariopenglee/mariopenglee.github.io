@@ -80,7 +80,7 @@ export default function Updates() {
 							display: "inline-block",
 						}}
 					>
-						Updates 🚀
+						updates 🚀
 					</span>
 				</h1>
 				<div className="timeline">

@@ -59,7 +59,34 @@ export default function Projects() {
   };
   return (
     <motion.div className="page-content" initial="initial" animate="in" exit="out" variants={pageVariants} transition={pageTransition}>
+      <h1
+					style={{
+						fontWeight: 700,
+						fontSize: "2.4rem",
+						marginBottom: "2.2rem",
+						letterSpacing: "-0.01em",
+						textAlign: "left",
+						lineHeight: 1.1,
+						display: "inline-block",
+					}}
+				>
+          here's some
+					{" "}
+					<span
+						style={{
+							background:
+								"linear-gradient(90deg, #007aff 0%, #b16cea 50%, #ff6bcb 100%)",
+							WebkitBackgroundClip: "text",
+							WebkitTextFillColor: "transparent",
+							backgroundClip: "text",
+							display: "inline-block",
+						}}
+					>
+						magic ✨
+					</span>
+				</h1>
       <section id="projects">
+        
         {allProjects.map((project) => (
           <ProjectCard project={project} key={project.id} onClick={() => handleCardClick(project)} />
         ))}
