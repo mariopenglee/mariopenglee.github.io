@@ -39,8 +39,6 @@ a:hover {
 
 html, body {
   margin: 0;
-  display: flex;
-  place-items: center;
   max-width: 100vw;
   width: 100%;
   min-height: 100vh;
@@ -95,12 +93,8 @@ b{
 
 @media (max-width: 734px) {
   :root {
-    font-size: 3em;
+    font-size: 4vw;
   }
-  p {
-    font-size: 1em;
-  }
- 
 }
 
 .content {
