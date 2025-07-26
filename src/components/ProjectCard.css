@@ -58,7 +58,6 @@
   opacity: 0.5;
   cursor: default;
 }
-
 @media (max-width: 768px) {
   .project-card-title {
     font-size: 1rem;
@@ -67,3 +66,4 @@
     font-size: 0.8rem;
   }
 }
+
