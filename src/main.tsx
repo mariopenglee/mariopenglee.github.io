@@ -4,7 +4,7 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Landing from './screens/Landing';
 import Projects from './pages/Projects';
-import Contact from './pages/Contact';
+import Updates from './pages/Updates';
 import CustomCursor from './components/CustomCursor';
 import { AnimatePresence } from 'framer-motion';
 
@@ -22,7 +22,7 @@ const App = () => {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Landing />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/updates" element={<Updates />} />
           </Routes>
         </AnimatePresence>
       </div>
