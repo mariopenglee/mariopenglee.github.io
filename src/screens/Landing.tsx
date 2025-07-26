@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import Home from '../pages/Home';
@@ -9,8 +10,9 @@ import {  motion } from 'framer-motion';
 gsap.registerPlugin(ScrollToPlugin);
 
 function Landing() {
-  
+
   const arrowRef = useRef(null);
+  const location = useLocation();
 
   const scrollToAbout = () => {
     gsap.to(window, { duration: 1, scrollTo: '#about' });
@@ -34,6 +36,13 @@ function Landing() {
     window.addEventListener('scroll', checkIfTop);
     return () => window.removeEventListener('scroll', checkIfTop);
   }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('section') === 'about') {
+      scrollToAbout();
+    }
+  }, [location]);
 
   return (
     <>
