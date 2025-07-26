@@ -114,7 +114,19 @@ function Home() {
         justifyContent: 'center',
         zIndex: 1
       }}>
-        <section id="home" ref={sectionRef} style={{width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', maxWidth: 900, margin: '0 auto', padding: '0 1.5rem', gap: '3vw', position: 'relative'}}>
+        <section id="home" ref={sectionRef} style={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: window.innerWidth <= 600 ? 'flex-start' : 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          maxWidth: 900,
+          margin: '0 auto',
+          padding: '0 1.5rem',
+          gap: '3vw',
+          position: 'relative'
+        }}>
           <div className="myname animatable" style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', minWidth: 0, zIndex: 1}}>
             <h1 className='hey' style={{
               fontWeight: 700,
