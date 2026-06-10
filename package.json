@@ -10,20 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-three/drei": "^9.86.3",
-    "@react-three/fiber": "^8.14.4",
-    "@react-three/postprocessing": "^2.15.11",
-    "@splinetool/loader": "^0.9.469",
-    "@splinetool/react-spline": "^2.2.6",
-    "@splinetool/runtime": "^0.9.469",
-    "framer-motion": "^10.16.5",
-    "framer-motion-ticker": "^1.0.19",
-    "gsap": "^3.12.2",
+    "marked": "^12.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
-    "react-scroll-percentage": "^4.3.0",
-    "three": "^0.157.0"
+    "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

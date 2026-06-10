@@ -1,12 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/harmony.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mario Peng Lee</title>
-    <script type="module" crossorigin src="/assets/index-294372bc.js"></script>
-    <link rel="stylesheet" href="/assets/index-06252eff.css">
+    <meta name="description" content="Mario Peng Lee — AI Engineer @ nexos.ai. Research, projects, and updates, served from a terminal." />
+    <meta name="theme-color" content="#f3f3f1" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content="mario peng lee" />
+    <meta property="og:description" content="AI Engineer @ nexos.ai — research, projects, updates." />
+    <meta property="og:type" content="website" />
+    <script>
+      // set theme before paint to avoid a flash
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t !== 'light' && t !== 'dark') {
+            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <title>mario peng lee — ~$</title>
+    <script type="module" crossorigin src="/assets/index-af75a577.js"></script>
+    <link rel="stylesheet" href="/assets/index-e2fb994e.css">
   </head>
   <body>
     <div id="root"></div>
