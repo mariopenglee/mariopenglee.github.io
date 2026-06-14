@@ -19,7 +19,6 @@ export default function Home() {
           <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer">
             {SITE.company}
           </a>
-          <span className="dim"> · leading the agentic team</span>
         </p>
         <ul className="links">
           {LINKS.map((l) => (
@@ -38,9 +37,9 @@ export default function Home() {
           <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer">
             {SITE.company}
           </a>
-          , where I lead the agentic team. We build the agent layer that lets a
-          single interface plan, call tools, and run code safely across whatever
-          models and data a company already uses.
+          , where I build the agent layer that lets a single interface plan,
+          call tools, and run code safely across whatever models and data a
+          company already uses.
         </p>
         <p>
           Before nexos I double-majored in Linguistics and Computer Science at
