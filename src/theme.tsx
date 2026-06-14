@@ -11,10 +11,11 @@ interface ThemeCtx {
 const Ctx = createContext<ThemeCtx | null>(null);
 
 function getInitial(): Theme {
-  if (typeof window === 'undefined') return 'light';
+  if (typeof window === 'undefined') return 'dark';
   const saved = localStorage.getItem('theme');
   if (saved === 'light' || saved === 'dark') return saved;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  // dark-first: only go light if the OS explicitly prefers it
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/harmony.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Mario Peng Lee — AI Engineer @ nexos.ai. Research, projects, and updates, served from a terminal." />
+    <meta name="description" content="Mario Peng Lee — AI Engineer at nexos.ai, leading the agentic team. Talks, writing, and selected work." />
     <meta name="theme-color" content="#f3f3f1" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)" />
     <meta property="og:title" content="mario peng lee" />
@@ -16,7 +16,8 @@
         try {
           var t = localStorage.getItem('theme');
           if (t !== 'light' && t !== 'dark') {
-            t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            // dark-first: only go light if the OS explicitly prefers it
+            t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
           }
           document.documentElement.setAttribute('data-theme', t);
         } catch (e) {}
@@ -28,9 +29,9 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
-    <title>mario peng lee — ~$</title>
-    <script type="module" crossorigin src="/assets/index-af75a577.js"></script>
-    <link rel="stylesheet" href="/assets/index-e2fb994e.css">
+    <title>mario peng lee</title>
+    <script type="module" crossorigin src="/assets/index-3fa550f2.js"></script>
+    <link rel="stylesheet" href="/assets/index-21019efb.css">
   </head>
   <body>
     <div id="root"></div>
