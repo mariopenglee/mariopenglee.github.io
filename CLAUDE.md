@@ -35,3 +35,12 @@ voice. Derived from his own writing samples:
 - Endings look forward with curiosity ("would love to look into it",
   "probably interesting to explore whether X") rather than punchlines.
 - No emojis.
+
+**Structure (for any longer piece: posts, writeups)**
+- One idea per piece. State it in a sentence before drafting; cut what
+  doesn't serve it.
+- Open on the gap, not the setup: first sentences hand the reader a specific
+  question, surprising result, or concrete image, then fill in background.
+- Lead with the result, then explain how. Anchor every abstract claim to
+  something concrete (a number, an example, the actual bug) within a sentence
+  or two. Blog-post specifics live in the blog-post skill.

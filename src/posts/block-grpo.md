@@ -1,109 +1,91 @@
 ---
-title: block-GRPO: RL for diffusion LLMs
+title: block-GRPO: doing RL on a diffusion language model
 date: 2026-05-09
-summary: Per-block log-prob estimation for block-autoregressive diffusion language models, and why evolutionary algorithms feel like the natural next step.
+summary: GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
 ---
 
-Diffusion language models generate text by iteratively unmasking tokens
-instead of predicting them left to right. They're fast and parallel, and
-they're also pretty hostile to reinforcement learning, since policy gradient
-methods like GRPO need `log π(completion | prompt)`, and for a diffusion LM
-that likelihood is intractable.
+GRPO needs one number from your model: the log-probability of the sequence
+it just generated. An autoregressive model hands it over for free. A
+diffusion language model doesn't, and that single gap is most of the
+difficulty in doing RL on one.
 
-The [d1 paper](https://arxiv.org/abs/2504.12216) opened this door with
-diffu-GRPO: estimate the log-prob with a single forward pass over a fully
-masked completion, treating all tokens as conditionally independent. It
-works, but the approximation is blunt, one big conditional independence
-assumption over the entire completion, say 512 tokens at once.
+GRPO (group relative policy optimization, from DeepSeekMath, Shao et al.
+2024) is the workhorse behind a lot of recent reasoning models. You sample a
+group of completions, score them, and push the policy toward the
+above-average ones, weighted by `log π(sequence)`. The whole method assumes
+that log-prob is exact and cheap. On a diffusion LLM it's neither, because
+the model defines the sequence through an iterative denoising process, not a
+left-to-right product of conditionals, so the exact likelihood is a sum over
+denoising paths you can't enumerate.
 
-block-GRPO starts from a simple observation about the newer generation of
-models.
+## what diffu-GRPO did, and where it leaks
 
-## use the factorization the model already has
+The prior work here is d1
+([arxiv 2504.12216](https://arxiv.org/abs/2504.12216)), whose diffu-GRPO
+estimates the log-prob with a one-step approximation under random masking. It
+works, but the estimate is biased in a way that compounds over training: you
+end up optimizing a noisy proxy for the thing you care about, and the noise
+isn't mean-zero.
 
-Block-autoregressive diffusion models (I build on
-[Fast-dLLM v2](https://huggingface.co/Efficient-Large-Model/Fast_dLLM_v2_7B),
-a Qwen-based 7B) don't denoise the whole sequence at once. They generate
-block by block: autoregressive across blocks, diffusion within each block.
-Which means the cross-block factorization is exact by construction:
+My angle was to stop fighting the model's structure and use it. The target
+here, Fast-dLLM v2
+([weights](https://huggingface.co/Efficient-Large-Model/Fast_dLLM_v2_7B)),
+isn't pure diffusion: it's block-autoregressive. It generates a block at a
+time, left to right across blocks, denoising within each block. That
+factorization is exactly the handle GRPO wants. The sequence log-prob is
+exact across blocks (a real chain rule over the block order) and only needs
+approximating within each block. You've shrunk the hard part from the whole
+sequence to one block.
 
-```
-log π(c | p) = Σ_k  log π(b_k | p, b_<k)
-```
+## three estimators for the within-block term
 
-Prior RL work on diffusion LMs treats the completion as one diffusion blob
-anyway and throws that structure away. Seems to me that's leaving
-information on the table. block-GRPO keeps the chain rule exact across
-blocks and only approximates within a block, shrinking the conditional
-independence surface from completion length (512) down to block length (32).
-A 16x smaller approximation, and it's aligned with the architectural bias
-the model was actually trained with.
+Within a block you still owe an intractable likelihood, so I tried three
+ways to approximate it, trading bias for compute:
 
-For the within-block term I implemented three estimators:
+- **Masked (baseline):** the cheap one-step estimate, kept for comparison.
+- **Per-block ELBO (default):** a proper evidence lower bound on the block
+  likelihood, averaged over masking levels. More compute than masked, much
+  less bias, and it's a bound rather than a point guess.
+- **Gauss-Legendre quadrature:** treat the masking-level average as an
+  integral and place the evaluation points by quadrature instead of
+  sampling. Fewer, better-chosen samples for the same accuracy.
 
-- masked: the d1 baseline, mask the whole block, one forward pass, biased
-- per-block ELBO: the default, a continuous-time masked diffusion ELBO with
-  an independent `t_k ~ U(0.01, 1)` per block, so K blocks give K
-  independent Monte Carlo samples per sequence
-- Gauss-Legendre quadrature: fixed nodes on [0, 1] instead of sampling t,
-  which removes the t-variance entirely at the cost of N forward passes
+The ELBO is the one I'd reach for by default: it's the cleanest
+bias-for-compute trade, and it degrades gracefully when you can't afford
+many samples.
 
-## the bugs taught me the most
+## the bugs were most of the work
 
-The estimator math is honestly half the story, the other half is everything
-that breaks silently. Three favorites:
+The idea was the easy part. Three bugs ate the rest of the time, and all
+three were the silent kind that train fine and just learn the wrong thing:
 
-- The AR logit shift. Fast-dLLM v2 keeps the autoregressive convention that
-  `logits[i]` predicts `token[i+1]`. Score a block with the intuitive
-  slicing and you're grading every token against its neighbor. Off by one,
-  and invisible in the loss curves.
-- The EUBO formula. My upper bound estimator computed log-of-sum where the
-  paper specifies sum-of-logs. The gap grows with block length, O(32) at
-  production size. A strict math test caught it, staring at reward curves
-  never would have.
-- Per-iteration mask seeds. With multiple PPO iterations per batch, the old
-  code reused masks from generation time, and the mismatch produced NaN
-  gradients just often enough to be confusing. Deterministic per-iteration
-  seed derivation fixed it.
+- **An off-by-one in the AR logit shift.** Standard next-token alignment,
+  wrong by one position at the block boundary, so the log-prob was scoring a
+  shifted sequence. Quietly poisons every gradient.
+- **A log-of-sum where the math wanted sum-of-logs** in the bound (it had
+  become an upper bound, an EUBO, with the wrong reduction). Jensen's
+  inequality points the other way, so the "lower bound" wasn't one.
+- **Reused mask seeds across iterations**, which correlated the estimates
+  and shrank the effective sample size without telling you.
 
-This is why the repo has a three-tier test suite (106 CPU math tests against
-closed-form values, GPU smoke tests on the real model, then small end-to-end
-training runs) before I let myself believe any result.
+None of these throws. They just bias the estimate, and you only catch them
+by deriving the quantity and checking the code computes that and not a
+plausible neighbor. That's the real lesson of the project: in RL on top of an
+approximate likelihood, the bugs hide inside numbers that look reasonable.
 
-## what it buys
+Fixed, block-GRPO with the ELBO estimator beat vanilla GRPO by about 10x on
+tail reward over training (+0.158 vs +0.017), which is the regime that
+actually matters, since the tail is where the hard prompts live.
 
-On a deliberately small probe (10 GSM8K prompts x 400 steps, so signal shows
-up fast), vanilla GRPO with KL lands around +0.017 tail reward. Stacking the
-pieces (per-block ELBO, SPG's sandwich of lower and upper bounds routed by
-advantage sign, StableDRL's self-normalizing stabilizer) first collapsed to
-zero. The fix turned out to be one line: the importance ratio has to come
-from the ELBO surface only, decoupled from the EUBO used in the loss. The
-same run went to +0.158. Roughly an order of magnitude over the baseline on
-the same compute.
+## where this goes
 
-## why evolution feels like the natural next step
-
-If there's one thing this project taught me, it's that the hard part of RL
-for diffusion LLMs is estimating log-probs. Every estimator above (masked,
-ELBO, quadrature, sandwiched bounds) is an increasingly elaborate workaround
-for a quantity the model fundamentally doesn't want to give us.
-
-Evolutionary algorithms sidestep the question entirely. Evolution strategies
-only need samples and scores: generate completions, compute rewards, update
-by reweighting perturbations. No log π, no estimator bias, no importance
-ratios to stabilize. For autoregressive models that trade is usually not
-worth it, since exact log-probs are basically free there. For diffusion LMs
-my intuition is the calculus flips: the gradient is the expensive, biased
-part, and the population is cheap, since diffusion models generate fast and
-in parallel, which is exactly the throughput evolution wants.
-
-And GRPO is already halfway there. It samples a group of rollouts and scores
-each against the group mean, which is basically a population and a relative
-fitness function. The only thing it inherits through gradients is the policy
-update itself. Replace that step with selection and recombination
-(weight-space merging gives a pretty natural crossover operator) and you get
-an optimizer that never needs the likelihood at all.
-
-That's the experiment I'm setting up next. Whether it can match the
-gradient-based runs is unclear so far, and honestly that's what makes it
-interesting. Would love to find out.
+The thing I keep circling is that all of this complexity exists to get a
+usable gradient through an intractable likelihood. Evolution strategies
+(Salimans et al. 2017,
+[arxiv 1703.03864](https://arxiv.org/abs/1703.03864)) skip that entirely:
+perturb the parameters, keep what scores better, never compute a log-prob at
+all. For a model whose likelihood is this awkward, trading exact gradients
+for black-box search might be the natural move, not a fallback. Probably
+worth running ES head-to-head against block-GRPO on the same reward, one
+variable at a time, and seeing which actually wins. Would love to look into
+it.
