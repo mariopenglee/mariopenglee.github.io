@@ -33,11 +33,21 @@ export default function Home() {
 
       <div className="bio">
         <p>
-          I'm an {SITE.role} at{' '}
+          I'm a {SITE.role} of{' '}
           <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer">
             {SITE.company}
           </a>
-          , where I build the agent layer that lets a single interface plan,
+          , an LLM input compression proxy: it sits between a coding agent and
+          the model and shrinks each request before it's billed, cutting token
+          bills on long sessions by up to about 70% while keeping the output
+          basically the same.
+        </p>
+        <p>
+          Before that I was an AI Engineer at{' '}
+          <a href="https://nexos.ai/" target="_blank" rel="noopener noreferrer">
+            nexos.ai
+          </a>
+          , where I built the agent layer that lets a single interface plan,
           call tools, and run code safely across whatever models and data a
           company already uses.
         </p>
@@ -47,6 +57,14 @@ export default function Home() {
           I researched AI safety, interpretability, and how people and models
           learn language, across four labs. That's still the lens I bring to
           building agents now.
+        </p>
+        <p>
+          These days I also contribute to open-source interpretability research
+          at{' '}
+          <a href="https://www.eleuther.ai/" target="_blank" rel="noopener noreferrer">
+            EleutherAI
+          </a>
+          .
         </p>
       </div>
 

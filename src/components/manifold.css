@@ -1,0 +1,165 @@
+.mt-demo {
+  margin: 2rem 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  padding: 1.25rem;
+}
+
+.mt-panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  cursor: grab;
+  touch-action: none;
+}
+
+.mt-panels:active {
+  cursor: grabbing;
+}
+
+.mt-panel {
+  margin: 0;
+  min-width: 0;
+}
+
+.mt-panel-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+}
+
+.mt-pct {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.mt-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1 / 1;
+}
+
+.mt-hint {
+  color: var(--ink-faint);
+}
+
+.mt-readout {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  margin: 1rem 0 0.25rem;
+}
+
+.mt-readout strong {
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.mt-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1.5rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.mt-ctrl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-dim);
+}
+
+.mt-dim {
+  color: var(--ink-faint);
+}
+
+.mt-ctrl input[type='range'] {
+  width: 100%;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.mt-seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  width: fit-content;
+}
+
+.mt-seg button {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.7rem;
+  background: transparent;
+  color: var(--ink-dim);
+  border: none;
+  cursor: pointer;
+}
+
+.mt-seg button.on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.mt-reshuffle {
+  justify-self: start;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.8rem;
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.mt-reshuffle:hover {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.mt-ctrl-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.mt-toggle {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.7rem;
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.mt-toggle.on {
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+@media (max-width: 34rem) {
+  .mt-panels {
+    grid-template-columns: 1fr;
+  }
+  .mt-controls {
+    grid-template-columns: 1fr;
+  }
+}
