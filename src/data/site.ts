@@ -1,8 +1,8 @@
 export const SITE = {
   name: 'mario peng lee',
-  role: 'AI Engineer',
-  company: 'nexos.ai',
-  companyUrl: 'https://nexos.ai/',
+  role: 'cofounder',
+  company: 'condense.chat',
+  companyUrl: 'https://condense.chat/',
 };
 
 export const LINKS: { name: string; key: string; url: string }[] = [
@@ -50,6 +50,14 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
     links: [
       { name: 'writeup', url: '#/blog/heartbeat' },
       { name: 'demo', url: 'https://www.youtube.com/watch?v=KoVKYMgw2H0' },
+    ],
+  },
+  {
+    title: 'Do SAEs capture concept manifolds?',
+    desc: 'open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it',
+    links: [
+      { name: 'writeup', url: '#/blog/cross-seed-saes' },
+      { name: 'code', url: 'https://github.com/mariopenglee/cross-seed-manifold-poc' },
     ],
   },
   {
