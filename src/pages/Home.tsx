@@ -1,11 +1,37 @@
 import { Link } from 'react-router-dom';
 import Denoise from '../components/Denoise';
 import TalkCard from '../components/TalkCard';
-import { SITE, LINKS, TALKS, WORK } from '../data/site';
+import { marked } from 'marked';
+import { SITE, BIO, LINKS, TALKS, WORK, RESEARCH, LEADERSHIP } from '../data/site';
 import { POSTS } from '../data/posts';
 import './page.css';
 
 const FEATURED = POSTS.slice(0, 3);
+
+function WorkSection({ title, items }: { title: string; items: typeof WORK }) {
+  return (
+    <section className="section">
+      <p className="section-title">{title}</p>
+      <ul className="work-list">
+        {items.map((w) => (
+          <li className="work-item" key={w.title}>
+            <div className="work-head">
+              <span className="work-title">{w.title}</span>
+              <span className="work-links">
+                {w.links.map((l) => (
+                  <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer">
+                    {l.name}
+                  </a>
+                ))}
+              </span>
+            </div>
+            <p className="work-desc dim">{w.desc}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
 export default function Home() {
   return (
@@ -15,11 +41,12 @@ export default function Home() {
           <Denoise text={SITE.name} />
         </h1>
         <p className="hero-role">
-          {SITE.role} at{' '}
+          {SITE.role} of{' '}
           <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer">
             {SITE.company}
           </a>
         </p>
+        <p className="hero-role dim">{SITE.tagline}</p>
         <ul className="links">
           {LINKS.map((l) => (
             <li key={l.key}>
@@ -32,40 +59,9 @@ export default function Home() {
       </header>
 
       <div className="bio">
-        <p>
-          I'm a {SITE.role} of{' '}
-          <a href={SITE.companyUrl} target="_blank" rel="noopener noreferrer">
-            {SITE.company}
-          </a>
-          , an LLM input compression proxy: it sits between a coding agent and
-          the model and shrinks each request before it's billed, cutting token
-          bills on long sessions by up to about 70% while keeping the output
-          basically the same.
-        </p>
-        <p>
-          Before that I was an AI Engineer at{' '}
-          <a href="https://nexos.ai/" target="_blank" rel="noopener noreferrer">
-            nexos.ai
-          </a>
-          , where I built the agent layer that lets a single interface plan,
-          call tools, and run code safely across whatever models and data a
-          company already uses.
-        </p>
-        <p>
-          Before nexos I double-majored in Linguistics and Computer Science at
-          UCLA (departmental honors, data science minor, Phi Beta Kappa), where
-          I researched AI safety, interpretability, and how people and models
-          learn language, across four labs. That's still the lens I bring to
-          building agents now.
-        </p>
-        <p>
-          These days I also contribute to open-source interpretability research
-          at{' '}
-          <a href="https://www.eleuther.ai/" target="_blank" rel="noopener noreferrer">
-            EleutherAI
-          </a>
-          .
-        </p>
+        {BIO.map((p) => (
+          <p key={p} dangerouslySetInnerHTML={{ __html: marked.parseInline(p) as string }} />
+        ))}
       </div>
 
       {TALKS.length > 0 && (
@@ -109,26 +105,9 @@ export default function Home() {
         </section>
       )}
 
-      <section className="section">
-        <p className="section-title">selected work</p>
-        <ul className="work-list">
-          {WORK.map((w) => (
-            <li className="work-item" key={w.title}>
-              <div className="work-head">
-                <span className="work-title">{w.title}</span>
-                <span className="work-links">
-                  {w.links.map((l) => (
-                    <a key={l.name} href={l.url} target="_blank" rel="noopener noreferrer">
-                      {l.name}
-                    </a>
-                  ))}
-                </span>
-              </div>
-              <p className="work-desc dim">{w.desc}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <WorkSection title="selected work" items={WORK} />
+      <WorkSection title="research" items={RESEARCH} />
+      <WorkSection title="leadership" items={LEADERSHIP} />
     </div>
   );
 }

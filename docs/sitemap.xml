@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://mariopenglee.com/</loc>
-    <lastmod>2026-06-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+  <url><loc>https://mariopenglee.com/</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://mariopenglee.com/llms.txt</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/kids-vs-llm-stories.md</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/cyclediffusion.md</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/cross-seed-saes.md</loc><lastmod>2026-07-15</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/block-grpo.md</loc><lastmod>2026-05-09</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/heartbeat.md</loc><lastmod>2026-03-01</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/gpt2-ioi.md</loc><lastmod>2025-05-21</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/multitask-training.md</loc><lastmod>2025-05-10</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/hello.md</loc><lastmod>2025-05-01</lastmod></url>
 </urlset>

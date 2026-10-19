@@ -1,0 +1,47 @@
+# Mario Peng Lee
+
+> cofounder of condense.chat. making powerful AI accessible to everyone, and safe when it gets there.
+
+I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), which compresses what coding agents send to the model so heavy AI workloads cost less (up to about 70% off long sessions, with basically the same output). I'm also CEO of [Pocketful](https://pocketful.ai/), which brings WhatsApp AI agents to restaurant owners in Argentina. Same mission for both: AI that everyone can actually afford and use.
+
+My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). What I'm most interested in is how minds, human and machine, represent things, and how understanding that makes AI cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/).
+
+Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), where I built the agent layer, the memory model behind nexos.heartbeat, and a sandboxed code interpreter.
+
+## links
+- [linkedin](https://www.linkedin.com/in/mariopenglee/)
+- [github](https://github.com/mariopenglee)
+- [scholar](https://scholar.google.com/citations?user=g5-ua5oAAAAJ&hl)
+- [cv](https://drive.google.com/file/d/1iMqFVWe2bbiVVxuoxsXdHfDLJeahqtRg/view?usp=sharing)
+- [X](https://x.com/mariopenglee)
+
+## writing
+- [Kids vs LLMs at telling a story](https://mariopenglee.com/blog/kids-vs-llm-stories.md) (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.
+- [cyclediffusion: can a picture be a bottleneck?](https://mariopenglee.com/blog/cyclediffusion.md) (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.
+- [Do sparse autoencoders capture manifolds?](https://mariopenglee.com/blog/cross-seed-saes.md) (2026-07-15): A concept like "year" lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.
+- [block-GRPO: doing RL on a diffusion language model](https://mariopenglee.com/blog/block-grpo.md) (2026-05-09): GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
+- [Building nexos.heartbeat: the infinite context problem](https://mariopenglee.com/blog/heartbeat.md) (2026-03-01): An always-on AI twin doesn't have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.
+- [GPT-2, IOI, and the sphex problem](https://mariopenglee.com/blog/gpt2-ioi.md) (2025-05-21): A wasp can look like it understands what it's doing right up until you move one thing. I poked at GPT-2's indirect-object circuit the same way, to see whether it understood the task or just had a routine that usually works.
+- [Does parameter sharing help? a multitask recommender experiment](https://mariopenglee.com/blog/multitask-training.md) (2025-05-10): I built the same recommender four times to find out whether sharing parameters across tasks helps. It turned out the loss weighting mattered more than the sharing, which is a known and slightly annoying axis.
+- [Starting a blog](https://mariopenglee.com/blog/hello.md) (2025-05-01): Why this page exists, and what to expect.
+
+## selected work
+- **nexos.heartbeat**: always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model ([writeup](https://mariopenglee.com/blog/heartbeat.md)) ([demo](https://www.youtube.com/watch?v=KoVKYMgw2H0))
+- **Do SAEs capture concept manifolds?**: open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it ([writeup](https://mariopenglee.com/blog/cross-seed-saes.md)) ([code](https://github.com/mariopenglee/cross-seed-manifold-poc))
+- **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/))
+
+## research
+- **GPT-4 vs. children: narrative cohesion in wordless picture books**: how children aged 4 to 6 and GPT-4 tie a story together while narrating a wordless book, measured with coreference chains (with Catherine Sandhofer, Amalia Ionescu) ([writeup](https://mariopenglee.com/blog/kids-vs-llm-stories.md))
+- **CycleDiffusion**: relational representations in visual models (with Andrew Lee, Hongjin Lu) ([writeup](https://mariopenglee.com/blog/cyclediffusion.md))
+- **PhoneTic5**: independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023) ([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)) ([demo](https://phonetic5.streamlit.app/))
+- **child language and concept acquisition**: experiments on how kids pick up words and concepts, at the Language and Development Lab
+- **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
+
+## leadership
+- **AI Safety at UCLA**: co-founded it, raised about $150k, and led its alignment research team ([feature](https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024))
+- **a16z speedrun Global Founder Sprint**: selected with condense.chat, SF Tech Week 2026
+- **Phi Beta Kappa**: UCLA, 2024
+
+## talks
+- [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
+- [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Lithuania)

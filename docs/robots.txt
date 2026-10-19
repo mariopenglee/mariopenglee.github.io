@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://mariopenglee.com/sitemap.xml
+# plain-text summary for LLMs and agents: https://mariopenglee.com/llms.txt
