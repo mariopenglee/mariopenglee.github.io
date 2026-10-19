@@ -18,6 +18,8 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 ## writing
 - [Kids vs LLMs at telling a story](https://mariopenglee.com/blog/kids-vs-llm-stories.md) (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.
 - [cyclediffusion: can a picture be a bottleneck?](https://mariopenglee.com/blog/cyclediffusion.md) (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.
+- [A transformer that passes the wug test](https://mariopenglee.com/blog/phonetic5.md) (2026-10-16): I fine-tuned T5 to turn spelling into IPA. Nobody told it English phonology rules, but it says "wugs" with a /z/ and "wuks" with an /s/, just like a kid does.
+- [Why linguists keep writing about John and Mary](https://mariopenglee.com/blog/diverse-names.md) (2026-10-15): In linguistics papers, 30% of male names are John and 31% of female names are Mary. A good list of names doesn't fix that, because people still pick from it. A random generator does.
 - [Do sparse autoencoders capture manifolds?](https://mariopenglee.com/blog/cross-seed-saes.md) (2026-07-15): A concept like "year" lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.
 - [block-GRPO: doing RL on a diffusion language model](https://mariopenglee.com/blog/block-grpo.md) (2026-05-09): GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
 - [Building nexos.heartbeat: the infinite context problem](https://mariopenglee.com/blog/heartbeat.md) (2026-03-01): An always-on AI twin doesn't have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.
@@ -33,9 +35,9 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 ## research
 - **GPT-4 vs. children: narrative cohesion in wordless picture books**: how children aged 4 to 6 and GPT-4 tie a story together while narrating a wordless book, measured with coreference chains (with Catherine Sandhofer, Amalia Ionescu) ([writeup](https://mariopenglee.com/blog/kids-vs-llm-stories.md))
 - **CycleDiffusion**: relational representations in visual models (with Andrew Lee, Hongjin Lu) ([writeup](https://mariopenglee.com/blog/cyclediffusion.md))
-- **PhoneTic5**: independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023) ([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)) ([demo](https://phonetic5.streamlit.app/))
+- **PhoneTic5**: independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023) ([writeup](https://mariopenglee.com/blog/phonetic5.md)) ([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)) ([demo](https://phonetic5.streamlit.app/))
 - **child language and concept acquisition**: experiments on how kids pick up words and concepts, at the Language and Development Lab
-- **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
+- **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary and Rainey Williams) ([writeup](https://mariopenglee.com/blog/diverse-names.md)) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
 
 ## leadership
 - **AI Safety at UCLA**: co-founded it, raised about $150k, and led its alignment research team ([feature](https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024))
@@ -186,6 +188,147 @@ you train it against. A narrow critic hands you its biases, and a loop with
 nothing anchoring it to real images finds a degenerate picture, not a clever
 code. Next I want to swap in BLIP-large as the reader and see whether a
 captioner that actually describes scenes keeps the pictures honest.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/phonetic5.md -->
+---
+title: A transformer that passes the wug test
+date: 2026-10-16
+summary: I fine-tuned T5 to turn spelling into IPA. Nobody told it English phonology rules, but it says "wugs" with a /z/ and "wuks" with an /s/, just like a kid does.
+---
+
+In 1958 Jean Berko Gleason showed children a made-up creature, said "this
+is a wug", showed two of them and waited. The kids said "two wugs" with a
+/z/ at the end, not an /s/, for a word they had never heard. They weren't
+remembering anything. They had learned a rule: the plural is voiced after a
+voiced sound and devoiced after a voiceless one, so "bugs" ends in /z/ and
+"bats" in /s/.
+
+I wanted to know if a transformer that only ever sees spelling and
+pronunciation learns that rule too, or just memorizes a dictionary.
+
+## the setup
+
+The task is grapheme to phoneme (G2P): text in, IPA out. Older G2P systems
+are built from rules that linguists write by hand. I didn't give the model
+any. I fine-tuned T5 small, base and large (60M to 770M parameters) on
+about 113k English word and IPA pairs from ipa_dict, and added the IPA
+symbols to the tokenizer so the model could actually write them. That's the
+whole training signal: words and how they're pronounced, no phonology.
+
+I also built two English to IPA sequence datasets for future work and put
+them on Hugging Face
+([ipa_dict_seq2seq](https://huggingface.co/datasets/mariopeng/openIPAseq2seq),
+[OpenWebIPA](https://huggingface.co/datasets/mariopeng/openwebIPA)).
+
+## the wug test
+
+Then I gave every model words that aren't in the data, built as minimal
+pairs:
+
+```
+prompt    t5-small    t5-base     t5-large
+wuks      [wəks]      [wəks]      [wəks]
+wugs      [wəgz]      [wəgz]      [wəgz]
+musips    [məsəps]    [mjuzɪps]   [mjuzɪps]
+```
+
+All three models pass. "wuks" and "wugs" differ only in whether the
+consonant before the s is voiced, and the models flip the plural from /s/
+to /z/ exactly where a native speaker does. The s in "wugs" isn't
+copied from spelling, because the spelling says s. The model has learned the
+rule that turns it into a /z/.
+
+The same thing shows up on loan words. No model would write the /ts/
+cluster at the start of "tsunami", because English words can't start that
+way. The bigger the model, the closer it got to how a native speaker says
+words like "coyote", "chow mein" and "receipt". Scale buys phonotactics the
+same way it buys syntax.
+
+## what it means
+
+A speaker's sense of what sounds like English ("brick" yes, "bnick" no)
+comes from the words they know, and a model trained on nothing but words
+ends up with a piece of the same knowledge. That makes these models a
+cheap way to test ideas about how people learn sound rules. Since you can
+look inside them, the next step is to find where in the network the
+voicing rule lives.
+
+The paper was published in the *UCLA Undergraduate Science Journal*
+(2023) as "Transformer Phonotactics via IPA G2P Finetuning"
+([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)),
+and you can try the model in the [demo](https://phonetic5.streamlit.app/).
+
+
+---
+
+<!-- https://mariopenglee.com/blog/diverse-names.md -->
+---
+title: Why linguists keep writing about John and Mary
+date: 2026-10-15
+summary: In linguistics papers, 30% of male names are John and 31% of female names are Mary. A good list of names doesn't fix that, because people still pick from it. A random generator does.
+---
+
+Open a linguistics paper and look at the example sentences. "John thinks
+Mary left." A survey of 927 papers in three major journals found that
+30% of all male names were John and 31% of all female names were Mary.
+Male arguments showed up twice as often as female ones, and they were the
+ones doing things. Textbooks look the same, and they haven't changed much
+since the 1990s.
+
+Nobody chooses this. When an example needs a name and you're at a
+whiteboard, you reach for the first one in your head, and the first one in
+your head comes from the culture you grew up in.
+
+## a list isn't enough
+
+The obvious fix is a curated list of diverse names, and good ones already
+exist. But choosing from a list is still choosing. Over a semester the
+same unconscious pull comes back, even with a balanced list and good
+intentions.
+
+So with Maura O'Leary and Rainey Williams we built the
+[Diverse Names Generator](https://diversenamesgenerator.com/), which takes
+the choice away. You press generate, or swipe a card in the Android app,
+and get a random name from a database linguists curate. The bias never
+gets a chance to act.
+
+## making random usable
+
+Random only works if people actually use it in a real classroom, so every
+name comes with what an instructor needs at that moment:
+
+- an IPA transcription, so you can say it confidently
+- its usual gender association and the languages it comes from
+- sometimes a recording, its native script, and famous people who share it
+
+Filters make sure the randomness still fits the example. Semanticists need
+one name per first letter so the initials don't collide in logic notation,
+syntacticians need to match gender features, and one filter keeps to
+English phonotactics for instructors worried about unfamiliar clusters.
+Inside those constraints the pick is still random. The app downloads the
+filtered set once with a single database call, then generates from that
+local list, so it works offline in a classroom with bad wifi and never
+shows the same name twice in a row.
+
+The names come from users and students. Phonetics instructors can give
+their students credit for submitting a name with a recording, which turns
+an IPA exercise into something that ends up in front of other classes.
+Linguists check every submission by hand before it goes into the pool.
+When we published, the database had over 200 names from more than 30
+languages.
+
+## the point
+
+The bias here isn't in anyone's values, it's in which name comes to mind
+first. You can't train that away, but you can design it out. When the
+default changes, the examples change.
+
+The paper is in the
+[*Proceedings of the LSA*](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)
+(2023), and we presented it at the LSA 2023 Annual Meeting.
 
 
 ---

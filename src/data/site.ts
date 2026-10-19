@@ -96,6 +96,7 @@ export const RESEARCH: typeof WORK = [
     title: 'PhoneTic5',
     desc: 'independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023)',
     links: [
+      { name: 'writeup', url: '#/blog/phonetic5' },
       { name: 'preprint', url: 'https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view' },
       { name: 'demo', url: 'https://phonetic5.streamlit.app/' },
     ],
@@ -107,8 +108,9 @@ export const RESEARCH: typeof WORK = [
   },
   {
     title: 'The Diverse Names Generator',
-    desc: 'a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O\'Leary)',
+    desc: 'a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O\'Leary and Rainey Williams)',
     links: [
+      { name: 'writeup', url: '#/blog/diverse-names' },
       { name: 'paper', url: 'https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541' },
       { name: 'live', url: 'https://diversenamesgenerator.com/' },
     ],
