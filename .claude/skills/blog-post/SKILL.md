@@ -64,6 +64,10 @@ and Paul Graham's "Writing, Briefly" (say one thing, cut what isn't working).
   interesting-but-off-axis tangent goes in a parenthetical, a link, or gets
   cut. When a concept deserves weight, ground it in the real work (name the
   paper, the bug, the number), don't just gesture at it.
+- **One clean story, no process.** The post showcases one core finding:
+  question, setup, result, what it means. Never backtrack ("I wrote X,
+  turns out I was wrong"), never narrate bugs found, reruns, lost
+  notebooks, or fixes. Caveats only if they're part of the finding itself.
 - **Close on the portable idea.** Name what the specific result generalizes
   to, looking forward.
 

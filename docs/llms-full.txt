@@ -1,0 +1,636 @@
+# Mario Peng Lee
+
+> cofounder of condense.chat. making powerful AI accessible to everyone, and safe when it gets there.
+
+I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), which compresses what coding agents send to the model so heavy AI workloads cost less (up to about 70% off long sessions, with basically the same output). I'm also CEO of [Pocketful](https://pocketful.ai/), which brings WhatsApp AI agents to restaurant owners in Argentina. Same mission for both: AI that everyone can actually afford and use.
+
+My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). What I'm most interested in is how minds, human and machine, represent things, and how understanding that makes AI cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/).
+
+Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), where I built the agent layer, the memory model behind nexos.heartbeat, and a sandboxed code interpreter.
+
+## links
+- [linkedin](https://www.linkedin.com/in/mariopenglee/)
+- [github](https://github.com/mariopenglee)
+- [scholar](https://scholar.google.com/citations?user=g5-ua5oAAAAJ&hl)
+- [cv](https://drive.google.com/file/d/1iMqFVWe2bbiVVxuoxsXdHfDLJeahqtRg/view?usp=sharing)
+- [X](https://x.com/mariopenglee)
+
+## writing
+- [Kids vs LLMs at telling a story](https://mariopenglee.com/blog/kids-vs-llm-stories.md) (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.
+- [cyclediffusion: can a picture be a bottleneck?](https://mariopenglee.com/blog/cyclediffusion.md) (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.
+- [Do sparse autoencoders capture manifolds?](https://mariopenglee.com/blog/cross-seed-saes.md) (2026-07-15): A concept like "year" lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.
+- [block-GRPO: doing RL on a diffusion language model](https://mariopenglee.com/blog/block-grpo.md) (2026-05-09): GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
+- [Building nexos.heartbeat: the infinite context problem](https://mariopenglee.com/blog/heartbeat.md) (2026-03-01): An always-on AI twin doesn't have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.
+- [GPT-2, IOI, and the sphex problem](https://mariopenglee.com/blog/gpt2-ioi.md) (2025-05-21): A wasp can look like it understands what it's doing right up until you move one thing. I poked at GPT-2's indirect-object circuit the same way, to see whether it understood the task or just had a routine that usually works.
+- [Does parameter sharing help? a multitask recommender experiment](https://mariopenglee.com/blog/multitask-training.md) (2025-05-10): I built the same recommender four times to find out whether sharing parameters across tasks helps. It turned out the loss weighting mattered more than the sharing, which is a known and slightly annoying axis.
+- [Starting a blog](https://mariopenglee.com/blog/hello.md) (2025-05-01): Why this page exists, and what to expect.
+
+## selected work
+- **nexos.heartbeat**: always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model ([writeup](https://mariopenglee.com/blog/heartbeat.md)) ([demo](https://www.youtube.com/watch?v=KoVKYMgw2H0))
+- **Do SAEs capture concept manifolds?**: open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it ([writeup](https://mariopenglee.com/blog/cross-seed-saes.md)) ([code](https://github.com/mariopenglee/cross-seed-manifold-poc))
+- **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/))
+
+## research
+- **GPT-4 vs. children: narrative cohesion in wordless picture books**: how children aged 4 to 6 and GPT-4 tie a story together while narrating a wordless book, measured with coreference chains (with Catherine Sandhofer, Amalia Ionescu) ([writeup](https://mariopenglee.com/blog/kids-vs-llm-stories.md))
+- **CycleDiffusion**: relational representations in visual models (with Andrew Lee, Hongjin Lu) ([writeup](https://mariopenglee.com/blog/cyclediffusion.md))
+- **PhoneTic5**: independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023) ([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)) ([demo](https://phonetic5.streamlit.app/))
+- **child language and concept acquisition**: experiments on how kids pick up words and concepts, at the Language and Development Lab
+- **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
+
+## leadership
+- **AI Safety at UCLA**: co-founded it, raised about $150k, and led its alignment research team ([feature](https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024))
+- **a16z speedrun Global Founder Sprint**: selected with condense.chat, SF Tech Week 2026
+- **Phi Beta Kappa**: UCLA, 2024
+
+## talks
+- [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
+- [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Lithuania)
+
+---
+
+<!-- https://mariopenglee.com/blog/kids-vs-llm-stories.md -->
+---
+title: Kids vs LLMs at telling a story
+date: 2026-10-18
+summary: Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.
+---
+
+Hand a five year old a wordless picture book and they'll tell you a story:
+"a dog finds a paint can, and then he knocks it over, and then he sees a
+cat..." The dog stays the dog the whole way through. In 2024, GPT-4 doing
+the same task lost track of its characters much more often than the kids
+did. Today the best models are indistinguishable from them.
+
+## the setup
+
+With Amalia Ionescu and Catherine Sandhofer at UCLA's Language and Cognitive
+Development Lab, we had 31 children aged 4 to 6 narrate *Bow Meow Wow* by
+Priya Kuriyan (Pratham Books, CC BY 4.0), a wordless book where a dog tips
+over a paint can, meets a cat, and the two end up making a painting. They
+went page by page. The models got the same pages, one image per turn, and
+told stories of about the same length (115 to 200 words
+vs the kids' 154).
+
+To measure how well each storyteller keeps track of characters we used
+coreference resolution ([FastCoref](https://github.com/shon-otmazgin/fastcoref)),
+which groups every mention of the same entity ("a dog ... he ... the yellow
+dog") into a chain. The longer the chains, the more the story keeps coming
+back to the same characters instead of losing them.
+
+## the result
+
+Kids averaged 5.66 mentions per character. GPT-4 averaged 3.15, a huge gap
+(Cohen's d = 2.2). Then we ran the same book through six models, 30 stories
+each, and the gap shrinks with every generation:
+
+```
+model                 gap vs kids (d)
+gpt-4 (2024)          2.20
+gpt-4 turbo           1.85
+gpt-5.5               1.75
+gpt-6.1 sol           0.94
+claude haiku 5.5      0.93
+claude opus 5.5       0.42   (not significant)
+claude sonnet 5.5     0.33   (not significant)
+```
+
+Opus and Sonnet tell this story with the same referential cohesion as a
+four to six year old. No model goes past the kids yet.
+
+## kids and models get there differently
+
+Matching on chain length doesn't mean the stories look alike. Kids lean on
+pronouns, "it ... it ... he", sometimes for a character they never actually
+introduced: they left about 0.87 pronouns per story that couldn't be tied to
+anyone, vs 0.20 or fewer for every model. Models do the opposite, introducing
+each character explicitly and then varying how they refer to it ("a fluffy
+dog", "the pup"). Same cohesion, different strategy. My guess is the kids
+are narrating their own picture of the scene, while the models write for a
+reader.
+
+## what's next
+
+Seems to me chain length is a good first measure, and frontier models have
+basically caught up on it. The next thing I'd want to look at is whether a
+storyteller introduces a character before referring back to it, and whether
+the story has real causal structure ("he knocked it over, so the cat ran"),
+which is much closer to what we mean by a coherent story. Code and model
+outputs are [on GitHub](https://github.com/mariopenglee/llm-child-narratives)
+(the children's transcripts stay private).
+
+
+---
+
+<!-- https://mariopenglee.com/blog/cyclediffusion.md -->
+---
+title: cyclediffusion: can a picture be a bottleneck?
+date: 2026-10-17
+summary: I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.
+---
+
+If you force a picture to carry a sentence, text to image and back to text,
+does the picture stay something a person can read, or does it drift into a
+private code only the captioner understands? I trained exactly that loop.
+It didn't learn a code. Left alone it collapsed into carpet-like texture,
+and the captioner happily described every image as "a man standing in front
+of a wall that says 'The Wall'".
+
+## the setup
+
+The idea is an autoencoder whose bottleneck is a picture you can open and
+look at, the same instinct as natural language autoencoders
+([transformer-circuits, 2026](https://transformer-circuits.pub/2026/nla/))
+but in pixels. It started as a project on relational representations in
+visual models at UCLA's Computational Vision & Learning Lab, with Andrew Lee
+and Hongjin Lu.
+
+A caption goes into Stable Diffusion
+([code](https://github.com/mariopenglee/cyclediffusion)), and a frozen
+Pix2Struct captioner scores how likely the original caption is given the
+generated image. That score is the cycle loss, and it trains the diffusion
+UNet. For the gradient to reach the image I rewrote Pix2Struct's patch
+extraction and flattening as pure tensor ops, so the whole loop is
+differentiable. A second term, the usual denoising loss on real COCO
+image-caption pairs weighted by lambda, ties the model to real pictures, and
+lambda=0 is the pure cycle.
+
+## what it learned
+
+Each checkpoint generated images for 200 held-out COCO captions, scored by
+the training critic (Pix2Struct), a captioner it never trained against
+(BLIP), and CLIPScore:
+
+```
+change vs base              p2s_nll   blip_nll   clip
+lambda=0, step 500            +0.14     +1.50    -13.0
+lambda=1, step 750            -0.22     +0.18     -3.0
+LoRA lambda=0.1, step 750     -0.11     +0.10     -1.5
+```
+
+With the pure cycle the images turn into carpet and stone-wall textures,
+BLIP calls them "a close up of a carpet", and even the critic's own score
+gets worse. With the anchor, the critic's score improves while BLIP and CLIP
+get worse, so the generator is learning to please one specific reader rather
+than to carry the meaning.
+
+## the reader is the bottleneck
+
+The reason is the critic. This Pix2Struct checkpoint was fine-tuned on
+TextCaps, captions about text inside images, and even on the untouched model's
+pictures it describes a kitchen as "a building with a clock that says
+10:00". Train against it and the generator inherits that fixation on signs
+and shirts that say things.
+
+My takeaway is that a readable bottleneck is only as readable as the reader
+you train it against. A narrow critic hands you its biases, and a loop with
+nothing anchoring it to real images finds a degenerate picture, not a clever
+code. Next I want to swap in BLIP-large as the reader and see whether a
+captioner that actually describes scenes keeps the pictures honest.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/cross-seed-saes.md -->
+---
+title: Do sparse autoencoders capture manifolds?
+date: 2026-07-15
+summary: A concept like "year" lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.
+---
+
+The representation of a year inside a language model isn't a point, it's a
+helix: a periodic part (the decade digit) wound around a linear axis (the
+century). Color traces a curved surface, days of the week trace a ring. A lot
+of concepts are like this. They live on smooth low-dimensional manifolds
+rather than single directions, which raises an awkward question for the main
+tool we use to read models. A
+[sparse autoencoder (SAE)](https://transformer-circuits.pub/2023/monosemantic-features)
+is built to break an activation into a few discrete atoms, so what does it do
+with a continuous curved surface?
+
+Often it doesn't capture it cleanly. That's the finding in Bhalla et al.,
+["Do Sparse Autoencoders Capture Concept Manifolds?" (2026)](https://arxiv.org/abs/2604.28119):
+instead of allocating a compact group of atoms that span the manifold (they
+call this global capture), an SAE tends to shatter it into many atoms that
+each tile a small local patch, or land in a fragmented in-between they call
+dilution. My follow-up question was simple. SAE training is stochastic, so each
+random seed shatters the manifold a bit differently. If you train several SAEs
+that differ only in seed and pool their atoms, do the different shatterings
+tile the manifold more fully than any single one does?
+
+The short answer from a [small POC](https://github.com/mariopenglee/cross-seed-manifold-poc)
+is yes, and the benefit shows up exactly where a single SAE gives up.
+
+## where pooling helps
+
+I used a synthetic benchmark from the paper (48 manifolds, circles and helices
+and swiss rolls, placed in a 128-dim space), because the geometry is known and
+reconstructions can be scored against ground truth. A manifold's fate is set by
+the TopK sparsity `k`. Near `k` equal to the manifold's dimension a single SAE
+captures it compactly from a handful of atoms, and pooling adds basically
+nothing. As `k` grows the SAE dilutes the manifold across redundant atoms, and
+that's where pooling pulls ahead: the gap in a few-atom reconstruction score
+grows from about +0.01 at clean capture to roughly +0.1 at deep dilution. So
+the benefit tracks dilution. Pooling helps precisely where one SAE stops
+capturing the manifold cleanly.
+
+## the intuition, to play with
+
+The demo below is a toy version of the mechanism (not a real SAE, just the
+geometry). Pick a helix, sphere, or torus, the kind of shape a real concept
+traces, and drag to spin it. Each seed scatters atoms over the manifold, and
+each covers a small patch. The score is few-atom capture: how much the best
+handful of patches tile, which is what the paper's metric rewards. One seed
+leaves gaps, a second seed's gaps land elsewhere, so the pooled panel fills in
+where the single-seed panel has holes (turn on "color by seed" to see which
+seed covers what). Push the sparsity `k` up into dilution and the gap grows.
+
+The third panel is the tell. It's one SAE as wide as the whole pool, the same
+total atoms and compute, and you might expect it to win. But at high `k` it can
+fall behind even a single narrow seed. With the same sparsity budget spread
+over more atoms, each one specializes to a finer patch, and a few fine patches
+tile less of the manifold than a few coarse ones. Widening one SAE shatters the
+concept right where pooling separate seeds tiles it.
+
+[[demo:manifold-tiling]]
+
+## tiling, not cleaner copies
+
+The wide control rules out the obvious worry (that pooling just wins on atom
+count) since it has those atoms and still loses. The other question is whether
+the pool's gain is complementary coverage or just denoised copies of one
+solution. I aligned each seed's atoms to a reference and averaged the matched
+ones. Averaging can clean up a shared solution but can't invent an atom in a
+region no seed covered, and it recovered basically none of the gain (often it
+came out worse than a single seed). The pool's improvement also concentrated on
+exactly the points the best single seed reconstructed worst. So the seeds tile
+complementary regions rather than agreeing on one answer you could average.
+Decomposing the gain, roughly half is just having several independent SAEs to
+draw from and half is genuine seed diversity.
+
+## what I'd hold loosely
+
+This is toy data with known geometry and one reconstruction metric, and it's a
+few-percent effect, not a step change. The reason I think it's interesting is
+the reframe: seed variation usually gets filed as instability, but here it
+behaves like coverage, and coverage is something you can pool.
+
+The catch is that on a real model you can't score against ground truth, since
+you don't know the manifold. So the test I actually care about is next: pool
+seeds on Llama-3.1-8B activations for concepts whose geometry we can at least
+guess (years, colors, days), and see whether the places the seeds diverge are
+where a single SAE was quietly diluting a concept. If pooled-seed agreement can
+flag real manifold structure, that's a cheap knob worth having.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/block-grpo.md -->
+---
+title: block-GRPO: doing RL on a diffusion language model
+date: 2026-05-09
+summary: GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
+---
+
+GRPO needs one number from your model: the log-probability of the sequence
+it just generated. An autoregressive model hands it over for free. A
+diffusion language model doesn't, and that single gap is most of the
+difficulty in doing RL on one.
+
+GRPO (group relative policy optimization, from DeepSeekMath, Shao et al.
+2024) is the workhorse behind a lot of recent reasoning models. You sample a
+group of completions, score them, and push the policy toward the
+above-average ones, weighted by `log π(sequence)`. The whole method assumes
+that log-prob is exact and cheap. On a diffusion LLM it's neither, because
+the model defines the sequence through an iterative denoising process, not a
+left-to-right product of conditionals, so the exact likelihood is a sum over
+denoising paths you can't enumerate.
+
+## what diffu-GRPO did, and where it leaks
+
+The prior work here is d1
+([arxiv 2504.12216](https://arxiv.org/abs/2504.12216)), whose diffu-GRPO
+estimates the log-prob with a one-step approximation under random masking. It
+works, but the estimate is biased in a way that compounds over training: you
+end up optimizing a noisy proxy for the thing you care about, and the noise
+isn't mean-zero.
+
+My angle was to stop fighting the model's structure and use it. The target
+here, Fast-dLLM v2
+([weights](https://huggingface.co/Efficient-Large-Model/Fast_dLLM_v2_7B)),
+isn't pure diffusion: it's block-autoregressive. It generates a block at a
+time, left to right across blocks, denoising within each block. That
+factorization is exactly the handle GRPO wants. The sequence log-prob is
+exact across blocks (a real chain rule over the block order) and only needs
+approximating within each block. You've shrunk the hard part from the whole
+sequence to one block.
+
+## three estimators for the within-block term
+
+Within a block you still owe an intractable likelihood, so I tried three
+ways to approximate it, trading bias for compute:
+
+- **Masked (baseline):** the cheap one-step estimate, kept for comparison.
+- **Per-block ELBO (default):** a proper evidence lower bound on the block
+  likelihood, averaged over masking levels. More compute than masked, much
+  less bias, and it's a bound rather than a point guess.
+- **Gauss-Legendre quadrature:** treat the masking-level average as an
+  integral and place the evaluation points by quadrature instead of
+  sampling. Fewer, better-chosen samples for the same accuracy.
+
+The ELBO is the one I'd reach for by default: it's the cleanest
+bias-for-compute trade, and it degrades gracefully when you can't afford
+many samples.
+
+## the bugs were most of the work
+
+The idea was the easy part. Three bugs ate the rest of the time, and all
+three were the silent kind that train fine and just learn the wrong thing:
+
+- **An off-by-one in the AR logit shift.** Standard next-token alignment,
+  wrong by one position at the block boundary, so the log-prob was scoring a
+  shifted sequence. Quietly poisons every gradient.
+- **A log-of-sum where the math wanted sum-of-logs** in the bound (it had
+  become an upper bound, an EUBO, with the wrong reduction). Jensen's
+  inequality points the other way, so the "lower bound" wasn't one.
+- **Reused mask seeds across iterations**, which correlated the estimates
+  and shrank the effective sample size without telling you.
+
+None of these throws. They just bias the estimate, and you only catch them
+by deriving the quantity and checking the code computes that and not a
+plausible neighbor. That's the real lesson of the project: in RL on top of an
+approximate likelihood, the bugs hide inside numbers that look reasonable.
+
+Fixed, block-GRPO with the ELBO estimator beat vanilla GRPO by about 10x on
+tail reward over training (+0.158 vs +0.017), which is the regime that
+actually matters, since the tail is where the hard prompts live.
+
+## where this goes
+
+The thing I keep circling is that all of this complexity exists to get a
+usable gradient through an intractable likelihood. Evolution strategies
+(Salimans et al. 2017,
+[arxiv 1703.03864](https://arxiv.org/abs/1703.03864)) skip that entirely:
+perturb the parameters, keep what scores better, never compute a log-prob at
+all. For a model whose likelihood is this awkward, trading exact gradients
+for black-box search might be the natural move, not a fallback. Probably
+worth running ES head-to-head against block-GRPO on the same reward, one
+variable at a time, and seeing which actually wins. Would love to look into
+it.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/heartbeat.md -->
+---
+title: Building nexos.heartbeat: the infinite context problem
+date: 2026-03-01
+summary: An always-on AI twin doesn't have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.
+---
+
+An always-on assistant doesn't have a context window problem. It has an
+infinite context problem, and that's a much deeper hole.
+
+At nexos.ai my team has been building
+[nexos.heartbeat](https://nexos.ai/heartbeat/), a digital AI twin: it
+watches, learns, surfaces what matters, and acts before you ask. The pitch
+is short. The problem behind it is one of the more interesting ones I've
+worked on, and it isn't the one people expect.
+
+## the infinite context problem
+
+Context windows keep growing, and it's tempting to think the problem
+dissolves on its own. It doesn't, because the input isn't a document, it's
+a stream: every thread, meeting, draft, and half-decision, every day,
+forever. No window holds an unbounded stream, and storage was never the hard
+part (logs are cheap). The hard part is that at any moment almost none of the
+past matters, and you don't know in advance which part does.
+
+## memory is compression
+
+Shannon's definition of information is surprise, and by that definition most
+of the stream carries almost none: the signal is sparse. So the system has
+to compress, and lossless doesn't save you, since a losslessly compressed
+unbounded stream is still unbounded. Lossy compression forces a value
+judgment. Rate-distortion theory says you can't even define it without
+choosing what it costs to lose something, and that choice is the actual
+product decision. The information bottleneck (Tishby, Pereira, Bialek, 1999)
+frames it well: squeeze the stream through a bottleneck that keeps only what
+predicts a chosen variable, and let that variable set the cost instead of
+hand-picking one. For a twin the variable is action, not reconstruction, so
+the question isn't "can it replay the past", it's "would it act differently
+without this". Memory becomes a compressed belief state, sufficient
+statistics for action (the information bottleneck is really just that idea,
+the minimal sufficient statistic, generalized to lossy settings).
+
+The counterintuitive consequence: a good twin is defined mostly by what it
+ignores, and "gets smarter every day" literally means it compresses you
+better. Compression and prediction are the same quantity seen from two
+sides, so acting before you ask is just prediction crossing a confidence
+threshold.
+
+## the design space
+
+The naive version is hierarchical RAG: embed everything, retrieve top-k,
+summarize, repeat up a tree. It works until the part that matters today is
+something you compressed away yesterday, because it didn't look important at
+the time. Fixed summarization is lossy in a direction you chose too early.
+
+What you actually want is memory you can revise: keep the compressed belief
+state, but let new evidence reopen old conclusions. So the structure isn't a
+summary, it's a versioned model of the user that updates as you learn.
+
+## memory as a git repository
+
+The design I keep coming back to is a repository of structured plain-text
+files, versioned like code. State lives in readable files (who the user is,
+what they're working on, what they care about), and every update is a diff
+against that state. The history of diffs is the timeline: not a log of
+events, but a log of how the model of the user changed.
+
+This buys a few things almost for free. Concurrency: many processes can
+propose updates, and you reconcile them like merges. Belief reconciliation:
+a conflict between an old assumption and new evidence is a merge conflict,
+and you resolve it explicitly instead of silently overwriting. Auditability:
+you can read, in plain text, why the twin believes what it believes, and
+roll back when it's wrong. Branches let you hold tentative models of the
+user and only commit when they're confirmed.
+
+It's plain text because plain text is the most durable, inspectable,
+mergeable format we have, and because a human (or another model) can read
+the state and tell you it's wrong. A belief state you can't inspect is one
+you can't correct.
+
+## where this goes
+
+The open question I find most interesting is when to act. A twin that acts
+on every high-confidence prediction is exhausting; one that waits for
+certainty is useless. The threshold is itself something you should learn per
+person, from whether your past actions landed. That feedback loop, acting,
+watching how it lands, updating the threshold, is probably the actual
+product, and I'd love to write more about it once we've pushed on it
+further.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/gpt2-ioi.md -->
+---
+title: GPT-2, IOI, and the sphex problem
+date: 2025-05-21
+summary: A wasp can look like it understands what it's doing right up until you move one thing. I poked at GPT-2's indirect-object circuit the same way, to see whether it understood the task or just had a routine that usually works.
+---
+
+The digger wasp Sphex drags its prey to the burrow, leaves it on the
+threshold, goes in to check the nest, then comes back and hauls it in. Move
+the prey a few inches while it's inside, and it drags it back to the
+threshold and checks the nest *again*. You can run this loop forty times. The
+behavior looks like understanding until you nudge one thing, and then it's
+obviously a routine. Hofstadter named the trait sphexishness, and the
+question I find it raises is: how would you tell the difference in a neural
+network?
+
+I spent some time on that with Buck Shlegeris at Redwood Research, poking at
+GPT-2's indirect object identification (IOI) circuit. IOI is the task in
+"When John and Mary went to the store, John gave a drink to ___", where the
+model should say Mary. There's a celebrated paper that reverse-engineers the
+exact circuit GPT-2 small uses for this
+([Wang et al., "Interpretability in the Wild", 2022](https://arxiv.org/abs/2211.00593)):
+specific attention heads that find the duplicated name, suppress it, and copy
+the other one. It's clean, and it's real. My question was the sphex one: does
+that circuit understand IOI, or does it have a routine that usually works on
+the sentences it was measured on?
+
+## perturb it and watch
+
+So I [perturbed the inputs](https://github.com/mariopenglee/GPT2IOInotebooks)
+and watched what held, which is just behavioral analysis: vary the stimulus,
+see when the behavior breaks. A few things fell out:
+
+- **Name priors beat the syntax.** Swap in a rare name and the circuit
+  wobbles. It isn't tracking "the non-repeated entity" abstractly so much as
+  leaning on how name-like and frequent the tokens are. Common names win
+  arguments they shouldn't.
+- **GPT-2 small will happily pick the subject as its own object** ("Josh went
+  with Josh"), a thing the GPT-Neo models mostly learned to punish. So the
+  "circuit" is partly a smaller model's tolerance for a degenerate answer.
+- **Add entities and it degrades by falling back on heuristics.** With four
+  names in play GPT-Neo tracks the referent noticeably better than GPT-2, and
+  when GPT-2 breaks it breaks toward proximity and repetition: grab the
+  nearest plausible name, or the one it just saw. Routines, not reasoning.
+
+None of this says the circuit paper is wrong. The circuit is there. It says
+the circuit implements something narrower than "identify the indirect
+object", and you only see the gap by moving the prey.
+
+## the layers you need
+
+The way I think about it now is that interpretability has layers of
+abstraction, and they map almost one-to-one onto how we study people.
+Behavioral analysis is the psychology layer: treat the model as a black box,
+vary inputs, characterize what it does. Circuit analysis is the cognitive
+science layer: name the mechanism, the heads and the information flow.
+Single-neuron work is the neuroscience layer: the wiring underneath.
+
+My view is you need all three, and the cheap one comes first. Behavioral
+analysis is fast and needs no internals, and it's the layer that tells you
+*what to explain* before you spend weeks explaining it. Skip it and you risk
+reverse-engineering a beautiful circuit for a behavior the model doesn't
+robustly have. The expensive layers validate and localize; the cheap layer
+keeps them honest.
+
+The open thread I'd like to pull on is making the perturbation search
+automatic: instead of hand-designing the nudge that breaks a circuit, search
+for it, the adversarial-example version of the sphex test. If a circuit
+survives a hard search for its breaking input, that's a much stronger claim
+to understanding than surviving the sentences someone happened to try.
+Probably worth building.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/multitask-training.md -->
+---
+title: Does parameter sharing help? a multitask recommender experiment
+date: 2025-05-10
+summary: I built the same recommender four times to find out whether sharing parameters across tasks helps. It turned out the loss weighting mattered more than the sharing, which is a known and slightly annoying axis.
+---
+
+I built the same recommender four times to answer one question: does sharing
+parameters across tasks actually help? The answer turned out to be "wrong
+question." What moved the results wasn't whether the tasks shared a backbone,
+it was how I weighted their two losses.
+([code](https://github.com/mariopenglee/multitask-training-evaluation))
+
+## the setup
+
+Every user is a task. For each user-movie interaction the model predicts two
+things at once: whether the user would engage with the item (binary
+classification) and what rating they'd give it (regression). I built it both
+ways that mattered at the time, classic Matrix Factorization and Neural
+Collaborative Filtering, on the GroupLens MovieLens data, which covers the
+linear and the deep end of collaborative filtering.
+
+## the grid
+
+Four configurations, crossing parameter sharing with loss weighting: sharing
+on or off, weights at 0.99/0.1 or 0.5/0.5. The point was to separate two
+questions that usually get conflated: does sharing help at all, and how much
+of the outcome is really just the weighting in disguise. Control one
+variable at a time.
+
+## what I took away
+
+The clean lesson wasn't a winning configuration, it was how far the answer
+moved when the weights moved. With the wrong balance the "transfer" turns
+into plain interference, one head quietly eating the other. So my view is
+that multitask learning isn't a free lunch, it's a coupling knob, and the
+weighting is as much a part of the architecture as the shared layers.
+
+That's not just my MovieLens result. The weighting matters so much that a
+whole line of work tries to stop hand-tuning it: Kendall et al. learn the
+per-task weights from each task's uncertainty instead of setting them, and Yu
+et al.'s PCGrad attacks the interference one level down, projecting away the
+part of one task's gradient that conflicts with another's. Different fixes,
+same underlying problem I ran into, that two objectives sharing a network are
+coupled whether you like it or not.
+
+The question, when does sharing between objectives help and when does it
+hurt, has been one of the more durable ones I've worked on. It shows up in
+adapters, in multi-objective reward models, basically anywhere one network
+serves several masters. This was just the first time I measured it directly.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/hello.md -->
+---
+title: Starting a blog
+date: 2025-05-01
+summary: Why this page exists, and what to expect.
+---
+
+I keep having half-thoughts about the things I build that don't fit in a
+commit message or a paper, and then I lose them. This page is where they go
+from now on: short notes on what I'm building and thinking about, written
+more often than I'd manage without somewhere to put them.
+
+## what to expect
+
+Mostly AI engineering, with detours into linguistics, psychology, and
+safety, plus some higher-level theory and math. Some posts will be long,
+most will be short.
+
+## why a terminal
+
+Because why not. No hero images, no parallax, just text, the way I actually
+work:
+
+```sh
+$ whoami
+mario peng lee, AI Engineer
+$ cat thoughts/ | tee blog/
+```
+
+> Make technology accessible, inclusive, and safe for everyone.
+
+That's the throughline. Thanks for reading, see you in the next one.
