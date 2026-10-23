@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://mariopenglee.com/</loc><lastmod>2026-10-18</lastmod></url>
-  <url><loc>https://mariopenglee.com/llms.txt</loc><lastmod>2026-10-18</lastmod></url>
+  <url><loc>https://mariopenglee.com/</loc><lastmod>2026-10-23</lastmod></url>
+  <url><loc>https://mariopenglee.com/llms.txt</loc><lastmod>2026-10-23</lastmod></url>
+  <url><loc>https://mariopenglee.com/blog/role-collapse.md</loc><lastmod>2026-10-23</lastmod></url>
   <url><loc>https://mariopenglee.com/blog/kids-vs-llm-stories.md</loc><lastmod>2026-10-18</lastmod></url>
   <url><loc>https://mariopenglee.com/blog/cyclediffusion.md</loc><lastmod>2026-10-17</lastmod></url>
   <url><loc>https://mariopenglee.com/blog/phonetic5.md</loc><lastmod>2026-10-16</lastmod></url>

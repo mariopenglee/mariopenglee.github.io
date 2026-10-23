@@ -16,6 +16,7 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - [X](https://x.com/mariopenglee)
 
 ## writing
+- [Where role collapse happens in diffusion models](https://mariopenglee.com/blog/role-collapse.md) (2026-10-23): Prompt SDXL for a mouse chasing a cat and you usually get a cat chasing a mouse. My first suspect was CLIP reading prompts as a bag of words, but after ruling out the encoder, guidance, and cross-attention, the problem seems to sit in the UNet itself.
 - [Kids vs LLMs at telling a story](https://mariopenglee.com/blog/kids-vs-llm-stories.md) (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.
 - [cyclediffusion: can a picture be a bottleneck?](https://mariopenglee.com/blog/cyclediffusion.md) (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.
 - [A transformer that passes the wug test](https://mariopenglee.com/blog/phonetic5.md) (2026-10-16): I fine-tuned T5 to turn spelling into IPA. Nobody told it English phonology rules, but it says "wugs" with a /z/ and "wuks" with an /s/, just like a kid does.
