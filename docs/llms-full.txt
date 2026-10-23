@@ -111,6 +111,8 @@ prompts 68-74% reversed, and so does passive voice (78%) and IterComp, a
 fine-tune trained for composition (76%). The pictures do change between
 settings, just not who is doing what.
 
+[[demo:role-collapse-rates]]
+
 ## suspect three: cross-attention
 
 Another option is that the noun tokens leak into each other's image regions.
@@ -201,6 +203,8 @@ claude opus 5.5       0.42   (not significant)
 claude sonnet 5.5     0.33   (not significant)
 ```
 
+[[demo:kids-gap]]
+
 Opus and Sonnet tell this story with the same referential cohesion as a
 four to six year old. No model goes past the kids yet.
 
@@ -280,6 +284,8 @@ gets worse. With the anchor, the critic's score improves while BLIP and CLIP
 get worse, so the generator is learning to please one specific reader rather
 than to carry the meaning.
 
+[[demo:cycle-critic]]
+
 ## the reader is the bottleneck
 
 The reason is the critic. This Pix2Struct checkpoint was fine-tuned on
@@ -346,6 +352,8 @@ to /z/ exactly where a native speaker does. The s in "wugs" isn't
 copied from spelling, because the spelling says s. The model has learned the
 rule that turns it into a /z/.
 
+[[demo:wug-test]]
+
 The same thing shows up on loan words. No model would write the /ts/
 cluster at the start of "tsunami", because English words can't start that
 way. The bigger the model, the closer it got to how a native speaker says
@@ -399,6 +407,8 @@ So with Maura O'Leary and Rainey Williams we built the
 the choice away. You press generate, or swipe a card in the Android app,
 and get a random name from a database linguists curate. The bias never
 gets a chance to act.
+
+[[demo:name-draw]]
 
 ## making random usable
 
@@ -572,6 +582,8 @@ exact across blocks (a real chain rule over the block order) and only needs
 approximating within each block. You've shrunk the hard part from the whole
 sequence to one block.
 
+[[demo:block-factorization]]
+
 ## three estimators for the within-block term
 
 Within a block you still owe an intractable likelihood, so I tried three
@@ -703,6 +715,8 @@ you can read, in plain text, why the twin believes what it believes, and
 roll back when it's wrong. Branches let you hold tentative models of the
 user and only commit when they're confirmed.
 
+[[demo:belief-repo]]
+
 It's plain text because plain text is the most durable, inspectable,
 mergeable format we have, and because a human (or another model) can read
 the state and tell you it's wrong. A belief state you can't inspect is one
@@ -765,6 +779,8 @@ see when the behavior breaks. A few things fell out:
   names in play GPT-Neo tracks the referent noticeably better than GPT-2, and
   when GPT-2 breaks it breaks toward proximity and repetition: grab the
   nearest plausible name, or the one it just saw. Routines, not reasoning.
+
+[[demo:ioi-perturb]]
 
 None of this says the circuit paper is wrong. The circuit is there. It says
 the circuit implements something narrower than "identify the indirect
@@ -834,6 +850,8 @@ into plain interference, one head quietly eating the other. So my view is
 that multitask learning isn't a free lunch, it's a coupling knob, and the
 weighting is as much a part of the architecture as the shared layers.
 
+[[demo:loss-weighting]]
+
 That's not just my MovieLens result. The weighting matters so much that a
 whole line of work tries to stop hand-tuning it: Kendall et al. learn the
 per-task weights from each task's uncertainty instead of setting them, and Yu
@@ -873,11 +891,7 @@ most will be short.
 Because why not. No hero images, no parallax, just text, the way I actually
 work:
 
-```sh
-$ whoami
-mario peng lee, AI Engineer
-$ cat thoughts/ | tee blog/
-```
+[[demo:terminal-typing]]
 
 > Make technology accessible, inclusive, and safe for everyone.
 

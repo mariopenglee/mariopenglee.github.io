@@ -42,6 +42,8 @@ see when the behavior breaks. A few things fell out:
   when GPT-2 breaks it breaks toward proximity and repetition: grab the
   nearest plausible name, or the one it just saw. Routines, not reasoning.
 
+[[demo:ioi-perturb]]
+
 None of this says the circuit paper is wrong. The circuit is there. It says
 the circuit implements something narrower than "identify the indirect
 object", and you only see the gap by moving the prey.

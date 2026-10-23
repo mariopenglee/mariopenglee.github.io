@@ -49,6 +49,8 @@ gets worse. With the anchor, the critic's score improves while BLIP and CLIP
 get worse, so the generator is learning to please one specific reader rather
 than to carry the meaning.
 
+[[demo:cycle-critic]]
+
 ## the reader is the bottleneck
 
 The reason is the critic. This Pix2Struct checkpoint was fine-tuned on

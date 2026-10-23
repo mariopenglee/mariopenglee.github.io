@@ -20,11 +20,7 @@ most will be short.
 Because why not. No hero images, no parallax, just text, the way I actually
 work:
 
-```sh
-$ whoami
-mario peng lee, AI Engineer
-$ cat thoughts/ | tee blog/
-```
+[[demo:terminal-typing]]
 
 > Make technology accessible, inclusive, and safe for everyone.
 

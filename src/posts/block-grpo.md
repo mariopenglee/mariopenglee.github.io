@@ -37,6 +37,8 @@ exact across blocks (a real chain rule over the block order) and only needs
 approximating within each block. You've shrunk the hard part from the whole
 sequence to one block.
 
+[[demo:block-factorization]]
+
 ## three estimators for the within-block term
 
 Within a block you still owe an intractable likelihood, so I tried three

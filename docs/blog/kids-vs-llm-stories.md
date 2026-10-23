@@ -43,6 +43,8 @@ claude opus 5.5       0.42   (not significant)
 claude sonnet 5.5     0.33   (not significant)
 ```
 
+[[demo:kids-gap]]
+
 Opus and Sonnet tell this story with the same referential cohesion as a
 four to six year old. No model goes past the kids yet.
 
