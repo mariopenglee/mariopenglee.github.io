@@ -69,6 +69,11 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
     ],
   },
   {
+    title: 'Where role collapse happens in diffusion models',
+    desc: 'why SDXL and SD3.5 draw "a mouse chasing a cat" as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them',
+    links: [{ name: 'writeup', url: '#/blog/role-collapse' }],
+  },
+  {
     title: 'Code Interpreter at nexos.ai',
     desc: 'a sandboxed runtime that lets our agents write and run code safely',
     links: [

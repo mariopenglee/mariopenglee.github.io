@@ -31,6 +31,7 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 ## selected work
 - **nexos.heartbeat**: always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model ([writeup](https://mariopenglee.com/blog/heartbeat.md)) ([demo](https://www.youtube.com/watch?v=KoVKYMgw2H0))
 - **Do SAEs capture concept manifolds?**: open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it ([writeup](https://mariopenglee.com/blog/cross-seed-saes.md)) ([code](https://github.com/mariopenglee/cross-seed-manifold-poc))
+- **Where role collapse happens in diffusion models**: why SDXL and SD3.5 draw "a mouse chasing a cat" as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them ([writeup](https://mariopenglee.com/blog/role-collapse.md))
 - **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/))
 
 ## research
