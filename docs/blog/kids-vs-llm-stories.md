@@ -8,7 +8,8 @@ Hand a five year old a wordless picture book and they'll tell you a story:
 "a dog finds a paint can, and then he knocks it over, and then he sees a
 cat..." The dog stays the dog the whole way through. In 2024, GPT-4 doing
 the same task lost track of its characters much more often than the kids
-did. Today the best models are indistinguishable from them.
+did. Two years of models later, the best ones are basically
+indistinguishable from them, at least on this measure.
 
 ## the setup
 
@@ -28,8 +29,8 @@ back to the same characters instead of losing them.
 
 ## the result
 
-Kids averaged 5.66 mentions per character. GPT-4 averaged 3.15, a huge gap
-(Cohen's d = 2.2). Then we ran the same book through six models, 30 stories
+Kids averaged 5.66 mentions per character. GPT-4 averaged 3.15, a pretty huge
+gap (Cohen's d = 2.2). Then we ran the same book through six models, 30 stories
 each, and the gap shrinks with every generation:
 
 ```
@@ -46,7 +47,7 @@ claude sonnet 5.5     0.33   (not significant)
 [[demo:kids-gap]]
 
 Opus and Sonnet tell this story with the same referential cohesion as a
-four to six year old. No model goes past the kids yet.
+four to six year old (none of the models go past the kids yet, though).
 
 ## kids and models get there differently
 
@@ -55,8 +56,8 @@ pronouns, "it ... it ... he", sometimes for a character they never actually
 introduced: they left about 0.87 pronouns per story that couldn't be tied to
 anyone, vs 0.20 or fewer for every model. Models do the opposite, introducing
 each character explicitly and then varying how they refer to it ("a fluffy
-dog", "the pup"). Same cohesion, different strategy. My guess is the kids
-are narrating their own picture of the scene, while the models write for a
+dog", "the pup"). So they land on similar cohesion through pretty
+different strategies, and my guess is the kids are narrating their own picture of the scene, while the models write for a
 reader.
 
 ## what's next

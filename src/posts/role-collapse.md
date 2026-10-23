@@ -10,8 +10,8 @@ get a cat chasing a mouse. The same goes for "a horse riding an astronaut" or
 have. [Malakouti and Kovashka](https://arxiv.org/abs/2503.10037) call this role
 collapse. I wanted to know which part of the pipeline is responsible, so I went
 through the obvious suspects one at a time. My answer so far is that the text
-encoder isn't the problem. The denoiser gets the roles and draws the usual
-pairing anyway.
+encoder isn't the problem: the denoiser seems to get the roles and draws the
+usual pairing anyway.
 
 The prompts follow their RoleBench setup: 10 relations, each in a common
 direction and a rare reversed one, active and passive voice, 4 images per
@@ -26,13 +26,13 @@ This was my first guess. CLIP is known to treat captions a lot like a bag of
 words ([Yuksekgonul et al., 2023](https://arxiv.org/abs/2210.01936)), and it
 reads left to right, so in "a photo of one cat chasing one mouse" the cat token
 is computed before the verb exists. A linear probe for the role of the first
-noun sits at chance (0.50) in both of SDXL's CLIP encoders. So SDXL really is
+noun sits at chance (0.50) in both of SDXL's CLIP encoders, so SDXL really is
 getting role-blind noun tokens.
 
 T5-XXL is the opposite. The first noun's role is decodable at about 1.00,
 including on relations the probe never saw, and in later layers the probe also
 works on sentences like "one mouse that one cat is chasing", which have no
-"being" in them. So T5 seems to encode the actual role.
+"being" in them. My read is that T5 encodes the actual role, not just word order.
 
 SD3.5-Large uses T5 alongside CLIP, which makes it a clean test. If CLIP were
 the cause, SD3.5 should do better. It doesn't:
@@ -45,8 +45,9 @@ SD3.5, T5 only             0.45-0.57
 ```
 
 Zeroing the CLIP inputs lowers the reversed rate, but almost all of that moves
-to "neither" (a missing lion, a baby held instead of fed). Correct goes up by
-about 4 points. When both entities are drawn, they still have the usual roles.
+to "neither" (a missing lion, a baby held instead of fed), and correct only
+goes up by about 4 points. When both entities are drawn, they still have the
+usual roles.
 
 ## suspect two: weak conditioning
 
@@ -89,7 +90,7 @@ That leaves the denoiser itself (the UNet in SDXL, the MMDiT in SD3.5). With
 T5 the roles are in the text embedding, and SD3.5 draws what's typical for the
 noun pair anyway.
 
-That also suggests what to do next. If the failure is inside the UNet, then a
+If the failure really is inside the UNet, then a
 model that does draw reversed roles, like the LoRA from the ReBind paper, should
 differ from base SDXL somewhere in there. My plan is to train a
 [block-sparse featurizer](https://arxiv.org/abs/2606.25234) (BSF, a sparse

@@ -6,9 +6,9 @@ summary: I trained a diffusion model so a captioner could read its pictures back
 
 If you force a picture to carry a sentence, text to image and back to text,
 does the picture stay something a person can read, or does it drift into a
-private code only the captioner understands? I trained exactly that loop.
-It didn't learn a code. Left alone it collapsed into carpet-like texture,
-and the captioner happily described every image as "a man standing in front
+private code only the captioner understands? I trained that loop, and it
+didn't learn a code. Left alone it collapsed into carpet-like texture, and
+the captioner happily described every image as "a man standing in front
 of a wall that says 'The Wall'".
 
 ## the setup
@@ -46,21 +46,21 @@ LoRA lambda=0.1, step 750     -0.11     +0.10     -1.5
 With the pure cycle the images turn into carpet and stone-wall textures,
 BLIP calls them "a close up of a carpet", and even the critic's own score
 gets worse. With the anchor, the critic's score improves while BLIP and CLIP
-get worse, so the generator is learning to please one specific reader rather
-than to carry the meaning.
+get worse, so my read is the generator is learning to please one specific
+reader rather than to carry the meaning.
 
 [[demo:cycle-critic]]
 
 ## the reader is the bottleneck
 
-The reason is the critic. This Pix2Struct checkpoint was fine-tuned on
+My guess is the reason is the critic. This Pix2Struct checkpoint was fine-tuned on
 TextCaps, captions about text inside images, and even on the untouched model's
 pictures it describes a kitchen as "a building with a clock that says
 10:00". Train against it and the generator inherits that fixation on signs
 and shirts that say things.
 
-My takeaway is that a readable bottleneck is only as readable as the reader
-you train it against. A narrow critic hands you its biases, and a loop with
-nothing anchoring it to real images finds a degenerate picture, not a clever
-code. Next I want to swap in BLIP-large as the reader and see whether a
-captioner that actually describes scenes keeps the pictures honest.
+So it seems to me a readable bottleneck is only as readable as the reader
+you train it against. A narrow critic hands you its biases, and with nothing
+anchoring the loop to real images it finds a degenerate picture rather than a
+clever code. Next I'd like to swap in BLIP-large as the reader and see whether
+a captioner that actually describes scenes keeps the pictures honest.

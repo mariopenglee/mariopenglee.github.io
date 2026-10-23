@@ -2,9 +2,9 @@
 
 > cofounder of condense.chat. making powerful AI accessible to everyone, and safe when it gets there.
 
-I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), which compresses what coding agents send to the model so heavy AI workloads cost less (up to about 70% off long sessions, with basically the same output). I'm also CEO of [Pocketful](https://pocketful.ai/), which brings WhatsApp AI agents to restaurant owners in Argentina. Same mission for both: AI that everyone can actually afford and use.
+I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), which compresses what coding agents send to the model so heavy AI workloads cost less (up to about 70% off long sessions, with basically the same output). I'm also CEO of [Pocketful](https://pocketful.ai/), which brings WhatsApp AI agents to restaurant owners in Argentina. Both are basically the same bet, that AI should be cheap and usable enough for everyone.
 
-My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). What I'm most interested in is how minds, human and machine, represent things, and how understanding that makes AI cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/).
+My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). Mostly I'm interested in how minds (human and machine) represent things, and my view is that understanding that is how AI gets cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/).
 
 Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), where I built the agent layer, the memory model behind nexos.heartbeat, and a sandboxed code interpreter.
 
