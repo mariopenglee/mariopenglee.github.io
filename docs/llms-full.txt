@@ -22,7 +22,7 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - [A transformer that passes the wug test](https://mariopenglee.com/blog/phonetic5.md) (2026-10-16): I fine-tuned T5 to turn spelling into IPA. Nobody told it English phonology rules, but it says "wugs" with a /z/ and "wuks" with an /s/, just like a kid does.
 - [Why linguists keep writing about John and Mary](https://mariopenglee.com/blog/diverse-names.md) (2026-10-15): In linguistics papers, 30% of male names are John and 31% of female names are Mary. A good list of names doesn't fix that, because people still pick from it. A random generator does.
 - [Do sparse autoencoders capture manifolds?](https://mariopenglee.com/blog/cross-seed-saes.md) (2026-07-15): A concept like "year" lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.
-- [block-GRPO: doing RL on a diffusion language model](https://mariopenglee.com/blog/block-grpo.md) (2026-05-09): GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
+- [block-GRPO: doing RL on a diffusion language model](https://mariopenglee.com/blog/block-grpo.md) (2026-05-09): GRPO needs a log-probability that diffusion LLMs can't give you cheaply. Using the model's own block-autoregressive structure makes most of it exact, and it beat vanilla GRPO by about 10x on tail reward.
 - [Building nexos.heartbeat: the infinite context problem](https://mariopenglee.com/blog/heartbeat.md) (2026-03-01): An always-on AI twin doesn't have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.
 - [GPT-2, IOI, and the sphex problem](https://mariopenglee.com/blog/gpt2-ioi.md) (2025-05-21): A wasp can look like it understands what it's doing right up until you move one thing. I poked at GPT-2's indirect-object circuit the same way, to see whether it understood the task or just had a routine that usually works.
 - [Does parameter sharing help? a multitask recommender experiment](https://mariopenglee.com/blog/multitask-training.md) (2025-05-10): I built the same recommender four times to find out whether sharing parameters across tasks helps. It turned out the loss weighting mattered more than the sharing, which is a known and slightly annoying axis.
@@ -552,13 +552,15 @@ would love to look into it.
 ---
 title: block-GRPO: doing RL on a diffusion language model
 date: 2026-05-09
-summary: GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
+summary: GRPO needs a log-probability that diffusion LLMs can't give you cheaply. Using the model's own block-autoregressive structure makes most of it exact, and it beat vanilla GRPO by about 10x on tail reward.
 ---
 
 GRPO needs one number from your model: the log-probability of the sequence
 it just generated. An autoregressive model hands it over for free. A
 diffusion language model doesn't, and to be honest that gap is most of what
-makes RL on one hard.
+makes RL on one hard. My workaround was to lean on the model's own block
+structure so most of that number becomes exact, and it beat vanilla GRPO by
+about 10x on tail reward.
 
 GRPO (group relative policy optimization, from DeepSeekMath, Shao et al.
 2024) is the workhorse behind a lot of recent reasoning models. You sample a
@@ -606,27 +608,14 @@ The ELBO is the one I'd reach for by default. It's the cleanest
 bias-for-compute trade, and it degrades gracefully when you can't afford
 many samples.
 
-## the bugs were most of the work
+## the result
 
-Honestly the idea was the easy part. Three bugs ate most of the time, all
-of the silent kind that train fine and learn the wrong thing:
-
-- **An off-by-one in the AR logit shift.** Standard next-token alignment,
-  wrong by one position at the block boundary, so the log-prob was scoring a
-  shifted sequence (which quietly poisons every gradient).
-- **A log-of-sum where the math wanted sum-of-logs** in the bound (it had
-  become an upper bound, an EUBO, with the wrong reduction). Jensen's
-  inequality points the other way, so the "lower bound" wasn't one.
-- **Reused mask seeds across iterations**, which correlated the estimates
-  and shrank the effective sample size without telling you.
-
-None of these throws an error, they just bias the estimate. The only way I
-found to catch them was deriving the quantity by hand and checking the code
-computes that and not some plausible neighbor.
-
-With those fixed, block-GRPO with the ELBO estimator beat vanilla GRPO by about 10x on
-tail reward over training (+0.158 vs +0.017). My view is the tail is the
-number to watch, since that's where the hard prompts live.
+Block-GRPO with the ELBO estimator beat vanilla GRPO by about 10x on tail
+reward over training (+0.158 vs +0.017). My view is the tail is the number
+to watch, since that's where the hard prompts live, and it's also where a
+biased log-prob hurts most: when only a few completions in a group score
+well, the update leans almost entirely on their log-probs, so any error in
+those gets amplified instead of averaged out.
 
 ## where this goes
 
