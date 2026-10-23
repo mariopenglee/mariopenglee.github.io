@@ -20,7 +20,7 @@ model should say Mary. There's a celebrated paper that reverse-engineers the
 exact circuit GPT-2 small uses for this
 ([Wang et al., "Interpretability in the Wild", 2022](https://arxiv.org/abs/2211.00593)):
 specific attention heads that find the duplicated name, suppress it, and copy
-the other one. It's clean, and it's real. My question was the sphex one: does
+the other one. It's a clean result and I think it's real. My question was the sphex one: does
 that circuit understand IOI, or does it have a routine that usually works on
 the sentences it was measured on?
 
@@ -40,12 +40,13 @@ see when the behavior breaks. A few things fell out:
 - **Add entities and it degrades by falling back on heuristics.** With four
   names in play GPT-Neo tracks the referent noticeably better than GPT-2, and
   when GPT-2 breaks it breaks toward proximity and repetition: grab the
-  nearest plausible name, or the one it just saw. Routines, not reasoning.
+  nearest plausible name, or the one it just saw (which looks a lot more
+  like a routine than reasoning).
 
 [[demo:ioi-perturb]]
 
-None of this says the circuit paper is wrong. The circuit is there. It says
-the circuit implements something narrower than "identify the indirect
+To be clear, none of this says the circuit paper is wrong (the circuit is
+there). My read is that it implements something narrower than "identify the indirect
 object", and you only see the gap by moving the prey.
 
 ## the layers you need
@@ -61,12 +62,13 @@ My view is you need all three, and the cheap one comes first. Behavioral
 analysis is fast and needs no internals, and it's the layer that tells you
 *what to explain* before you spend weeks explaining it. Skip it and you risk
 reverse-engineering a beautiful circuit for a behavior the model doesn't
-robustly have. The expensive layers validate and localize; the cheap layer
-keeps them honest.
+robustly have. The expensive layers are still how you validate and
+localize, they just work much better once the cheap one has told them what
+to look for.
 
 The open thread I'd like to pull on is making the perturbation search
 automatic: instead of hand-designing the nudge that breaks a circuit, search
 for it, the adversarial-example version of the sphex test. If a circuit
 survives a hard search for its breaking input, that's a much stronger claim
-to understanding than surviving the sentences someone happened to try.
-Probably worth building.
+to understanding than surviving the sentences someone happened to try, so
+it's probably worth building.

@@ -24,4 +24,4 @@ work:
 
 > Make technology accessible, inclusive, and safe for everyone.
 
-That's the throughline. Thanks for reading, see you in the next one.
+That's basically the throughline. Thanks for reading, see you in the next one.

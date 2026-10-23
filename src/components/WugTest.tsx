@@ -97,8 +97,8 @@ export default function WugTest() {
         ) : (
           <div className="mt-ctrl">
             <span className="mt-dim">
-              no model output for this word. the line above is a hand-written rule, not the model, shown to make the
-              pattern the models learned explicit.
+              no model output for this word. the line above is a hand-written rule (not the model), just to show the
+              pattern the models picked up.
             </span>
           </div>
         )}
