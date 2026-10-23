@@ -112,13 +112,15 @@ ${t}</tr>
 Please report this to https://github.com/markedjs/marked.`,t){const i="<p>An error occurred:</p><pre>"+_e(r.message+"",!0)+"</pre>";return n?Promise.resolve(i):i}if(n)return Promise.reject(r);throw r}};const Yt=new iy;function M(e,t){return Yt.parse(e,t)}M.options=M.setOptions=function(e){return Yt.setOptions(e),M.defaults=Yt.defaults,vh(M.defaults),M};M.getDefaults=ia;M.defaults=tn;M.use=function(...e){return Yt.use(...e),M.defaults=Yt.defaults,vh(M.defaults),M};M.walkTokens=function(e,t){return Yt.walkTokens(e,t)};M.parseInline=Yt.parseInline;M.Parser=Ze;M.parser=Ze.parse;M.Renderer=to;M.TextRenderer=ca;M.Lexer=Xe;M.lexer=Xe.lex;M.Tokenizer=Ji;M.Hooks=cr;M.parse=M;M.options;M.setOptions;M.use;M.walkTokens;M.parseInline;Ze.parse;Xe.lex;const oy=`---
 title: block-GRPO: doing RL on a diffusion language model
 date: 2026-05-09
-summary: GRPO needs a log-probability that diffusion LLMs can't give you cheaply. The fix is to use the model's own block-autoregressive structure, and a few bugs later it beat vanilla GRPO by about 10x on tail reward.
+summary: GRPO needs a log-probability that diffusion LLMs can't give you cheaply. Using the model's own block-autoregressive structure makes most of it exact, and it beat vanilla GRPO by about 10x on tail reward.
 ---
 
 GRPO needs one number from your model: the log-probability of the sequence
 it just generated. An autoregressive model hands it over for free. A
 diffusion language model doesn't, and to be honest that gap is most of what
-makes RL on one hard.
+makes RL on one hard. My workaround was to lean on the model's own block
+structure so most of that number becomes exact, and it beat vanilla GRPO by
+about 10x on tail reward.
 
 GRPO (group relative policy optimization, from DeepSeekMath, Shao et al.
 2024) is the workhorse behind a lot of recent reasoning models. You sample a
@@ -166,27 +168,14 @@ The ELBO is the one I'd reach for by default. It's the cleanest
 bias-for-compute trade, and it degrades gracefully when you can't afford
 many samples.
 
-## the bugs were most of the work
+## the result
 
-Honestly the idea was the easy part. Three bugs ate most of the time, all
-of the silent kind that train fine and learn the wrong thing:
-
-- **An off-by-one in the AR logit shift.** Standard next-token alignment,
-  wrong by one position at the block boundary, so the log-prob was scoring a
-  shifted sequence (which quietly poisons every gradient).
-- **A log-of-sum where the math wanted sum-of-logs** in the bound (it had
-  become an upper bound, an EUBO, with the wrong reduction). Jensen's
-  inequality points the other way, so the "lower bound" wasn't one.
-- **Reused mask seeds across iterations**, which correlated the estimates
-  and shrank the effective sample size without telling you.
-
-None of these throws an error, they just bias the estimate. The only way I
-found to catch them was deriving the quantity by hand and checking the code
-computes that and not some plausible neighbor.
-
-With those fixed, block-GRPO with the ELBO estimator beat vanilla GRPO by about 10x on
-tail reward over training (+0.158 vs +0.017). My view is the tail is the
-number to watch, since that's where the hard prompts live.
+Block-GRPO with the ELBO estimator beat vanilla GRPO by about 10x on tail
+reward over training (+0.158 vs +0.017). My view is the tail is the number
+to watch, since that's where the hard prompts live, and it's also where a
+biased log-prob hurts most: when only a few completions in a group score
+well, the update leans almost entirely on their log-probs, so any error in
+those gets amplified instead of averaged out.
 
 ## where this goes
 
