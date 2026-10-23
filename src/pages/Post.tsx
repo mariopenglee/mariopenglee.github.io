@@ -2,6 +2,16 @@ import { Fragment } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getPost } from '../data/posts';
 import ManifoldTiling from '../components/ManifoldTiling';
+import BlockFactorization from '../components/BlockFactorization';
+import NameDraw from '../components/NameDraw';
+import CycleCritic from '../components/CycleCritic';
+import IoiPerturb from '../components/IoiPerturb';
+import KidsGap from '../components/KidsGap';
+import TerminalTyping from '../components/TerminalTyping';
+import BeliefRepo from '../components/BeliefRepo';
+import LossWeighting from '../components/LossWeighting';
+import RoleCollapseRates from '../components/RoleCollapseRates';
+import WugTest from '../components/WugTest';
 import './page.css';
 
 // Interactive demos a post can embed by dropping `[[demo:key]]` on its own
@@ -9,6 +19,16 @@ import './page.css';
 // split out and replace with the mapped component.
 const DEMOS: Record<string, () => JSX.Element> = {
   'manifold-tiling': () => <ManifoldTiling />,
+  'block-factorization': () => <BlockFactorization />,
+  'name-draw': () => <NameDraw />,
+  'cycle-critic': () => <CycleCritic />,
+  'ioi-perturb': () => <IoiPerturb />,
+  'kids-gap': () => <KidsGap />,
+  'terminal-typing': () => <TerminalTyping />,
+  'belief-repo': () => <BeliefRepo />,
+  'loss-weighting': () => <LossWeighting />,
+  'role-collapse-rates': () => <RoleCollapseRates />,
+  'wug-test': () => <WugTest />,
 };
 
 const DEMO_RE = /<p>\[\[demo:([\w-]+)\]\]<\/p>/;

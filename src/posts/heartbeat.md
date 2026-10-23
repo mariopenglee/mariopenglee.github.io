@@ -72,6 +72,8 @@ you can read, in plain text, why the twin believes what it believes, and
 roll back when it's wrong. Branches let you hold tentative models of the
 user and only commit when they're confirmed.
 
+[[demo:belief-repo]]
+
 It's plain text because plain text is the most durable, inspectable,
 mergeable format we have, and because a human (or another model) can read
 the state and tell you it's wrong. A belief state you can't inspect is one

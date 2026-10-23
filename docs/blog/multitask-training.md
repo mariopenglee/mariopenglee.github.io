@@ -35,6 +35,8 @@ into plain interference, one head quietly eating the other. So my view is
 that multitask learning isn't a free lunch, it's a coupling knob, and the
 weighting is as much a part of the architecture as the shared layers.
 
+[[demo:loss-weighting]]
+
 That's not just my MovieLens result. The weighting matters so much that a
 whole line of work tries to stop hand-tuning it: Kendall et al. learn the
 per-task weights from each task's uncertainty instead of setting them, and Yu

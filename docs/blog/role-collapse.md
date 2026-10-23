@@ -56,6 +56,8 @@ prompts 68-74% reversed, and so does passive voice (78%) and IterComp, a
 fine-tune trained for composition (76%). The pictures do change between
 settings, just not who is doing what.
 
+[[demo:role-collapse-rates]]
+
 ## suspect three: cross-attention
 
 Another option is that the noun tokens leak into each other's image regions.

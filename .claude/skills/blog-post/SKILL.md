@@ -23,7 +23,15 @@ summary: One or two sentences shown on the blog index. No em dashes here either.
 - Headers: `##` only, lowercase, plain and descriptive ("the setup",
   "what broke"). Never clever or theatrical.
 - Links: inline markdown, link the project/paper on first mention.
-- Code blocks for equations, terminal output, or actual code. No images.
+- Code blocks for equations, terminal output, or actual code.
+- **Every post needs at least one visual**: an interactive demo, animation, or
+  figure that shows the post's core idea (not decoration). Build it as a React
+  component in `src/components/`, register it in the `DEMOS` map in
+  `src/pages/Post.tsx`, and drop `[[demo:key]]` on its own line in the
+  markdown. Reuse the `mt-` classes in `manifold.css` (`ManifoldTiling.tsx`
+  is the model): monochrome theme tokens (`--ink`, `--line`, ...), works in
+  both themes and at phone width. Use only numbers that appear in the post;
+  a toy simulation must say it's a toy.
 
 ## 2. Voice (hard rules)
 
@@ -93,6 +101,7 @@ alongside the budget it falls under.
 ```bash
 grep -n '—' src/posts/*.md                 # must be empty (prose; mock terminal output excepted)
 grep -rnP '[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}]' src/posts/   # must be empty
+grep -L '\[\[demo:' src/posts/*.md       # must be empty (every post has a visual)
 npm run build                              # must pass (tsc + vite)
 ```
 

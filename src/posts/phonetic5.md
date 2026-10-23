@@ -46,6 +46,8 @@ to /z/ exactly where a native speaker does. The s in "wugs" isn't
 copied from spelling, because the spelling says s. The model has learned the
 rule that turns it into a /z/.
 
+[[demo:wug-test]]
+
 The same thing shows up on loan words. No model would write the /ts/
 cluster at the start of "tsunami", because English words can't start that
 way. The bigger the model, the closer it got to how a native speaker says

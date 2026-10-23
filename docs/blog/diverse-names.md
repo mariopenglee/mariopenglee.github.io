@@ -28,6 +28,8 @@ the choice away. You press generate, or swipe a card in the Android app,
 and get a random name from a database linguists curate. The bias never
 gets a chance to act.
 
+[[demo:name-draw]]
+
 ## making random usable
 
 Random only works if people actually use it in a real classroom, so every
