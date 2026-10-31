@@ -2,7 +2,7 @@
 % Research variant (Stanford MSCS, Berkeley EECS MS, Columbia MS CS):  pdflatex cv.tex
 % Berkeley MEng variant:  pdflatex -jobname=cv-meng "\def\MENG{}\input{cv.tex}"
 \documentclass[10pt]{article}
-\usepackage[margin=0.7in]{geometry}
+\usepackage[margin=0.65in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -59,7 +59,7 @@ AI engineer and co-founder of two companies. Team lead for a 12-person team at n
 
 \entry{Computational Vision and Learning Lab, UCLA}{Research Assistant}{Jul 2023 -- Jun 2024}{Co-advised by Hongjing Lu and Keith Holyoak.}
 \begin{itemize}
-  \item CycleDiffusion. Trained a diffusion model so a captioner can read its images back into the prompt. The prompt ended up encoded as texture, probably because of the captioner.
+  \item CycleDiffusion. Built and trained a diffusion model with a captioner in the loop as a cycle-consistency objective. The prompt was encoded as texture, and I traced that to the captioner used as the training signal.
 \end{itemize}
 
 \entry{Language and Cognitive Development Lab, UCLA}{Research Assistant}{Jun 2023 -- Jun 2024}{Advised by Catherine Sandhofer, with Amalia Ionescu and Hunter Priniski.}
@@ -72,7 +72,7 @@ AI engineer and co-founder of two companies. Team lead for a 12-person team at n
   \item Perturbation study of GPT-2's indirect-object identification circuit. Accuracy drops with rare names, and with four entities the model picks by proximity.
 \end{itemize}
 
-\entry{Ongoing collaborations}{after graduation}{2024 -- present}{With Andrew Lee, role collapse in text-to-image models. SD3.5 reverses 72 to 75\% of rare-direction prompts even though T5 encodes the roles, so the problem seems to be in the denoiser. With Amalia Ionescu and Hunter Priniski, the 2026 follow-up to the children and GPT-4 study.}
+\entry{Ongoing collaborations}{after graduation}{2024 -- present}{With Andrew Lee, role collapse in text-to-image models. SD3.5 reverses 72 to 75\% of rare-direction prompts even though T5 encodes the roles. I ruled out the text encoder, guidance and the prompt embeddings, which localizes the failure to the denoiser. With Amalia Ionescu and Hunter Priniski, the 2026 follow-up to the children and GPT-4 study.}
 
 \entry{Other undergraduate research}{UCLA Language Acquisition Lab; Swarthmore Linguistics}{2022 -- 2024}{Advised by Megha Sundara and Laurel Perkins; Maura O'Leary. Children's acquisition of Spanish inflection; the Diverse Names Generator (LSA 2023).}}
 
