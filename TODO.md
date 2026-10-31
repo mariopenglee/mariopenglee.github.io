@@ -22,3 +22,6 @@
 - site typo: "Hongjin Lu" in site.ts and cyclediffusion.md should be "Hongjing Lu"
 - site vs CV: Tesonet event is the "AI-Focused Conference" (the AI-Only
   Hackathon was the weekend it opened); the CV now says AI-Focused
+- block-grpo.md: add the results now cleared to share: critical facts kept
+  45% to 65%, throughput 40.3 to 158.5 tokens/s vs autoregressive decoding
+  (CV already states them)
