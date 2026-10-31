@@ -99,30 +99,39 @@ export const TALKS: {
 ];
 
 // curated highlights shown on the home page — deep-dives belong in the blog
+// most impressive first
 export const WORK: { title: string; desc: string; links: { name: string; url: string }[] }[] = [
   {
-    title: 'nexos.heartbeat',
-    desc: 'always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model',
-    links: [
-      { name: 'writeup', url: '#/blog/heartbeat' },
-      { name: 'demo', url: 'https://www.youtube.com/watch?v=KoVKYMgw2H0' },
-    ],
+    title: 'condense.chat',
+    desc: 'cofounder and chief scientist: compresses what coding agents send to the model, up to about 70% off long sessions with basically the same output (a16z speedrun Global Founder Sprint)',
+    links: [{ name: 'site', url: 'https://condense.chat/' }],
   },
   {
     title: 'Sparse autoencoder seeds share more than matching shows',
-    desc: 'my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; an independent side project finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed',
+    desc: 'EleutherAI SOAR 2026 (about 2% of applicants accepted), supervised by Gonçalo Paulo: one-to-one matching says two SAE seeds share about half their latents, a toy-calibrated transplant test estimates 75 to 86%',
     links: [
       { name: 'writeup', url: '#/blog/orphan-latents' },
       { name: 'kernel noise', url: '#/blog/same-init-different-dictionary' },
     ],
   },
   {
-    title: 'Do SAEs capture concept manifolds?',
-    desc: 'the toy phase, open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it',
+    title: 'nexos.heartbeat',
+    desc: "always-on AI twin and nexos.ai's biggest feature; I built the memory and continuity model (git-backed memory, presented at WIP: Index Ventures x Anthropic)",
     links: [
-      { name: 'writeup', url: '#/blog/cross-seed-saes' },
-      { name: 'code', url: 'https://github.com/mariopenglee/cross-seed-manifold-poc' },
+      { name: 'writeup', url: '#/blog/heartbeat' },
+      { name: 'talk', url: '#/blog/infinite-context-agents-wip-london' },
+      { name: 'demo', url: 'https://www.youtube.com/watch?v=KoVKYMgw2H0' },
     ],
+  },
+  {
+    title: 'Code Interpreter at nexos.ai',
+    desc: 'a sandboxed runtime that lets agents write and run real code, each run in an isolated, throwaway micro-VM',
+    links: [{ name: 'writeup', url: '#/blog/code-interpreter-nexos' }],
+  },
+  {
+    title: 'Pocketful',
+    desc: 'CEO: WhatsApp AI agents for restaurant owners in Argentina',
+    links: [{ name: 'site', url: 'https://pocketful.ai/' }],
   },
   {
     title: 'Where role collapse happens in diffusion models',
@@ -130,16 +139,15 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
     links: [{ name: 'writeup', url: '#/blog/role-collapse' }],
   },
   {
-    title: 'Code Interpreter at nexos.ai',
-    desc: 'a sandboxed runtime that lets our agents write and run code safely',
+    title: 'Do SAEs capture concept manifolds?',
+    desc: 'the toy phase of the SAE seed work: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it',
     links: [
-      {
-        name: 'writeup',
-        url: '#/blog/code-interpreter-nexos',
-      },
+      { name: 'writeup', url: '#/blog/cross-seed-saes' },
+      { name: 'code', url: 'https://github.com/mariopenglee/cross-seed-manifold-poc' },
     ],
   },
 ];
+
 
 // articles I wrote elsewhere (nexos.ai blog, shared on LinkedIn)
 export const ARTICLES: typeof WORK = [
