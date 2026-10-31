@@ -64,7 +64,7 @@
         ]
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-2ebf9388.js"></script>
+    <script type="module" crossorigin src="/assets/index-b5090f83.js"></script>
     <link rel="stylesheet" href="/assets/index-f82316d1.css">
   </head>
   <body>
@@ -85,8 +85,8 @@
 </ul>
 <h2>writing</h2>
 <ul>
-<li><a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">Same init, different dictionary</a> (2026-10-31): Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, already leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.</li>
-<li><a href="https://mariopenglee.com/blog/orphan-latents.md">Seeds share more than their latents admit</a> (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds says 75 to 86% of what they learn is shared, and part of the gap is the same manifold cut into different tiles.</li>
+<li><a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">Same init, different dictionary</a> (2026-10-31): Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.</li>
+<li><a href="https://mariopenglee.com/blog/orphan-latents.md">SAE seeds share more than matching shows</a> (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds puts the shared share at 75 to 86%, and part of the gap is the same manifold cut into different tiles.</li>
 <li><a href="https://mariopenglee.com/blog/role-collapse.md">Where role collapse happens in diffusion models</a> (2026-10-23): Prompt SDXL for a mouse chasing a cat and you usually get a cat chasing a mouse. My first suspect was CLIP reading prompts as a bag of words, but after ruling out the encoder, guidance, and cross-attention, the problem seems to sit in the UNet itself.</li>
 <li><a href="https://mariopenglee.com/blog/kids-vs-llm-stories.md">Kids vs LLMs at telling a story</a> (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.</li>
 <li><a href="https://mariopenglee.com/blog/cyclediffusion.md">cyclediffusion: can a picture be a bottleneck?</a> (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.</li>
