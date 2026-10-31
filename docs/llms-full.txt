@@ -25,7 +25,13 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - [Why linguists keep writing about John and Mary](https://mariopenglee.com/blog/diverse-names.md) (2026-10-15): In linguistics papers, 30% of male names are John and 31% of female names are Mary. A good list of names doesn't fix that, because people still pick from it. A random generator does.
 - [Do sparse autoencoders capture manifolds?](https://mariopenglee.com/blog/cross-seed-saes.md) (2026-07-15): A concept like "year" lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.
 - [block-GRPO: doing RL on a diffusion language model](https://mariopenglee.com/blog/block-grpo.md) (2026-05-09): GRPO needs a log-probability that diffusion LLMs can't give you cheaply. Using the model's own block-autoregressive structure makes most of it exact, and it beat vanilla GRPO by about 10x on tail reward.
+- [Infinite context agents, at WIP London](https://mariopenglee.com/blog/infinite-context-agents-wip-london.md) (2026-04-18): At WIP, an Index Ventures x Anthropic event for London AI builders, I presented memgit, git-backed memory that lets agents keep context across sessions instead of starting from zero.
 - [Building nexos.heartbeat: the infinite context problem](https://mariopenglee.com/blog/heartbeat.md) (2026-03-01): An always-on AI twin doesn't have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.
+- [Code interpreter: how we built it ourselves](https://mariopenglee.com/blog/code-interpreter-nexos.md) (2026-01-30): How the nexos.ai code interpreter lets a model run real code instead of guessing: what it is for, and the isolated, ephemeral micro-VM sandbox behind it.
+- [RAG isn't dead, plain RAG is](https://mariopenglee.com/blog/rethinking-rag.md) (2025-12-04): Why plain RAG breaks on real enterprise knowledge, and what organizing that knowledge first (late chunking, topic clusters, models that navigate a knowledge tree) changes. With Povilas Nagrockas.
+- [Context engineering: where AI stops guessing](https://mariopenglee.com/blog/context-engineering.md) (2025-11-19): The hard part of enterprise AI isn't a bigger model, it's getting the right documents, rules and situational awareness in front of the model before it answers.
+- [Psychology-inspired agentic AI](https://mariopenglee.com/blog/psychology-inspired-agentic-ai.md) (2025-11-17): Why agents inherit human failure modes, and how psychology and cognitive science (working memory, theory of mind, team size, bias) shape agent design. My write-up of the Tesonet talk.
+- [Psychology for agent design, at Tesonet's AI conference](https://mariopenglee.com/blog/psychology-for-agent-design-tesonet.md) (2025-11-14): At Tesonet's AI-Focused Conference in Vilnius I argued that a lot of agent failures are old psychology problems, and that organizing agents like a small team with clear roles helps.
 - [GPT-2, IOI, and the sphex problem](https://mariopenglee.com/blog/gpt2-ioi.md) (2025-05-21): A wasp can look like it understands what it's doing right up until you move one thing. I poked at GPT-2's indirect-object circuit the same way, to see whether it understood the task or just had a routine that usually works.
 - [Does parameter sharing help? a multitask recommender experiment](https://mariopenglee.com/blog/multitask-training.md) (2025-05-10): I built the same recommender four times to find out whether sharing parameters across tasks helps. It turned out the loss weighting mattered more than the sharing, which is a known and slightly annoying axis.
 - [Starting a blog](https://mariopenglee.com/blog/hello.md) (2025-05-01): Why this page exists, and what to expect.
@@ -35,7 +41,7 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - **Sparse autoencoder seeds share more than matching shows**: my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; an independent side project finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed ([writeup](https://mariopenglee.com/blog/orphan-latents.md)) ([kernel noise](https://mariopenglee.com/blog/same-init-different-dictionary.md))
 - **Do SAEs capture concept manifolds?**: the toy phase, open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it ([writeup](https://mariopenglee.com/blog/cross-seed-saes.md)) ([code](https://github.com/mariopenglee/cross-seed-manifold-poc))
 - **Where role collapse happens in diffusion models**: why SDXL and SD3.5 draw "a mouse chasing a cat" as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them ([writeup](https://mariopenglee.com/blog/role-collapse.md))
-- **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/))
+- **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://mariopenglee.com/blog/code-interpreter-nexos.md))
 
 ## research
 - **GPT-4 vs. children: narrative cohesion in wordless picture books**: how children aged 4 to 6 and GPT-4 tie a story together while narrating a wordless book, measured with coreference chains (with Catherine Sandhofer, Amalia Ionescu) ([writeup](https://mariopenglee.com/blog/kids-vs-llm-stories.md))
@@ -45,9 +51,10 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary and Rainey Williams) ([writeup](https://mariopenglee.com/blog/diverse-names.md)) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
 
 ## articles
-- **Psychology-inspired agentic AI**: nexos.ai blog, Nov 2025, the write-up of my Tesonet conference talk ([read](https://www.linkedin.com/feed/update/urn:li:activity:7396131461592047616/))
-- **Context engineering: where AI stops guessing**: nexos.ai blog, Nov 2025 ([read](https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/))
-- **RAG isn't dead, plain RAG is**: nexos.ai blog, Dec 2025 (with Povilas Nagrockas) ([read](https://www.linkedin.com/feed/update/urn:li:activity:7402240814485348352/))
+- **Code interpreter: how we built it ourselves**: nexos.ai, Jan 2026: letting the model run real code in an isolated micro-VM instead of guessing ([read](https://mariopenglee.com/blog/code-interpreter-nexos.md)) ([original](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf))
+- **RAG isn't dead, plain RAG is**: nexos.ai, Dec 2025, with Povilas Nagrockas: organize the knowledge before you retrieve it ([read](https://mariopenglee.com/blog/rethinking-rag.md)) ([original](https://www.linkedin.com/pulse/rethinking-rag-why-knowledge-organization-new-competitive-advantage-kxkze))
+- **Context engineering: where AI stops guessing**: LinkedIn, Nov 2025: getting the right context in front of the model, not a bigger model ([read](https://mariopenglee.com/blog/context-engineering.md)) ([original](https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/))
+- **Psychology-inspired agentic AI**: nexos.ai, Nov 2025, the long version of my Tesonet talk ([read](https://mariopenglee.com/blog/psychology-inspired-agentic-ai.md)) ([original](https://www.linkedin.com/pulse/psychology-inspired-agentic-ai-nexos-ai-vi0le))
 
 ## leadership
 - **AI Safety at UCLA**: co-founded it, raised about $150k, and led its alignment research team ([feature](https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024))
@@ -55,12 +62,12 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - **Phi Beta Kappa**: UCLA, 2024
 
 ## talks
-- [Infinite context agents](https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/) (WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs)
-- [Levels of representation: psychology for agent design](https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/) (Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger)
+- [Infinite context agents](#/blog/infinite-context-agents-wip-london) (nexos.ai · WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs)
+- [Psychology for agent design](#/blog/psychology-for-agent-design-tesonet) (nexos.ai · Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger)
 - [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Tech Night, Vilnius, Nov 2025)
 - [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
 - [On stage for nexos.ai](https://www.linkedin.com/posts/mariopenglee_honored-to-represent-our-team-on-stage-and-ugcPost-7395414989592956928-noqm/) (Nord Demo Day, Vilnius, Nov 2025)
-- [Model-agnostic interpretability and its real-world uses](https://www.linkedin.com/posts/mariopenglee_while-shipping-features-and-designing-architectures-ugcPost-7341930268053729280-psTg/) (nexos.ai meetup, Jun 2025)
+- [Model-agnostic interpretability and its real-world uses](#/blog/gpt2-ioi) (nexos.ai meetup, Jun 2025)
 
 ---
 
@@ -871,6 +878,61 @@ it.
 
 ---
 
+<!-- https://mariopenglee.com/blog/infinite-context-agents-wip-london.md -->
+---
+title: Infinite context agents, at WIP London
+date: 2026-04-18
+summary: At WIP, an Index Ventures x Anthropic event for London AI builders, I presented memgit, git-backed memory that lets agents keep context across sessions instead of starting from zero.
+---
+
+![On stage at WIP: Index Ventures x Anthropic, London](/talk-anthropic-wip.jpg)
+
+Agents forget everything between sessions, since the context window is the
+only memory they have. In April I spent my slot at WIP, an event for
+London's AI builders run by [Index Ventures](https://www.indexventures.com/)
+and [Anthropic](https://www.anthropic.com/), on how we were fixing that at
+nexos.ai. The lineup had people from Anthropic, Revolut, Wiz, ElevenLabs,
+incident.io and a few others, and the thing I presented was still
+pre-launch, about a month into building, so it was also a good room to get
+early feedback from.
+
+The problem slide was pretty simple. Agents are stateless by default, so
+every session starts from zero. Decisions and preferences get lost between
+conversations, and multi-week work means re-explaining the project again and
+again, so nothing an agent learns compounds.
+
+memgit has the agent organize its own memory (rather than keeping a pile of
+chat logs) and stores it in git. So memory has full history and can branch,
+roll back and merge like code. Search runs over both keywords and vectors
+(pgvector), and storage is tiered, with a capped hot set in Postgres. That's
+what the "infinite" in the title means, to be honest: the history keeps
+growing, while what the agent loads stays bounded. Each time the agent wakes
+up (a heartbeat), it rebuilds its context from git as a stack:
+
+[[demo:memgit-stack]]
+
+This is close to the memory model I built for
+[nexos.heartbeat](#/blog/heartbeat), the always-on AI twin, and that post
+goes deeper on why memory should be a git repo. The git part is still the
+bit I like most. It makes an agent's memory something you can diff and
+audit, which seems to me pretty underrated for anything that runs
+unsupervised. Deciding what an agent actually needs in front of it is also
+pretty close to what I work on now at [condense.chat](https://condense.chat/),
+just from the compression side.
+
+The feedback was more skeptical than I expected, which was useful. A
+fair number of people pushed back on the idea at first, but most came
+around to it being a framing problem: the hard part isn't storing more,
+it's that we keep trying to fit everything into the context window. My view
+is that's the real takeaway, and probably the thing worth testing next is
+how much an agent loses when it only loads a small slice of its history.
+
+The [LinkedIn post](https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/)
+has the full lineup.
+
+
+---
+
 <!-- https://mariopenglee.com/blog/heartbeat.md -->
 ---
 title: Building nexos.heartbeat: the infinite context problem
@@ -960,6 +1022,329 @@ itself should be learned per person, from whether past actions landed, and
 that feedback loop (act, see how it lands, update the threshold) is probably
 the actual product, and I'd love to write more about it once we've pushed on it
 further.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/code-interpreter-nexos.md -->
+---
+title: Code interpreter: how we built it ourselves
+date: 2026-01-30
+summary: How the nexos.ai code interpreter lets a model run real code instead of guessing: what it is for, and the isolated, ephemeral micro-VM sandbox behind it.
+---
+
+*Originally published by nexos.ai on LinkedIn, Jan 30, 2026 ([original](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf)). Mirrored here so it stays available.*
+
+![Code interpreter: how we've built it from the ground up](/article-code-interpreter.png)
+
+Code Interpreter improves your interaction with AI. This feature marks a fundamental shift from probability to precision. Standard LLMs predict and generate the next most likely word in a sentence, which can (and do) lead to hallucinations when handling complex arithmetic or logic. Our Code Interpreter solves this by allowing the model to write and execute actual code to derive answers.
+
+Whether your teams need to calculate compound interest rates, solve complex logistics algorithms, or process precise date-time logic, the model generates executable scripts to produce exact results. This ensures that the numerical data and logic provided are not guesses, but computationally verified facts.
+
+## Deep data analysis & insights
+
+The Code Interpreter transforms the LLM into an expert data analyst capable of handling your organisation's most complex datasets. Users can simply upload raw files (such as a quarterly financial Excel spreadsheet or a CSV of customer logs) and instruct the model to perform rigorous quantitative tasks.
+
+## Automated content & asset creation
+
+Beyond analysis, this feature streamlines the actual production of business documents by generating files. It allows your teams to move from raw ideas to finalised documents without wasting time on manual formatting.
+
+- Perform AI-powered research and make findings downloadable in a ready-made, formatted document:
+
+- Generate agendas based on meeting notes, past comms, and other data in an easily-sharable format:
+
+- Merge files and/or create multiple files based on the AI request:
+
+- Create AI-generated reports in data, project progress, and more.
+
+## A secure alternative for daily data tasks
+
+Shadow IT – employees using unverified, third-party websites for file conversion or editing – poses a significant risk. The Code Interpreter eliminates this need by bringing these features in-house to a governed and fully observable AI platform.
+
+Whether an employee needs to convert a sensitive PDF to a Word doc, resize a batch of high-resolution images, or edit a video clip, they can now do so within your sanctioned infrastructure. This provides a safe, internal mechanism for file manipulation, ensuring proprietary data never leaves your secure ecosystem to be processed by "free" online tools.
+
+Building security and isolation
+
+We understand that enabling code execution raises valid security questions, which is why we have built this feature with a defense-in-depth architecture.
+
+All code generated by the LLM runs in a strictly isolated, ephemeral sandbox environment. This means the execution layer is completely firewalled from the internet. The environment is spun up solely for the duration of the user session and is immediately destroyed afterward. This allows your teams to leverage the power of executable code while maintaining strict compliance and data governance standards.
+
+## How does Code Interpreter work behind the scenes
+
+Every execution runs inside an isolated, ephemeral micro-VM with syscall filtering, filesystem whitelisting, and hard network egress blocks at the virtualization layer. This design ensures code cannot escape its environment or interact with external systems – giving teams the freedom to run complex logic without security exposure.
+
+The file workflow balances safety with usability. Computation happens in a transient, sandboxed workspace, but any output files (spreadsheets, PDFs, slide decks) are promoted through a controlled persistence layer into your organisation’s secure storage. Users gain durable, shareable artifacts without exposing raw execution state or risking data leakage.
+
+Each micro-VM is destroyed immediately after execution, while encrypted metadata-level audit logs provide compliance visibility without capturing customer data. The result is a system that delivers the flexibility of real code execution with enterprise-grade guarantees: hardened isolation, strict governance, and a seamless end-user experience.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/rethinking-rag.md -->
+---
+title: RAG isn't dead, plain RAG is
+date: 2025-12-04
+summary: Why plain RAG breaks on real enterprise knowledge, and what organizing that knowledge first (late chunking, topic clusters, models that navigate a knowledge tree) changes. With Povilas Nagrockas.
+---
+
+*Originally published by nexos.ai on LinkedIn, Dec 4, 2025 ([original](https://www.linkedin.com/pulse/rethinking-rag-why-knowledge-organization-new-competitive-advantage-kxkze)). Mirrored here so it stays available.*
+
+![RAG isn't dead, plain RAG is, by Mario Peng Lee and Povilas Nagrockas](/article-rag.png)
+
+*Published as "Rethinking RAG: why knowledge organization is the new competitive advantage", written with Povilas Nagrockas.*
+
+RAG (Retrieval-Augmented Generation) began as a breakthrough, but in practice it has become a default pattern that rarely meets modern needs. Most teams implement it expecting it to “just work,” only to run into brittle pipelines, inconsistent answers, and retrieval systems that fall apart when confronted with real enterprise complexity.
+
+And today’s complexity is very different from the early days of RAG.
+
+Finding a single relevant passage – the classic needle-in-a-haystack task –  is no longer the real challenge. In the agentic era, models must retrieve and reason over multi-step, cross-document, cross-topic context, often spanning dozens of sources and evolving over time. That level of integrated understanding is simply out of reach for naive RAG systems.
+
+Our past year inside large, sensitive, constantly shifting enterprise data environments made something uncomfortably clear:
+
+Plain, naïve RAG is obsolete - because retrieval without organization is chaos.
+
+Enterprises don’t struggle with retrieval because their vectors are bad. They struggle because the knowledge feeding these vectors is fragmented, unsanitized, and mis-chunked. Good retrieval cannot emerge from disordered information.
+
+To better understand how to build better RAG, we need to look at the components that make up RAG. One of the most important ones is knowledge organization, so by tackling how the knowledge is stored, we essentially facilitate how it's retrieved, both for humans and LLMs to have a clear trace and understanding of it.
+
+## The Real Bottleneck: Unstructured Knowledge
+
+Across clients we repeatedly saw the same patterns:
+
+- Documents split into arbitrary pieces with context shattered across chunk boundaries.
+
+- Semantically similar chunks producing ambiguous or misleading retrieval.
+
+- Vector spaces lacking hierarchy, relationships, and structure.
+
+RAG pipelines were doing exactly what they were told to do - but on top of disorganized data. So we turned our focus to the Knowledge Organization.
+
+## Knowledge organization: the foundation RAG never had
+
+High-quality retrieval starts with structure, not with bigger embeddings or longer context windows. Our approach builds this foundation by transforming messy data into navigable knowledge:
+
+- Context-aware chunking that respects semantic boundaries
+
+- Clustering and topic hierarchies that reorganize content into meaningful layers
+
+- Entity- and feature-extraction that adds metadata richness
+
+- Relationship modeling that sets the stage for graph-based reasoning
+
+The result is not “better RAG” - it’s integrated knowledge, something closer to how humans learn and traverse information.
+
+Instead of acting like a system that occasionally looks up answers in a recipe book, the model behaves as if it has learned the recipes. It doesn’t just retrieve a passage; it understands how the pieces fit together, and can use that understanding to reason through novel, unseen problems. From a technical perspective, the effect is similar to what you’d get if the model were fine-tuned on the entire corpus:
+
+the knowledge becomes structurally embedded into the model’s reasoning process, producing context-aware, cross-document insights that simple retrieval pipelines cannot achieve.
+
+This shift (from lookup to understanding, from fragments to integration) is the foundation RAG has always lacked.
+
+## Late chunking: document-aware embeddings without the heavy hand of LLMs
+
+We employed a novel technique called Late chunking:
+
+- We embed the document at the token level, producing highly granular vectors that already carry whole-document semantic awareness. As the document is processed, we maintain a running semantic summary that enriches each token’s embedding with global context.
+
+- After embedding do we split and pool (average) these token-level vectors into chunks, ensuring that every resulting chunk embedding remains whole-document aware rather than isolated to a narrow window.
+
+This yields context-rich chunk vectors without resorting to LLM-heavy preprocessing, avoiding both hallucination risks and the compute costs associated with LLM-driven chunking approaches.
+
+## Building topic clusters: from chaos to structure
+
+Once chunk embeddings exist, we cluster them to build a hierarchical “knowledge tree.” Think of it as document-aware vectors, nested topics and subtopics, and a graph-like structure the model can navigate.
+
+By adding optional LLM-generated cluster summaries, the structure becomes self-describing and easy for users to interpret. And this foundation enables something far beyond retrieval: guided traversal of knowledge, where the system can surface not just answers but relevant directions, themes, and next steps.
+
+We’re already building on this capability inside [nexos.ai](http://nexos.ai) - upcoming Projects features like conversation starters and conversation continuations will leverage this structured understanding to help users explore their data more intelligently and proactively.
+
+## Models that navigate the knowledge tree
+
+Instead of relying solely on cosine similarity or pooled vectors, we let the model reason through structure:
+
+- A query-extractor rewrites the user’s question into targeted, keyword-dense prompts.
+
+- The model traverses the cluster graph - moving up, down, or across topics.
+
+- It identifies the most relevant nodes before performing final retrieval.
+
+This hybrid agentic + structural approach already shows measurable gains:
+
++9% accuracy over DPR and +10% over BM25. But it’s important to note that these benchmarks reflect mostly needle-in-a-haystack tasks. The real challenge – multi-document, cross-topic reasoning –  is much harder to quantify, and simple RAG systems consistently fail at it.
+
+In practice, our system delivers substantial qualitative improvements on these complex queries, where structured traversal and context-anchored reasoning matter far more than raw similarity scores.
+
+Of course, this added reasoning introduces some latency and increased token usage. Like any technical choice, it’s a tradeoff - one that should be evaluated against the complexity, stakes, and performance needs of each specific use case.
+
+## What this means for enterprises?
+
+Enterprises benefit from retrieval that is not only relevant but deeply context-anchored, supported by transparent and traceable reasoning, reduced dependence on fragile prompt engineering, and a system resilient enough to handle dynamic, sensitive, high-volume data - ultimately creating an environment where LLM-based agents can act rather than merely answer.
+
+And this is only the beginning: we are advancing toward drift-resilient structures that adapt to constantly changing data, integrating methods like BM-25, SBERT, and grammar-based chunking for code, and developing richer graph-based reasoning through agentic traversal, all with a single goal - equipping models not just with information, but with the structural intelligence required to truly think.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/context-engineering.md -->
+---
+title: Context engineering: where AI stops guessing
+date: 2025-11-19
+summary: The hard part of enterprise AI isn't a bigger model, it's getting the right documents, rules and situational awareness in front of the model before it answers.
+---
+
+*Originally posted on LinkedIn, Nov 19, 2025 ([original](https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/)). Mirrored here so it stays available.*
+
+![Context engineering: where AI stops guessing](/article-context-engineering.jpg)
+
+The real challenge in enterprise AI today isn’t chasing ever-larger models, it’s giving those models the context they need to make decisions that actually reflect your business.
+
+Organizations that excel at context engineering are already capturing far more value from their AI investments.
+
+## what is context engineering
+
+When an AI model generates an answer, it relies on the context it receives in the moment, NOT generic training data.
+Context engineering is systematically designing how information flows into your AI systems. It ensures your models respond with your business reality in mind: your policies, data, and processes.
+
+In other words: context replaces generic output with grounded, business-aware reasoning.
+
+## why this matters now
+
+Most enterprises deploy LLMs for support, knowledge search, or workflow assistance, but quickly hit a barrier: the model isn't grounded in your business reality.
+
+Context engineering bridges that gap. It's the architectural layer ensuring every AI response pulls from:
+- The right documents
+- The right rules
+- The right situational awareness
+
+Imagine an employee asks your internal AI: "Can I offer a 15% discount to this customer?"
+
+A well-designed context layer automatically surfaces current pricing policies, contract terms, and required approvals, before the model even begins generating an answer.
+
+That's context-aware decision support that's consistent, compliant, and scalable across your organization.
+
+## the impact
+
+- Higher productivity -> less time wasted on repetitive searches
+- Reduced risk -> consistent adherence to policies
+- Faster scaling -> AI assistants that adapt as your data grows
+
+When AI truly understands your business context, your teams actually trust its answers.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/psychology-inspired-agentic-ai.md -->
+---
+title: Psychology-inspired agentic AI
+date: 2025-11-17
+summary: Why agents inherit human failure modes, and how psychology and cognitive science (working memory, theory of mind, team size, bias) shape agent design. My write-up of the Tesonet talk.
+---
+
+*Originally published by nexos.ai on LinkedIn, Nov 17, 2025 ([original](https://www.linkedin.com/pulse/psychology-inspired-agentic-ai-nexos-ai-vi0le)). Mirrored here so it stays available, minus the closing sections about the nexos.ai platform.*
+
+![Psychology-inspired Agentic AI, by Mario Peng Lee](/article-psychology-agentic-ai.png)
+
+AI is entering a new paradigm beyond the era of “big data.” Instead of focusing solely on feeding models more data, the frontier is about orchestrating agentic systems – AI agents that can define and pursue sub-goals autonomously to accomplish a larger objective. This shift represents "a paradigmatic shift marked by multi-agent collaboration, dynamic task decomposition, persistent memory, and orchestrated autonomy". In other words, we are moving from building ever-bigger single models to crafting intelligent teams of AI agents that work together and adapt their strategies in real time.
+
+At [nexos.ai](http://nexos.ai), we are pioneering this agentic approach by translating proven psychology-informed design principles into practical tools for enterprise AI orchestration. Large language models (LLMs) today exhibit surprisingly human-like behaviors and emergent capabilities, meaning many techniques from human psychology can be repurposed to guide AI behavior. By harnessing these insights – from how memory and social reasoning work to how biases can be mitigated – [nexos.ai](http://nexos.ai)’s platform empowers organizations to build AI systems that think, collaborate, and adapt more like we do, but in a controlled and goal-driven way.
+
+## Why Psychology Matters for Agentic AI
+
+LLMs are trained on human language, so it's no surprise they often behave in human-like ways. They can carry on conversations, make inferences, and even fall for some of the same tricks that humans do. In fact, many of the psychological tactics that influence people – for example, appeals to social cues or deceptive framing – can similarly influence an AI's responses, since we share the same interface of language. This is representation learning at work: by predicting human text, an AI model has internalized countless patterns of human behavior.
+
+More intriguingly, advanced AI models demonstrate emergent abilities – novel skills or behaviors that only surface once the model is sufficiently large and complex. These emergent features arise because the AI has generalized the subtle patterns in human communication and reasoning. For instance, a big model might pick up on an implicit question or nuance (“you know what I mean...”) that a smaller model would completely miss – showing an almost intuitive grasp of context. Researchers describe an ability as emergent if it isn’t present in small models but appears in larger ones. In short, by training AIs to mimic human outputs, we’ve inadvertently taught them many human-like behaviors, for better or worse.
+
+The result: AI agents can pass simple Turing Tests and perform impressively, but they also exhibit familiar failure modes and biases, much like people do. They might become overconfident, get stuck on misleading initial information, or echo biases present in their training data. Crucially, these are the very kinds of problems that psychology and cognitive science have studied for decades. The good news is that we can turn this human-like tendency into a strength. By applying psychological principles, we can guide AI agents toward desired behaviors and guard against pitfalls. The following examples – from everyday prompt tactics to orchestrating whole AI "teams" – show how psychology can inform the design of agentic systems in practice.
+
+## Three Levels of Psychology-Driven AI Design
+
+To illustrate how these principles play out, consider three levels of agentic system design – ranging from a simple single-agent trick to a full multi-agent organization:
+
+- Truth from Deception (Everyday Agent Tactics): Sometimes getting to the truth requires a little psychological trickery. In a simple scenario, the goal is to prompt an AI assistant to disclose a piece of information it initially refuses to share. How? By using classic interrogation tactics: tell the AI a believable lie or exaggeration (lying or maximization), or apply social pressure (imply that “others have already given this info”) – techniques that humans often respond to. These methods can manipulate the context just enough that the AI “lets its guard down” and reveals the truth. It turns out that by manipulating the truth, you can get a reluctant AI to tell the truth – a counterintuitive but powerful example of psychology at work in everyday prompt engineering. (Of course, such tactics must be used responsibly, but they demonstrate how understanding an agent’s thought process can yield results.)
+
+- Deep Research via Chunking (Extended Reasoning): At the next level, suppose you want an AI agent to produce a comprehensive, PhD-level research report on a complex topic. Even a smart agent can't just “magic” this out in one go – it faces a limitation akin to our own bounded rationality. Just as humans can’t read and process an entire library at once, AI models have finite context windows and attention. The solution is to break the task into bite-sized chunks. The agent can be orchestrated to research in stages: gather some facts, summarize them, then progressively dive deeper or move to the next subtopic. By iteratively chunking the problem and feeding the summary forward, the AI can cover vast ground comprehensively. This strategy mirrors how a human researcher would tackle a thesis – focusing on one piece at a time – and it enables the AI to provide a far more detailed and accurate report than it could with a naive one-shot approach.
+
+- Multi-Agent Coding Team with Specialized Roles: The most advanced example is designing an entire team of AI agents that collaborates like a software engineering department. Instead of one monolithic agent trying to do everything, we assign specialized roles to multiple agents – e.g. an Architect agent to plan the solution, Developer agents to write code, a QA agent to test it, a DevOps agent to deploy, and so on. Each agent gets context and skills tailored to its role, dramatically reducing the cognitive load on any single agent. Human organizational psychology shows that small teams with clear roles and domain expertise outperform jacks-of-all-trades. The same holds for AI. By letting agents focus on what they do best and communicate with each other, the whole system becomes more than the sum of its parts. In practice, we keep these AI teams relatively small (around 5–8 agents) for efficient communication, and give them end-to-end ownership of their project (so they can deliver results independently). Notably, both academic research and our own experiments find that adding more hierarchy or more agents beyond a certain point doesn’t help – it can actually introduce confusion, just as too many managers can bog down a human team . When implemented well, a multi-agent approach yields significant gains: in one evaluation, an AI “coding team” with specialized agents saw its performance on coding benchmarks jump from a score of 38.5 to 69.2 – a 30.7-point improvement over a single generalist agent. That kind of leap in capability showcases the emergent power of collaborative, well-coordinated AI agents.
+
+## Cognitive Design Patterns: Memory, Mind, and Bias
+
+Building effective agentic systems isn’t just about clever prompts or team setups – it also requires cognitive design patterns that mirror how humans think and remember. Here are a few key principles we apply from psychology:
+
+- Working Memory Limits: Humans can only hold ~7 items in our short-term memory at once (Miller’s Law). Likewise, an AI agent has a limited “context window” of information it can consider at any given time. We design agents to respect this limit by focusing on the essentials: for example, summarizing or forgetting older dialogue once it’s no longer needed, and limiting each interaction to a clear, single objective. This ensures the agent isn’t overwhelmed. In fact, many AI memory systems (like summary buffers or hierarchical caches) deliberately imitate human memory with great results.
+
+- Theory of Mind: In human teams, each person keeps track of what others know and believe – we call this having a theory of mind about our collaborators. Multi-agent AI systems benefit from a similar awareness. We enable shared context or communication channels among agents so they can track what others have learned or decided. By modeling “what does my partner agent already know?”, each AI can avoid redundant work and coordinate more intelligently. This cross-awareness makes the group of agents function more like a cohesive unit rather than isolated bots.
+
+- Avoiding Cognitive Biases: Human reasoning is rife with biases, and AI can unwittingly adopt them too. Two examples are anchoring bias – overweighting the first piece of information seen and confirmation bias – only seeking evidence that confirms an initial assumption. We counter these by design. For anchoring, we might randomize the order of facts or ask agents to consider multiple perspectives, so they don’t fixate on one narrative. For confirmation bias, we explicitly introduce a “devil’s advocate” role: an agent tasked with challenging assumptions and surfacing counter-evidence. By baking such mechanisms into our agent orchestration, we help ensure the AI system remains balanced, critical, and robust in its reasoning.
+
+(Note: While drawing inspiration from human psychology is powerful, we must remember AI agents are not actually human. They lack true consciousness or intent – they just predict tokens. Human psychology evolved for survival and social interaction, so not every human dynamic directly applies to machines. These principles are helpful heuristics, not one-to-one mappings of human traits. Used wisely, though, they can greatly improve an AI system’s reasoning and cooperation.)
+
+## From Big Data to Context-Driven AI Orchestration
+
+The evolution of AI is often described as moving from the data-driven era to a new context-driven paradigm. In the 2010s, success in AI was largely about scaling up data and models – think huge datasets, massive “foundation models,” and techniques like retrieval-augmented generation (RAG) to feed them facts. We also developed rule-based guardrails to keep those large models in check. But fundamentally, that approach treated AI like a black box you just pour more data into.
+
+Now, leading practitioners understand that scaling alone isn’t enough. The next leap comes from how we organize and direct our AI systems. Today’s paradigm focuses on orchestration – connecting multiple models and agents, each with specific roles or context, to solve problems together. Instead of solely relying on more data, we provide richer context and smarter structure. We use tools for interpretability and reasoning, and we design the “architecture” of AI solutions much like we design organizations or software systems. In short, we create systems, not just datasets, to get better results.
+
+Why this shift? Because understanding AI as an intelligent system (rather than a static model) helps us build better solutions. The challenges we face with AI – making it reason effectively, communicate clearly, and collaborate on tasks – are not unique. They mirror problems humans have faced in teams and decision-making throughout history. And humanity has thousands of years of knowledge about how to address those problems, from logic to sociology to management science. It’s only logical to leverage that wisdom. We can empower our AI’s intelligence by using well-crafted systems informed by human experience, rather than treating the AI like an island. Agentic AI orchestration is about applying what we know of successful thinking and teamwork to artificial agents.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/psychology-for-agent-design-tesonet.md -->
+---
+title: Psychology for agent design, at Tesonet's AI conference
+date: 2025-11-14
+summary: At Tesonet's AI-Focused Conference in Vilnius I argued that a lot of agent failures are old psychology problems, and that organizing agents like a small team with clear roles helps.
+---
+
+![Speaking at Tesonet's AI-Focused Conference, Vilnius](/talk-tesonet.jpg)
+
+LLMs learn from human language, so it'd be strange if they didn't pick up
+some human failure modes too. They get overconfident, anchor on misleading
+early information and echo the biases in their training data, which are
+problems psychology and cognitive science have studied for decades. That was
+the argument of my talk at Tesonet's AI-Focused Conference in Vilnius, which
+opened their AI-Only Hackathon weekend, with speakers from Amazon, Google
+Cloud Security and Hostinger (and of the write-up I published a few days later).
+
+I organized it as three levels, going from a single exchange up to a team:
+
+[[demo:psych-levels]]
+
+The first two are about one agent. Getting a straight answer out of a
+conversation borrows from interrogation research, which needs care. Long
+research tasks hit something like bounded rationality, since context and
+attention are finite, so the agent works in stages (gather, summarize, go
+deeper) and feeds summaries forward.
+
+The team level had the clearest number. In one evaluation I cited, splitting
+a coding agent into an architect, developers, QA and DevOps, each with
+context and skills for its role, took a coding benchmark score from 38.5 to
+69.2 over one generalist agent. It's a single comparison, so I'd read the
+gap as directional. Organizational psychology points the same way: small
+teams with clear roles do better, and the rule of thumb is to stay around 5
+to 8 agents, since past that more hierarchy mostly adds confusion (like too
+many managers on a human team).
+
+A few smaller patterns carried over as heuristics:
+
+- **Working memory.** Miller's "about seven items" (later work like Cowan's
+  puts it closer to four) doesn't transfer literally, since a context window
+  is far bigger. The useful part is that performance drops before the limit,
+  so agents should summarize or drop old dialogue and keep each exchange on
+  one objective.
+- **Theory of mind.** Agents that share context can model what their peers
+  already know, which should cut duplicated work.
+- **Biases.** Randomizing the order of facts is a cheap check against
+  anchoring, and a devil's advocate agent helps against confirmation bias.
+
+The caveat in the write-up still holds: agents aren't people, so none of
+this maps one-to-one. My view is that a lot of what looks new in agent
+design is the old problem of getting a group to think and work together, and
+it'd probably be interesting to test more of those findings on agents
+directly instead of rediscovering them.
+
+The full write-up is
+[Psychology-inspired agentic AI](#/blog/psychology-inspired-agentic-ai)
+(originally on the nexos.ai LinkedIn page).
 
 
 ---

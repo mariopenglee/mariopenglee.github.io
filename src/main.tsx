@@ -6,6 +6,7 @@ import { SITE, NAV } from './data/site';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
 import Post from './pages/Post';
+import Talks from './pages/Talks';
 import './index.css';
 
 function TopBar() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Post />} />
+          <Route path="/talks" element={<Talks />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

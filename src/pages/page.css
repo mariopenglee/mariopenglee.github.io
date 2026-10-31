@@ -443,3 +443,28 @@
   color: var(--ink-dim);
   font-weight: 500;
 }
+
+/* ---- highlights: one-line proof points under the hero ---- */
+.highlights {
+  list-style: none;
+  margin: -1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+}
+
+.highlights li::before {
+  content: '> ';
+  color: var(--ink-faint);
+}
+
+.highlights a {
+  color: var(--ink-dim);
+}
+
+.highlights a:hover {
+  color: var(--ink);
+}

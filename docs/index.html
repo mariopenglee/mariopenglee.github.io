@@ -64,8 +64,8 @@
         ]
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-e784b8b2.js"></script>
-    <link rel="stylesheet" href="/assets/index-59e88856.css">
+    <script type="module" crossorigin src="/assets/index-80adcd31.js"></script>
+    <link rel="stylesheet" href="/assets/index-1969a732.css">
   </head>
   <body>
     <div id="root"><h1>Mario Peng Lee</h1>
@@ -94,7 +94,13 @@
 <li><a href="https://mariopenglee.com/blog/diverse-names.md">Why linguists keep writing about John and Mary</a> (2026-10-15): In linguistics papers, 30% of male names are John and 31% of female names are Mary. A good list of names doesn&#39;t fix that, because people still pick from it. A random generator does.</li>
 <li><a href="https://mariopenglee.com/blog/cross-seed-saes.md">Do sparse autoencoders capture manifolds?</a> (2026-07-15): A concept like &quot;year&quot; lives on a curved manifold, and a single sparse autoencoder often shatters it instead of capturing it whole. Training several SAEs that differ only in random seed and pooling them tiles the manifold back together, right where one SAE dilutes it.</li>
 <li><a href="https://mariopenglee.com/blog/block-grpo.md">block-GRPO: doing RL on a diffusion language model</a> (2026-05-09): GRPO needs a log-probability that diffusion LLMs can&#39;t give you cheaply. Using the model&#39;s own block-autoregressive structure makes most of it exact, and it beat vanilla GRPO by about 10x on tail reward.</li>
+<li><a href="https://mariopenglee.com/blog/infinite-context-agents-wip-london.md">Infinite context agents, at WIP London</a> (2026-04-18): At WIP, an Index Ventures x Anthropic event for London AI builders, I presented memgit, git-backed memory that lets agents keep context across sessions instead of starting from zero.</li>
 <li><a href="https://mariopenglee.com/blog/heartbeat.md">Building nexos.heartbeat: the infinite context problem</a> (2026-03-01): An always-on AI twin doesn&#39;t have a context window problem, it has an infinite context problem. Information theory, the design space, and why our memory is a git repository.</li>
+<li><a href="https://mariopenglee.com/blog/code-interpreter-nexos.md">Code interpreter: how we built it ourselves</a> (2026-01-30): How the nexos.ai code interpreter lets a model run real code instead of guessing: what it is for, and the isolated, ephemeral micro-VM sandbox behind it.</li>
+<li><a href="https://mariopenglee.com/blog/rethinking-rag.md">RAG isn&#39;t dead, plain RAG is</a> (2025-12-04): Why plain RAG breaks on real enterprise knowledge, and what organizing that knowledge first (late chunking, topic clusters, models that navigate a knowledge tree) changes. With Povilas Nagrockas.</li>
+<li><a href="https://mariopenglee.com/blog/context-engineering.md">Context engineering: where AI stops guessing</a> (2025-11-19): The hard part of enterprise AI isn&#39;t a bigger model, it&#39;s getting the right documents, rules and situational awareness in front of the model before it answers.</li>
+<li><a href="https://mariopenglee.com/blog/psychology-inspired-agentic-ai.md">Psychology-inspired agentic AI</a> (2025-11-17): Why agents inherit human failure modes, and how psychology and cognitive science (working memory, theory of mind, team size, bias) shape agent design. My write-up of the Tesonet talk.</li>
+<li><a href="https://mariopenglee.com/blog/psychology-for-agent-design-tesonet.md">Psychology for agent design, at Tesonet&#39;s AI conference</a> (2025-11-14): At Tesonet&#39;s AI-Focused Conference in Vilnius I argued that a lot of agent failures are old psychology problems, and that organizing agents like a small team with clear roles helps.</li>
 <li><a href="https://mariopenglee.com/blog/gpt2-ioi.md">GPT-2, IOI, and the sphex problem</a> (2025-05-21): A wasp can look like it understands what it&#39;s doing right up until you move one thing. I poked at GPT-2&#39;s indirect-object circuit the same way, to see whether it understood the task or just had a routine that usually works.</li>
 <li><a href="https://mariopenglee.com/blog/multitask-training.md">Does parameter sharing help? a multitask recommender experiment</a> (2025-05-10): I built the same recommender four times to find out whether sharing parameters across tasks helps. It turned out the loss weighting mattered more than the sharing, which is a known and slightly annoying axis.</li>
 <li><a href="https://mariopenglee.com/blog/hello.md">Starting a blog</a> (2025-05-01): Why this page exists, and what to expect.</li>
@@ -105,7 +111,7 @@
 <li><strong>Sparse autoencoder seeds share more than matching shows</strong>: my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; an independent side project finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed (<a href="https://mariopenglee.com/blog/orphan-latents.md">writeup</a>) (<a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">kernel noise</a>)</li>
 <li><strong>Do SAEs capture concept manifolds?</strong>: the toy phase, open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it (<a href="https://mariopenglee.com/blog/cross-seed-saes.md">writeup</a>) (<a href="https://github.com/mariopenglee/cross-seed-manifold-poc">code</a>)</li>
 <li><strong>Where role collapse happens in diffusion models</strong>: why SDXL and SD3.5 draw &quot;a mouse chasing a cat&quot; as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them (<a href="https://mariopenglee.com/blog/role-collapse.md">writeup</a>)</li>
-<li><strong>Code Interpreter at nexos.ai</strong>: a sandboxed runtime that lets our agents write and run code safely (<a href="https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/">writeup</a>)</li>
+<li><strong>Code Interpreter at nexos.ai</strong>: a sandboxed runtime that lets our agents write and run code safely (<a href="https://mariopenglee.com/blog/code-interpreter-nexos.md">writeup</a>)</li>
 </ul>
 <h2>research</h2>
 <ul>
@@ -117,9 +123,10 @@
 </ul>
 <h2>articles</h2>
 <ul>
-<li><strong>Psychology-inspired agentic AI</strong>: nexos.ai blog, Nov 2025, the write-up of my Tesonet conference talk (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7396131461592047616/">read</a>)</li>
-<li><strong>Context engineering: where AI stops guessing</strong>: nexos.ai blog, Nov 2025 (<a href="https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/">read</a>)</li>
-<li><strong>RAG isn&#39;t dead, plain RAG is</strong>: nexos.ai blog, Dec 2025 (with Povilas Nagrockas) (<a href="https://www.linkedin.com/feed/update/urn:li:activity:7402240814485348352/">read</a>)</li>
+<li><strong>Code interpreter: how we built it ourselves</strong>: nexos.ai, Jan 2026: letting the model run real code in an isolated micro-VM instead of guessing (<a href="https://mariopenglee.com/blog/code-interpreter-nexos.md">read</a>) (<a href="https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf">original</a>)</li>
+<li><strong>RAG isn&#39;t dead, plain RAG is</strong>: nexos.ai, Dec 2025, with Povilas Nagrockas: organize the knowledge before you retrieve it (<a href="https://mariopenglee.com/blog/rethinking-rag.md">read</a>) (<a href="https://www.linkedin.com/pulse/rethinking-rag-why-knowledge-organization-new-competitive-advantage-kxkze">original</a>)</li>
+<li><strong>Context engineering: where AI stops guessing</strong>: LinkedIn, Nov 2025: getting the right context in front of the model, not a bigger model (<a href="https://mariopenglee.com/blog/context-engineering.md">read</a>) (<a href="https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/">original</a>)</li>
+<li><strong>Psychology-inspired agentic AI</strong>: nexos.ai, Nov 2025, the long version of my Tesonet talk (<a href="https://mariopenglee.com/blog/psychology-inspired-agentic-ai.md">read</a>) (<a href="https://www.linkedin.com/pulse/psychology-inspired-agentic-ai-nexos-ai-vi0le">original</a>)</li>
 </ul>
 <h2>leadership</h2>
 <ul>
@@ -129,12 +136,12 @@
 </ul>
 <h2>talks</h2>
 <ul>
-<li><a href="https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/">Infinite context agents</a> (WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs)</li>
-<li><a href="https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/">Levels of representation: psychology for agent design</a> (Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger)</li>
+<li><a href="#/blog/infinite-context-agents-wip-london">Infinite context agents</a> (nexos.ai · WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs)</li>
+<li><a href="#/blog/psychology-for-agent-design-tesonet">Psychology for agent design</a> (nexos.ai · Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger)</li>
 <li><a href="https://www.youtube.com/watch?v=PC2wbY8yAbA">Using AI Agents to Navigate Data Chaos</a> (nexos.ai · Danske Bank Tech Night, Vilnius, Nov 2025)</li>
 <li><a href="https://www.youtube.com/watch?v=KoVKYMgw2H0">nexos.heartbeat: an AI engine that works while you sleep</a> (nexos.ai · product demo)</li>
 <li><a href="https://www.linkedin.com/posts/mariopenglee_honored-to-represent-our-team-on-stage-and-ugcPost-7395414989592956928-noqm/">On stage for nexos.ai</a> (Nord Demo Day, Vilnius, Nov 2025)</li>
-<li><a href="https://www.linkedin.com/posts/mariopenglee_while-shipping-features-and-designing-architectures-ugcPost-7341930268053729280-psTg/">Model-agnostic interpretability and its real-world uses</a> (nexos.ai meetup, Jun 2025)</li>
+<li><a href="#/blog/gpt2-ioi">Model-agnostic interpretability and its real-world uses</a> (nexos.ai meetup, Jun 2025)</li>
 </ul>
 </div>
     

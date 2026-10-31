@@ -14,6 +14,7 @@ import RoleCollapseRates from '../components/RoleCollapseRates';
 import WugTest from '../components/WugTest';
 import SeedTiling from '../components/SeedTiling';
 import NoiseShare from '../components/NoiseShare';
+import Layers from '../components/Layers';
 import './page.css';
 
 // Interactive demos a post can embed by dropping `[[demo:key]]` on its own
@@ -33,6 +34,29 @@ const DEMOS: Record<string, () => JSX.Element> = {
   'wug-test': () => <WugTest />,
   'seed-tiling': () => <SeedTiling />,
   'noise-share': () => <NoiseShare />,
+  'memgit-stack': () => (
+    <Layers
+      caption="the agent context stack, rebuilt from git on every heartbeat (simplified from the slide)"
+      rows={[
+        { label: 'agent.md', note: 'identity' },
+        { label: 'user.md', note: 'owner' },
+        { label: 'continuity/slots.json', note: 'slots carried across sessions' },
+        { label: 'dated files', note: 'memory by date (partly illegible on the slide)' },
+        { label: 'pending events', note: 'what is waiting to be handled' },
+        { label: 'working memory', note: 'the current task' },
+      ]}
+    />
+  ),
+  'psych-levels': () => (
+    <Layers
+      caption="three levels of psychology-driven agent design, from one agent to a team"
+      rows={[
+        { label: '1. one exchange', note: 'getting an honest answer out of a conversation, borrowing from interrogation research' },
+        { label: '2. one long task', note: 'bounded rationality: chunked deep research that feeds summaries forward' },
+        { label: '3. a team', note: 'organizational psychology: small teams with clear roles' },
+      ]}
+    />
+  ),
 };
 
 const DEMO_RE = /<p>\[\[demo:([\w-]+)\]\]<\/p>/;
