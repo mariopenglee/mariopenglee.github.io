@@ -1,0 +1,156 @@
+% Mario Peng Lee, CV for CS master's applications.
+% Research variant (Stanford MSCS, Berkeley EECS MS, Columbia MS CS):  pdflatex cv.tex
+% Berkeley MEng variant:  pdflatex -jobname=cv-meng "\def\MENG{}\input{cv.tex}"
+\documentclass[10pt]{article}
+\usepackage[margin=0.55in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage[colorlinks=true, urlcolor=blue!50!black, linkcolor=black, citecolor=black]{hyperref}
+\usepackage{parskip}
+\setlength{\parskip}{2pt}
+\usepackage{needspace}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}[\vspace{-6pt}\rule{\textwidth}{0.4pt}]
+\titlespacing*{\section}{0pt}{5pt}{1pt}
+\setlist[itemize]{leftmargin=1.2em, itemsep=0pt, topsep=1pt, parsep=0pt}
+\let\oldsection\section
+\renewcommand{\section}[1]{\needspace{5\baselineskip}\oldsection{#1}}
+\newcommand{\entry}[4]{\needspace{2.2\baselineskip}\textbf{#1}, #2 \hfill #3\\ \textit{#4}}
+
+% ---------- sections as macros so the two variants can order them differently ----------
+
+\newcommand{\secHeader}{%
+\begin{center}
+  {\LARGE \textbf{Mario Peng Lee}}\\[3pt]
+  \footnotesize Vilnius, Lithuania \,$\cdot$\,
+  \href{https://mariopenglee.com}{mariopenglee.com} \,$\cdot$\,
+  \href{https://github.com/mariopenglee}{github.com/mariopenglee} \,$\cdot$\,
+  \href{https://scholar.google.com/citations?user=g5-ua5oAAAAJ}{Google Scholar} \,$\cdot$\,
+  \href{mailto:mario.penglee.mpl@gmail.com}{mario.penglee.mpl@gmail.com}\InputIfFileExists{private.tex}{}{}
+\end{center}}
+
+\newcommand{\secInterests}{%
+\section{Research Interests}
+Interpretability and representation learning, mostly whether our tools for reading models are reliable: when two sparse autoencoders disagree, is it the model or the method? A more applied version, which context a model actually needs, is what I work on in production as context compaction for long-running coding agents. I came to this from linguistics and psychology, so I test models behaviorally first, then look for the mechanism.}
+
+\newcommand{\secProfile}{%
+\section{Profile}
+AI engineer and co-founder of two companies. Team lead for a 12-person team at nexos.ai and led five engineers at Pocketful; now chief scientist at condense.chat (raised \texteuro500k; selected for the a16z speedrun Global Founder Sprint). Interpretability researcher at EleutherAI SOAR 2026; co-founded AI Safety at UCLA (raised about \$150k).}
+
+\newcommand{\secEducation}{%
+\section{Education}
+\entry{UCLA}{B.A., Linguistics and Computer Science (joint major) and Psychology}{2020 -- 2024}{Double major. Minor in Data Science Engineering. GPA 3.87/4.00. Phi Beta Kappa. Departmental Honors. Dean's Honors List, 10 quarters.}
+\begin{itemize}
+  \item Coursework: Machine Learning, Theory of Computing, Artificial Intelligence, Programming Languages, Computational Linguistics, Linear Algebra, Probability, Mathematical Statistics.
+  \item Upsilon Pi Epsilon and Psi Chi. \href{https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024}{UCLA Newsroom feature} at Commencement 2024 for co-founding AI Safety at UCLA.
+\end{itemize}
+\entry{Stanford Online}{Artificial Intelligence Professional Program (non-degree certificate)}{2022 -- 2023}{NLP (XCS224N), Natural Language Understanding (XCS224U), Multi-Task and Meta-Learning (XCS330).}}
+
+\newcommand{\secResearch}{%
+\section{Research Experience}
+\entry{EleutherAI}{Researcher, Summer of Open AI Research (SOAR 2026)}{Jul 2026 -- present}{Supervised by Gonçalo Paulo. One of 76 selected from about 3,450 applicants.}
+\begin{itemize}
+  \item Studying whether sparse autoencoders (SAEs) trained on Llama-3.1-8B and Pythia-160m activations learn the same features across random seeds. One-to-one matching says about half the latents are shared; a transplant test calibrated on toy worlds estimates the real shared share at 75 to 86\%.
+  \item Self-initiated follow-up, now a second paper with Paulo: rerunning with the same seed and data, changing only GPU kernel nondeterminism, leaves 43 to 85\% as many latents unmatched as a new seed, and largely the same latents (on Llama, 56\% vs 37\% expected by chance).
+  \item In one rare clean case (Llama layer 28), two seeds split temperature into 6 and 4 latents with no one-to-one match, yet their reconstructions align after an orthogonal rotation ($R^2 = .85$).
+\end{itemize}
+
+\entry{Independent research, with Andrew Lee}{Text-to-image interpretability}{2026 -- present}{Continued from our time together at the UCLA CVL lab.}
+\begin{itemize}
+  \item Role collapse in text-to-image models: why SDXL and SD3.5 draw ``a mouse chasing a cat'' with the roles swapped. A linear probe shows T5 encodes the roles, yet SD3.5 still reverses 72 to 75\% of rare-direction prompts; on SDXL, guidance and embedding splices don't move the rate and the nouns' cross-attention maps stay separate, which points to the denoiser.
+\end{itemize}
+
+\entry{Computational Vision and Learning Lab, UCLA}{Research Assistant}{Jul 2023 -- Jun 2024}{Co-advised by Hongjing Lu and Keith Holyoak.}
+\begin{itemize}
+  \item CycleDiffusion: trained a diffusion model so a captioner could recover the input sentence from the image, to probe relational representations. It collapsed into texture rather than a readable code, most likely because of the captioner it trained against.
+\end{itemize}
+
+\entry{Language and Cognitive Development Lab, UCLA}{Research Assistant}{Jun 2023 -- Jun 2024}{Advised by Catherine Sandhofer, with Amalia Ionescu and Hunter Priniski; 2026 follow-up ongoing.}
+\begin{itemize}
+  \item Narrative cohesion in 31 children aged 4 to 6 versus GPT-4 on a wordless picture book, measured by coreference chains. Children tracked characters far better in 2024 ($d = 2.2$); in a 2026 follow-up the gap shrinks with each model generation and is no longer significant for the best models.
+\end{itemize}
+
+\entry{Redwood Research}{Research Intern}{Jun 2022 -- Sep 2022}{Advised by Buck Shlegeris.}
+\begin{itemize}
+  \item Perturbation study of GPT-2's indirect-object identification (IOI) circuit: rare names destabilize it, it accepts the subject as its own object, and with four entities it falls back on proximity, so the circuit seems to implement something narrower than the task.
+\end{itemize}
+
+\entry{Other undergraduate research}{UCLA Language Acquisition Lab; Swarthmore Linguistics}{2022 -- 2024}{Advised by Megha Sundara and Laurel Perkins; Maura O'Leary. Children's acquisition of Spanish inflection; the Diverse Names Generator (LSA 2023).}}
+
+\newcommand{\secIndustry}{%
+\section{Industry Experience}
+\entry{condense.chat}{Co-Founder and Chief Scientist}{May 2026 -- present}{Context compaction for coding agents. Built the product from zero and raised \texteuro500k. Selected for the a16z speedrun Global Founder Sprint (SF Tech Week 2026).}
+\begin{itemize}
+  \item Designed the compaction engine and trained the models behind it (Adeline, Helene): up to 70\% smaller context on long coding-agent sessions (20+ turns, 40k+ tokens) with no measured quality loss on Terminal-Bench 2 and internal long-trajectory data.
+  \item block-GRPO: RL for a block-autoregressive diffusion LLM (Fast-dLLM v2 7B), with the log-probability exact across blocks and an ELBO within each; tail reward (gain on the hardest prompts) +0.158 vs +0.017 for vanilla GRPO.
+\end{itemize}
+
+\entry{nexos.ai}{AI Engineer, promoted to Senior AI Engineer Feb 2026}{Jun 2025 -- Jun 2026}{Enterprise AI platform (raised \texteuro30M), Vilnius. Team lead for a 12-person team spanning backend, frontend and AI.}
+\begin{itemize}
+  \item Designed the memory and continuity model behind nexos.heartbeat, the company's always-on AI twin: a git-backed, versioned model of each user that new evidence can revise. Presented the git-backed memory approach at WIP: Index Ventures x Anthropic, London.
+  \item Built the agent layer and a sandboxed code interpreter for agent-written code. Wrote nexos.ai engineering articles on the RAG rebuild and the code interpreter.
+\end{itemize}
+
+\entry{Pocketful}{Co-Founder; Head of Engineering to Jun 2025, CEO since}{Jun 2024 -- present}{WhatsApp AI agents for restaurant owners in Argentina. Bootstrapped and profitable.}
+\begin{itemize}
+  \item Built the first product solo, then led a team of five engineers. Acquired every customer, zero to over \$100k ARR.
+\end{itemize}}
+
+\newcommand{\secPublications}{%
+\section{Publications}
+\begin{itemize}
+  \item M. O'Leary, R. Williams, \textbf{M. Peng Lee}. 2023. The Diverse Names Generator: An app for decreasing bias and promoting inclusion. \textit{Proceedings of the Linguistic Society of America} 8(1), 5541.
+  \item \textbf{M. Peng Lee}. 2023. Transformer Phonotactics via IPA G2P Finetuning. \textit{UCLA Undergraduate Science Journal} 36, 37--43.
+\end{itemize}
+\textbf{Manuscripts in preparation}
+\begin{itemize}
+  \item \textbf{M. Peng Lee}, T. Ye, G. Paulo. Sparse autoencoder seeds share more than matching shows. EleutherAI SOAR 2026. \href{https://mariopenglee.com/\#/blog/orphan-latents}{Writeup}.
+  \item \textbf{M. Peng Lee}, G. Paulo. Same seed, different SAE: GPU noise and seed dependence. EleutherAI SOAR 2026. \href{https://mariopenglee.com/\#/blog/same-init-different-dictionary}{Writeup}.
+\end{itemize}}
+
+\newcommand{\secAwards}{%
+\section{Grants and Awards}
+\begin{itemize}
+  \item 2024: UCLA Departmental Honors Award. 2023: Open Philanthropy (now Coefficient Giving) University Organizer Fellowship, \$34,600 across two awards, for directing AI Safety at UCLA and its undergraduate research program.
+  \item 2023: UCLA Undergraduate Research Scholars Program, \$6,000, and two UCLA research and travel awards.
+  \item 2022: Open Philanthropy Action Fund, \$8,800, for co-founding AI Safety at UCLA. Long-Term Future Fund, \$4,785, for the Stanford certificate.
+\end{itemize}}
+
+\newcommand{\secTalks}{%
+\section{Talks}
+\begin{itemize}
+  \item \href{https://mariopenglee.com/\#/blog/infinite-context-agents-wip-london}{Infinite context agents} (writeup). WIP: Index Ventures x Anthropic, London, Apr 2026.
+  \item \href{https://www.youtube.com/watch?v=PC2wbY8yAbA}{Using AI Agents to Navigate Data Chaos} (recording). Danske Bank Tech Night, Vilnius, Nov 2025 (with Povilas Nagrockas).
+  \item \href{https://mariopenglee.com/\#/blog/psychology-for-agent-design-tesonet}{Psychology for agent design} (writeup). Tesonet AI-Focused Conference, Vilnius, Nov 2025.
+  \item \href{https://lnkd.in/p/d5E6HgSd}{Model-agnostic interpretability and its real-world applications}. nexos.ai meetup, Vilnius, Jun 2025.
+  \item The Diverse Names Generator. Linguistic Society of America Annual Meeting, 2023.
+\end{itemize}}
+
+\newcommand{\secLeadership}{%
+\section{Leadership and Service}
+\begin{itemize}
+  \item \textbf{AI Safety at UCLA}, Co-Founder, 2022 -- 2024. Raised about \$150k and founded and led its Alignment Research Team, directing undergraduate research projects.
+  \item \textbf{LA Blueprint} (student nonprofit building software for community organizations), Board Member, 2023 -- 2024. Editor, \textbf{\mbox{Undergraduate} Research Journal of Psychology}, 2023.
+\end{itemize}}
+
+\newcommand{\secSkills}{%
+\section{Skills}
+\textbf{Programming}: Python, PyTorch, Hugging Face, vLLM, TypeScript. \textbf{Languages}: Spanish, English and Chinese (native); Lithuanian, Italian (conversational).}
+
+% ---------- document ----------
+\begin{document}
+\fontsize{9.5}{11.4}\selectfont
+\secHeader
+\ifdefined\MENG
+  \secProfile \secIndustry \secLeadership \secEducation \secResearch \secPublications \secTalks \secAwards \secSkills
+\else
+  \secInterests \secEducation \secResearch \secIndustry \secPublications \secAwards \secTalks \secLeadership \secSkills
+\fi
+\end{document}

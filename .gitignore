@@ -25,3 +25,8 @@ dist
 *.sln
 *.sw?
 *.tsbuildinfo
+
+# personal / generated (CV builds, renders, downloaded photos)
+.claude/
+cv/private.tex
+cv/cv-2024-original.tex
