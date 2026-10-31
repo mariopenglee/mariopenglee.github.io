@@ -32,15 +32,12 @@ voice. Derived from his own writing samples:
 - Practical structure when discussing research: name the risk, then the
   mitigation; propose the smallest clean experiment first; control one
   variable at a time.
-- Endings look forward with curiosity ("would love to look into it",
-  "probably interesting to explore whether X") rather than punchlines.
+- No punchline endings. A curious forward look ("would love to look into
+  it") is one natural option, not a requirement.
 - No emojis.
 
-**Structure (for any longer piece: posts, writeups)**
-- One idea per piece. State it in a sentence before drafting; cut what
-  doesn't serve it.
-- Open on the gap, not the setup: first sentences hand the reader a specific
-  question, surprising result, or concrete image, then fill in background.
-- Lead with the result, then explain how. Anchor every abstract claim to
-  something concrete (a number, an example, the actual bug) within a sentence
-  or two. Blog-post specifics live in the blog-post skill.
+**Structure**
+- No fixed template. Posts shouldn't all read the same: pick the form that
+  fits the piece (note, story, walkthrough, argument, list) and vary it from
+  post to post. Be concrete and honest about the evidence; everything else
+  is the writer's call. Blog-post specifics live in the blog-post skill.

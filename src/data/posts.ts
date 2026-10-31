@@ -1,4 +1,6 @@
 import { marked } from 'marked';
+import markedKatex from 'marked-katex-extension';
+import 'katex/dist/katex.min.css';
 
 export interface Post {
   slug: string;
@@ -9,6 +11,8 @@ export interface Post {
 }
 
 marked.setOptions({ gfm: true, breaks: false });
+// $inline$ and $$display$$ LaTeX in posts, rendered at build time by KaTeX
+marked.use(markedKatex({ throwOnError: false }));
 
 // Author posts by dropping a markdown file in src/posts/. Frontmatter:
 //   ---

@@ -62,7 +62,7 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
   },
   {
     title: 'Sparse autoencoder seeds share more than matching shows',
-    desc: 'my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; a companion paper finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed',
+    desc: 'my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; an independent side project finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed',
     links: [
       { name: 'writeup', url: '#/blog/orphan-latents' },
       { name: 'kernel noise', url: '#/blog/same-init-different-dictionary' },
