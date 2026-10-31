@@ -55,10 +55,10 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - **Phi Beta Kappa**: UCLA, 2024
 
 ## talks
-- [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
-- [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Tech Night, Vilnius, Nov 2025)
-- Infinite context agents (Anthropic WIP London · AI features showcase)
+- [Infinite context agents](https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/) (WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs)
 - [Levels of representation: psychology for agent design](https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/) (Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger)
+- [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Tech Night, Vilnius, Nov 2025)
+- [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
 - [On stage for nexos.ai](https://www.linkedin.com/posts/mariopenglee_honored-to-represent-our-team-on-stage-and-ugcPost-7395414989592956928-noqm/) (Nord Demo Day, Vilnius, Nov 2025)
 - [Model-agnostic interpretability and its real-world uses](https://www.linkedin.com/posts/mariopenglee_while-shipping-features-and-designing-architectures-ugcPost-7341930268053729280-psTg/) (nexos.ai meetup, Jun 2025)
 
