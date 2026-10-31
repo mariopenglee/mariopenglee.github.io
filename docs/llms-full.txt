@@ -920,11 +920,25 @@ unsupervised. Deciding what an agent actually needs in front of it is also
 pretty close to what I work on now at [condense.chat](https://condense.chat/),
 just from the compression side.
 
-People were skeptical, which was useful, but most came around to it being
-a framing problem: the hard part isn't storing more,
-it's that we keep trying to fit everything into the context window. My view
-is that's the real takeaway, and probably the thing worth testing next is
-how much an agent loses when it only loads a small slice of its history.
+People were skeptical, which was useful, and the pushback came down to two
+things. The first was collaboration: what happens when several agents (or
+people) write to the same memory at once? To be honest I think this is
+where git shines, since concurrent edits are exactly what it was built for.
+You just make sure every writer keeps pulling and always rebases, and race
+conditions become ordinary merges.
+
+The second, stale information, was the fair one. If memory only grows,
+old facts sit next to new ones and the agent can't always tell which is
+current. I don't have a full answer yet. My guess is that semantic sharding
+(splitting memory by topic, so an update replaces the right slice instead
+of piling up next to it) is probably the way to solve it.
+
+Still, it held up in practice. All of nexos's company data ran through it,
+and it worked fine. It would remember a meeting you'd had, start a draft
+from it, and connect that to the right Jira ticket and the people involved,
+all natively, just an agent with the right context. Most people at the
+event seemed to come around to the same point: the hard part isn't storing
+more, it's that we keep trying to fit everything into the context window.
 
 The [LinkedIn post](https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/)
 has the full lineup.
