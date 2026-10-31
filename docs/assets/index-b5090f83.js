@@ -726,93 +726,94 @@ multi-objective reward models, basically anywhere one network is trained on
 more than one thing, and this was just the first time I measured it
 directly.
 `,wm=`---
-title: Seeds share more than their latents admit
+title: SAE seeds share more than matching shows
 date: 2026-10-31
-summary: Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds says 75 to 86% of what they learn is shared, and part of the gap is the same manifold cut into different tiles.
+summary: Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds puts the shared share at 75 to 86%, and part of the gap is the same manifold cut into different tiles.
 ---
 
 Train two sparse autoencoders (SAEs) on the same Llama-3.1-8B activations,
-change only the seed, and match their latents one-to-one. About
-half of them come out with no partner (these are usually called orphans, and
-[Paulo and Belrose](https://arxiv.org/abs/2501.16615) get only 30% shared on
-Llama-3-8B). The usual reading is that each seed learned features the
-other missed, which is bad news if you want SAE latents to be the
-units you interpret a model with. Our SOAR 2026 paper argues that's mostly wrong. Once orphans are tested by what they do rather than where their
-weights point, the share of structure two seeds have in common goes from
-51 / 53 / 42% to **75 / 86 / 82%** across three sites (Llama layer 16 MLP,
-Llama layer 28 residual, Pythia-160m layer 6 MLP). One-to-one matching
-undercounts sharing by 24 to 40 points.
+change only the seed, and match their latents one-to-one. About half come out
+with no partner (orphans; [Paulo and Belrose](https://arxiv.org/abs/2501.16615)
+get only 30% shared on Llama-3-8B). The usual reading is that each seed learned features the other
+missed, which matters a lot if you treat latents as the units you interpret a
+model with, since "the feature for X" would then depend on the seed. Our SOAR
+2026 paper finds that much of that gap comes from how latents are matched. If
+we count a latent as shared when it's matched or when the other seed's
+latents can stand in for it, the share goes from 51 / 53 / 42% to
+**75 / 86 / 82%** at three sites (Llama layer 16 MLP, Llama layer 28
+residual, Pythia-160m layer 6 MLP), so one-to-one matching misses 24 to 40
+points of sharing.
 
-Both views below are real data. The sphere is a toy world
-where the answer is known: one planted sphere, two TopK SAEs of width 32,
-every point coloured by the latent that fires hardest there. Seed A cuts it
-into 9 tiles and seed B into 6, and exactly one tile is matched across seeds,
-yet both reconstruct the sphere. The temperature view is Llama: we sweep
-"It is v degrees outside" from -30 to 60°C and plot each seed's tile-only
+Both views below are real data. The sphere is a toy world with a known
+answer: one planted sphere, two TopK SAEs of width 32, and every
+point coloured by the latent that fires hardest there. Seed A cuts it into 9
+tiles and seed B into 6, and exactly one tile is matched across seeds, yet
+both reconstruct the sphere. The temperature view is Llama: we sweep "It is v
+degrees outside" from -30 to 60°C and plot each seed's tile-only
 reconstruction on its top three principal components. Seed A uses 6 tiles and
 seed B 4, none has a one-to-one partner, and after an orthogonal rotation the
-two curves line up with R² = .85 (A just splits each end of the range in two).
+two curves line up with R² = .85.
 
 [[demo:seed-tiling]]
 
 ## why matching misses it
 
 The standard rule solves a Hungarian assignment over encoder and decoder
-directions and calls a pair matched if both cosines reach .7. That compares
+directions and calls a pair matched if both cosines reach .7, so it compares
 latents one at a time. If a manifold is tiled and the tile boundaries depend
 on the seed, no tile of A has to line up with any tile of B, even though
-their union covers the same thing. The toy makes this concrete: in worlds
-where both seeds see every manifold by construction, 61 to 84% of live
-latents are still orphans. Widening the SAE on a single sphere shatters it
-from 4 to 25 tiles, 89 to 99% of them unmatched, while the two seeds' outputs
-on it agree at R² ≥ .98.
+their union covers the same thing. In toy worlds where both seeds see every
+manifold, 61 to 84% of live latents are still orphans, and
+widening the SAE on a single sphere shatters it from 4 to 25 tiles (89 to 99%
+unmatched) while the two seeds' outputs on it agree at R² ≥ .98.
 
 ## the test
 
-Two steps, neither using weight similarity (orphans already failed
-that). First, pool both seeds' orphans and group them by co-firing,
-with the Ochiai coefficient over their active token sets:
+Neither step uses weight similarity, since orphans already failed that.
+First, we pool both seeds' orphans and group them by co-firing, with the
+Ochiai coefficient over their active token sets:
 
 \`\`\`
 O_ij = |A_i ∩ A_j| / sqrt(|A_i| · |A_j|)
 \`\`\`
 
-We connect each orphan to its 10 nearest neighbours, partition with Leiden
-CPM (resolution γ = .045 × the median edge weight), and keep only groups
-denser than size-matched groups in 5 degree-preserving shuffles. The method
-was picked from 7 similarities × 32 clusterings, scored against the known
-manifolds of the toy worlds with a rule fixed beforehand.
+Each orphan connects to its 10 nearest neighbours, Leiden CPM partitions the
+graph (γ = .045 × the median edge weight), and we keep only groups denser
+than size-matched groups in 5 degree-preserving shuffles. This recipe won
+out of 7 similarities × 32 clusterings on toy worlds with known manifolds,
+under a selection rule fixed beforehand.
 
-Second, transplant. For each group we delete the host seed's orphans and
+Second, we transplant. For each group we delete the host seed's orphans and
 insert the donor seed's, encoded on the same held-out tokens:
 
 \`\`\`
 repair = 1 − ΔSSE(donor) / ΔSSE(empty slot)
 \`\`\`
 
-So 1 means the donor fully stands in, 0 means it's no better than leaving
-the slot empty. A group counts as shared if its repair clears a bar b, and
-we set b by error control: b = .19 is the lowest bar where every control
+A repair of 1 means the donor fully stands in, and 0 means it's no better
+than leaving the slot empty. A group counts as shared if its repair clears a
+bar b, set by error control: b = .19 is the lowest bar at which every control
 donor (firing-matched latents, a different group, random latents) passes for
-at most 1% of orphans in all 16 toy worlds and all 3 real sites. In the toy,
-where every orphan is a false orphan, 86% pass, so that's the test's
+at most 1% of orphans in all 16 toy worlds and all 3 real sites. In the toy
+every orphan is a false orphan, and 86% pass, which gives the test's
 sensitivity s. Grouping, resolution, bar and sensitivity were all fixed on
 the toy before any real model was scored.
 
 ## what the real models say
 
 At b = .19, 51 to 65% of grouped orphans transplant, and no control passes
-for more than 0.9%. Correcting for sensitivity, with m the matched share and
-T(b) the share of all orphans in transplanting groups:
+for more than 0.9%. With m the matched share and T(b) the share of all
+orphans in transplanting groups, we correct for sensitivity:
 
 \`\`\`
 shared = m + (1 − m) · T(b) / s
 \`\`\`
 
-which is where the 75 / 86 / 82% comes from. Temperature is the cleanest
-case. The blind groups find the same pieces the sweep does (9 of 10
-tiles share a group with a tile of the other seed, p < .001), and the
-donor's tiles repair the host where one-to-one partners mostly don't:
+That's the 75 / 86 / 82%. It assumes the real-model sensitivity is close to
+the toy's, so I'd read it as an estimate rather than a count. Temperature is
+the cleanest case: the blind groups find the same pieces the sweep
+does (9 of 10 tiles share a group with a tile of the other seed, p < .001),
+and the donor's tiles repair the host where one-to-one partners mostly don't:
 
 \`\`\`
 donor                 SSE repair (host A / B)   KL repair
@@ -823,20 +824,21 @@ firing-matched            -.32 / -.51           -.20 / -.12
 
 ## what it doesn't show
 
-Real orphans transplant partly, not fully. The repair distribution is a broad
-peak around +.2 to +.4 (3 to 6% above .8, against 49% in the toy), so honestly
-"shared" here means "carries much of the same structure", not "the
-same latent in disguise". Groups also aren't a better unit than the failed
-Hungarian partners in real models (.62 to .63 vs .51 to .65), and clean tilings
-like temperature are rare (under 0.1% of orphans). Lowering the matching
-cutoff doesn't rescue anything either: how close an orphan's partner is
-barely predicts whether it transplants (AUC .52 to .58). 
-The open question is the remaining 14 to 25%. Some of it is groups that
-aren't one concept, and some probably is real seed variance, which raised
-the question of how much of that variance needs a different seed at all. We
-answer that in a [companion post](#/blog/same-init-different-dictionary),
-and I'd love to see whether a small learned adapter between seeds turns the
-partial transplants into full ones.
+Real orphans transplant partly: repairs form a broad peak around
++.2 to +.4 (3 to 6% above .8, against 49% in the toy), so "shared" here means
+"carries much of the same structure", not "the same latent in disguise".
+Groups also aren't a better unit than the failed Hungarian partners in real
+models (.62 to .63 vs .51 to .65), and clean tilings like temperature are
+rare (under 0.1% of orphans). Lowering the matching cutoff doesn't help,
+since how close an orphan's partner is barely predicts whether it
+transplants (AUC .52 to .58).
+
+That leaves 14 to 25% unexplained. Some of it is groups that aren't one
+concept, and some is probably real seed variance, which raises the question
+of how much of that variance needs a different initialization at all. That's
+the [companion post](#/blog/same-init-different-dictionary). I'd also love to
+see whether a small learned adapter between seeds turns the partial
+transplants into full ones.
 `,km=`---
 title: A transformer that passes the wug test
 date: 2026-10-16
@@ -1011,43 +1013,47 @@ could probably steer directly.
 `,Sm=`---
 title: Same init, different dictionary
 date: 2026-10-31
-summary: Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, already leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.
+summary: Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.
 ---
 
-If you flip the last bit of one encoder weight at step 0 and otherwise train
-a sparse autoencoder (SAE) bit for bit the same, how different is the final
-dictionary? On GPT-2 it ends up half as different as a run with a brand new
-seed. That's the main result of our second SOAR 2026 paper, and it reframes
-the [orphan latents](#/blog/orphan-latents) from the first one: much of what
-gets called seed dependence doesn't need a different initialization at all.
+Train a sparse autoencoder (SAE) on GPT-2 twice, bit for bit the same, except
+that in the second run you flip the last bit of one encoder weight at step 0.
+The two final dictionaries leave half as many latents unmatched as two runs
+with different seeds do. That's the headline of our second SOAR 2026 paper,
+and it bears directly on the [orphan latents](#/blog/orphan-latents) from the
+first one: much of what gets called seed dependence doesn't need a different
+initialization.
 
-The measurement is simple. Let u be the share of live latents left unmatched
-between two seeds, and t the share left unmatched between two runs with the
-same seed and data that differ only in GPU kernel nondeterminism (the order
-of atomic adds in the backward pass). The noise share is
+The protocol follows [Summers and Dinneen (2021)](https://arxiv.org/abs/2103.04514),
+who asked the same question for supervised networks. We match latents with
+Hungarian assignments over encoder and decoder directions (both cosines ≥ .7)
+and count unmatched live latents. Let u be the unmatched share between two
+seeds, and t the share between two runs with the same seed and data that
+differ only in GPU kernel nondeterminism (the order of atomic adds in the
+backward pass). The noise share is
 
 \`\`\`
 R_N = t / u
 \`\`\`
 
-which is a ratio of unmatched shares, not a variance decomposition. Across
-TopK SAEs on Pythia-160m, GPT-2 Small and Llama-3.1-8B it lands between .43
-and .85, and on GPT-2 it rises with the learning rate at equal reconstruction
-(.57 to .77) and with the budget (.77 to .85 from 1B to 4B tokens).
+a ratio of unmatched shares, not a variance decomposition. Across TopK SAEs
+on Pythia-160m, GPT-2 Small and Llama-3.1-8B it lands between .43 and .85.
+On GPT-2 it rises with the learning rate at equal reconstruction (.57 to .77)
+and with the budget (.77 to .85 from 1B to 4B tokens).
 
 [[demo:noise-share]]
 
 ## same latents, not just same amount
 
-A ratio alone could mean noise breaks some random other set of latents. It
-doesn't. We cross-tabulate "unmatched by the perturbation" against "unmatched
-by a new seed" and compute a Mantel-Haenszel odds ratio within firing
-frequency deciles, with a threshold of 3 fixed before any result was read.
-Every perturbation clears it (ulp flip, kernel noise, noise dose, document
-order, minibatch composition, a mid-run kernel switch), with odds ratios of
-4.7 to 28 across both matching rules. On Llama, a noise twin leaves unmatched
-56% of the latents a new seed leaves unmatched, against 37% if the two were
-unrelated.
+A ratio alone would be consistent with noise breaking some unrelated set of
+latents, so we cross-tabulate "unmatched by the perturbation" against
+"unmatched by a new seed" and compute a Mantel-Haenszel odds ratio within
+firing-frequency deciles, with a threshold of 3 fixed before any result was
+read. Every perturbation clears it (the last-bit flip, kernel noise, noise
+dose, document order, minibatch composition, a mid-run kernel switch), with
+odds ratios of 4.7 to 28 across two matching rules. On Llama, a noise twin
+leaves unmatched 56% of the latents a new seed leaves unmatched, against 37%
+if the two were independent.
 
 ## when it's decided
 
@@ -1059,13 +1065,15 @@ damping late noise, though we haven't pinned a mechanism. The window depends
 on the recipe (under bf16 autocast on Pythia it's still open at 5%).
 
 Seed pairs also aren't relabelings of each other. After permutation
-alignment, the relative barrier on the straight line between them is .16 to
-.22, and it disappears when only the matched latents are interpolated, so
-the barrier sits in the unmatched latents' directions.
+alignment, the relative barrier b (the largest rise in held-out FVU along the
+straight line between the two SAEs, over the endpoints' mean) is .16 to .22,
+and it disappears when only the matched latents are interpolated, so the
+barrier sits in the unmatched latents' directions.
 
-My intuition is that this is the part of the orphans the transplant test
-couldn't place, and I'd be curious whether a training recipe that damps those
-first few steps buys more reproducibility than any amount of seed averaging.
+The natural next step is to join the two papers: are the latents that kernel
+noise breaks the orphans that transplant, or the 14 to 25% that don't? I'd
+also be curious whether a recipe that damps those first few steps buys more
+reproducibility than seed averaging does.
 `;A.setOptions({gfm:!0,breaks:!1});const jm=Object.assign({"../posts/block-grpo.md":dm,"../posts/cross-seed-saes.md":hm,"../posts/cyclediffusion.md":fm,"../posts/diverse-names.md":pm,"../posts/gpt2-ioi.md":gm,"../posts/heartbeat.md":mm,"../posts/hello.md":bm,"../posts/kids-vs-llm-stories.md":ym,"../posts/multitask-training.md":vm,"../posts/orphan-latents.md":wm,"../posts/phonetic5.md":km,"../posts/role-collapse.md":xm,"../posts/same-init-different-dictionary.md":Sm});function Em(e){const t=e.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);if(!t)return{meta:{},body:e};const n={};for(const a of t[1].split(`
 `)){const r=a.indexOf(":");r>0&&(n[a.slice(0,r).trim()]=a.slice(r+1).trim().replace(/^["']|["']$/g,""))}return{meta:n,body:e.slice(t[0].length)}}const Ra=Object.entries(jm).map(([e,t])=>{const n=e.split("/").pop().replace(/\.md$/,""),{meta:a,body:r}=Em(t);return{slug:n,title:a.title??n,date:a.date??"",summary:a.summary??"",html:A.parse(r)}}).sort((e,t)=>e.date<t.date?1:-1),Cm=e=>Ra.find(t=>t.slug===e);const to=Ra.slice(0,3);function no({title:e,items:t}){return u.jsxs("section",{className:"section",children:[u.jsx("p",{className:"section-title",children:e}),u.jsx("ul",{className:"work-list",children:t.map(n=>u.jsxs("li",{className:"work-item",children:[u.jsxs("div",{className:"work-head",children:[u.jsx("span",{className:"work-title",children:n.title}),u.jsx("span",{className:"work-links",children:n.links.map(a=>u.jsx("a",{href:a.url,target:"_blank",rel:"noopener noreferrer",children:a.name},a.name))})]}),u.jsx("p",{className:"work-desc dim",children:n.desc})]},n.title))})]})}function $c(){return u.jsxs("div",{className:"fade page",children:[u.jsxs("header",{className:"hero",children:[u.jsx("h1",{className:"hero-name",children:u.jsx(Ng,{text:Bt.name})}),u.jsxs("p",{className:"hero-role",children:[Bt.role," of"," ",u.jsx("a",{href:Bt.companyUrl,target:"_blank",rel:"noopener noreferrer",children:Bt.company})]}),u.jsx("p",{className:"hero-role dim",children:Bt.tagline}),u.jsx("ul",{className:"links",children:xg.map(e=>u.jsx("li",{children:u.jsx("a",{href:e.url,target:"_blank",rel:"noopener noreferrer",children:e.name})},e.key))})]}),u.jsx("div",{className:"bio",children:kg.map(e=>u.jsx("p",{dangerouslySetInnerHTML:{__html:A.parseInline(e)}},e))}),Ic.length>0&&u.jsxs("section",{className:"section",children:[u.jsx("p",{className:"section-title",children:"talks"}),u.jsx("div",{className:"talk-list",children:Ic.map(e=>u.jsx(_g,{id:e.id,title:e.title,meta:e.meta,poster:e.poster},e.id))})]}),to.length>0&&u.jsxs("section",{className:"section",children:[u.jsx("p",{className:"section-title",children:"writing"}),u.jsx("ul",{className:"post-list",children:to.map(e=>u.jsxs("li",{className:"post-item",children:[u.jsx("span",{className:"post-date",children:e.date}),u.jsxs("div",{className:"post-main",children:[u.jsx(zn,{to:`/blog/${e.slug}`,className:"post-link",children:e.title}),e.summary&&u.jsx("p",{className:"post-summary",children:e.summary})]})]},e.slug))}),Ra.length>to.length&&u.jsx("p",{className:"section-more",children:u.jsx(zn,{to:"/blog",children:"all writing →"})})]}),u.jsx(no,{title:"selected work",items:jg}),u.jsx(no,{title:"research",items:Eg}),u.jsx(no,{title:"leadership",items:Cg})]})}function Tm(){return u.jsxs("div",{className:"fade page",children:[u.jsxs("header",{className:"hero hero-sub",children:[u.jsx("h1",{className:"hero-name",children:"writing"}),u.jsx("p",{className:"hero-role dim",children:"notes on interpretability, training, and agents"})]}),Ra.length===0?u.jsx("p",{className:"dim",children:"no posts yet."}):u.jsx("ul",{className:"post-list",children:Ra.map(e=>u.jsxs("li",{className:"post-item",children:[u.jsx("span",{className:"post-date",children:e.date}),u.jsxs("div",{className:"post-main",children:[u.jsx(zn,{to:`/blog/${e.slug}`,className:"post-link",children:e.title}),e.summary&&u.jsx("p",{className:"post-summary",children:e.summary})]})]},e.slug))})]})}const jr=6,Nm=jr,zh=3,Dc=["#e0703a","#4b9fd6","#5cb85c","#c268b4","#d4b23e"];function _m(e){return function(){e|=0,e=e+1831565813|0;let t=Math.imul(e^e>>>15,1|e);return t=t+Math.imul(t^t>>>7,61|t)^t,((t^t>>>14)>>>0)/4294967296}}const Fc=e=>e!=="helix";function Pm(e){if(e==="helix")return Array.from({length:340+1},(s,l)=>{const c=l/340,d=2*Math.PI*zh*c;return{p:[Math.cos(d),Math.sin(d),(c-.5)*2.4],t:c}});if(e==="sphere"){const s=Math.PI*(3-Math.sqrt(5));return Array.from({length:520},(l,c)=>{const d=1-2*c/519,p=Math.sqrt(Math.max(0,1-d*d)),f=s*c;return{p:[Math.cos(f)*p,d,Math.sin(f)*p],t:0}})}const t=30,n=20,a=.68,r=.32,i=[];for(let o=0;o<t;o++)for(let s=0;s<n;s++){const l=2*Math.PI*o/t,c=2*Math.PI*s/n;i.push({p:[(a+r*Math.cos(c))*Math.cos(l),(a+r*Math.cos(c))*Math.sin(l),r*Math.sin(c)],t:0})}return i}function Im(e,t){if(e==="helix"){const o=t(),s=2*Math.PI*zh*o;return{p:[Math.cos(s),Math.sin(s),(o-.5)*2.4],t:o}}if(e==="sphere"){const o=2*t()-1,s=2*Math.PI*t(),l=Math.sqrt(Math.max(0,1-o*o));return{p:[Math.cos(s)*l,Math.sin(s)*l,o],t:0}}const n=2*Math.PI*t(),a=2*Math.PI*t(),r=.68,i=.32;return{p:[(r+i*Math.cos(a))*Math.cos(n),(r+i*Math.cos(a))*Math.sin(n),i*Math.sin(a)],t:0}}function Lm(e,t,n,a){const r=[];if(e==="helix")for(let i=0;i<t.length;i++)Math.abs(t[i].t-n.t)<=a&&r.push(i);else{const i=a*a;for(let o=0;o<t.length;o++){const s=t[o].p[0]-n.p[0],l=t[o].p[1]-n.p[1],c=t[o].p[2]-n.p[2];s*s+l*l+c*c<=i&&r.push(o)}}return r}function Rm(e,t){return e==="helix"?.16/t:e==="sphere"?1.7/t:1.5/t}function ao(e,t,n,a,r,i){const o=_m(n*9301+(a+3)*2333+(e==="helix"?0:e==="sphere"?577:911));return Array.from({length:r},()=>({seed:a,cov:Lm(e,t,Im(e,o),i)}))}function ro(e,t){const n=new Int16Array(t).fill(-2);let a=0;for(let r=0;r<Nm;r++){let i=-1,o=0;for(let l=0;l<e.length;l++){let c=0;const d=e[l].cov;for(let p=0;p<d.length;p++)n[d[p]]===-2&&c++;c>o&&(o=c,i=l)}if(i<0)break;const s=e[i].cov;for(let l=0;l<s.length;l++)n[s[l]]===-2&&(n[s[l]]=e[i].seed,a++)}return{seedOf:n,capture:a/t}}function zm(){const[e,t]=x.useState("helix"),[n,a]=x.useState(5),[r,i]=x.useState(3),[o,s]=x.useState(1),[l,c]=x.useState(!1),d=x.useMemo(()=>{const k=Pm(e),C=k.length,E=Rm(e,n),T=E/Math.pow(r,Fc(e)?1/3:1/2),L=[];for(let oe=0;oe<r;oe++)L.push(...ao(e,k,o,oe,jr,E));const P=ao(e,k,o,0,jr,E),D=ao(e,k,o,-1,jr*r,T);return{pts:k,single:ro(P,C),pooled:ro(L,C),wide:ro(D,C)}},[e,n,r,o]),p=Math.round((d.pooled.capture-d.single.capture)*100),f=Math.round((d.wide.capture-d.single.capture)*100),b=[x.useRef(null),x.useRef(null),x.useRef(null)],y=x.useRef({yaw:.6,pitch:-.35,dragging:!1}),v=x.useRef(l);v.current=l,x.useEffect(()=>{let k=0;const C=(T,L,P,D)=>{const oe=Math.min(window.devicePixelRatio||1,2),he=Math.round((T.clientWidth||1)*oe);T.width!==he&&(T.width=he,T.height=he);const Z=T.getContext("2d");if(!Z)return;Z.clearRect(0,0,he,he);const Te=he/2,ae=Te/1.5,{yaw:rn,pitch:N}=y.current,I=Math.cos(rn),R=Math.sin(rn),V=Math.cos(N),J=Math.sin(N),Ot=ee=>v.current&&ee>=0?Dc[ee%Dc.length]:P,Ne=d.pts.map((ee,q)=>{const[ke,$t,on]=ee.p,Oh=ke*I+on*R,pl=-ke*R+on*I,$h=$t*V-pl*J,Dh=$t*J+pl*V;return{sx:Te+Oh*ae,sy:Te-$h*ae,depth:Dh,s:L.seedOf[q],i:q}});if(Fc(e)){Ne.sort((ee,q)=>ee.depth-q.depth);for(const ee of Ne){const q=(ee.depth+1.3)/2.6,ke=ee.s>-2;Z.globalAlpha=ke?.35+.65*q:.1+.18*q,Z.fillStyle=ke?Ot(ee.s):D;const $t=(ke?2.6:1.6)*(.6+.5*q)*oe;Z.beginPath(),Z.arc(ee.sx,ee.sy,$t,0,2*Math.PI),Z.fill()}}else for(let ee=0;ee<Ne.length-1;ee++){const q=Ne[ee],ke=Ne[ee+1],$t=(q.depth+1.3)/2.6,on=q.s>-2;Z.globalAlpha=on?.4+.6*$t:.1+.16*$t,Z.strokeStyle=on?Ot(q.s):D,Z.lineWidth=(on?3:1.2)*oe,Z.lineCap="round",Z.beginPath(),Z.moveTo(q.sx,q.sy),Z.lineTo(ke.sx,ke.sy),Z.stroke()}Z.globalAlpha=1},E=()=>{const T=getComputedStyle(document.documentElement),L=T.getPropertyValue("--ink").trim()||"#e9e9ec",P=T.getPropertyValue("--ink-faint").trim()||"#565760";y.current.dragging||(y.current.yaw+=.006);const D=[d.single,d.pooled,d.wide];b.forEach((oe,he)=>oe.current&&C(oe.current,D[he],L,P)),k=requestAnimationFrame(E)};return k=requestAnimationFrame(E),()=>cancelAnimationFrame(k)},[d,e]);const j=x.useRef({x:0,y:0}),g=k=>{var C,E;y.current.dragging=!0,j.current={x:k.clientX,y:k.clientY},(E=(C=k.target).setPointerCapture)==null||E.call(C,k.pointerId)},h=k=>{y.current.dragging&&(y.current.yaw+=(k.clientX-j.current.x)*.01,y.current.pitch=Math.max(-1.4,Math.min(1.4,y.current.pitch-(k.clientY-j.current.y)*.01)),j.current={x:k.clientX,y:k.clientY})},m=()=>{y.current.dragging=!1},w=[{key:0,label:"1 seed",pct:d.single.capture},{key:1,label:`${r} pooled`,pct:d.pooled.capture},{key:2,label:`1 wide SAE (${r}×)`,pct:d.wide.capture}];return u.jsxs("div",{className:"mt-demo",children:[u.jsx("div",{className:"mt-panels",onPointerDown:g,onPointerMove:h,onPointerUp:m,onPointerLeave:m,children:w.map(k=>u.jsxs("figure",{className:"mt-panel",children:[u.jsxs("figcaption",{className:"mt-panel-cap",children:[u.jsx("span",{children:k.label}),u.jsxs("span",{className:"mt-pct",children:[Math.round(k.pct*100),"%"]})]}),u.jsx("canvas",{ref:b[k.key],className:"mt-canvas"})]},k.key))}),u.jsxs("p",{className:"mt-readout",children:["pooling ",u.jsxs("strong",{children:[p>=0?"+":"",p,"%"]})," vs 1 seed"," · ","the wide SAE ",u.jsxs("strong",{children:[f>=0?"+":"",f,"%"]}),f<0?" (finer atoms shatter the manifold)":"",u.jsx("span",{className:"mt-hint",children:" · drag to spin"})]}),u.jsxs("div",{className:"mt-controls",children:[u.jsxs("label",{className:"mt-ctrl",children:[u.jsx("span",{children:"shape"}),u.jsx("div",{className:"mt-seg",children:["helix","sphere","torus"].map(k=>u.jsx("button",{className:e===k?"on":"",onClick:()=>t(k),children:k},k))})]}),u.jsxs("label",{className:"mt-ctrl",children:[u.jsxs("span",{children:["sparsity k ",u.jsx("span",{className:"mt-dim",children:"(compact → diluted)"})]}),u.jsx("input",{type:"range",min:1,max:8,value:n,onChange:k=>a(+k.target.value)})]}),u.jsxs("label",{className:"mt-ctrl",children:[u.jsxs("span",{children:["seeds pooled ",u.jsx("span",{className:"mt-dim",children:r})]}),u.jsx("input",{type:"range",min:1,max:5,value:r,onChange:k=>i(+k.target.value)})]}),u.jsxs("div",{className:"mt-ctrl-row",children:[u.jsxs("button",{className:`mt-toggle ${l?"on":""}`,onClick:()=>c(k=>!k),children:[l?"■":"□"," color by seed"]}),u.jsx("button",{className:"mt-reshuffle",onClick:()=>s(k=>k+1),children:"reshuffle"})]})]})]})}const Ae=24,Mm=[{b:1,label:"ar"},{b:4,label:"block 4"},{b:8,label:"block 8"},{b:Ae,label:"diffusion"}];function Am(e){const t=[];for(let n=0;n<Ae;n+=e){const a=Array.from({length:e},(r,i)=>n+i);for(let r=a.length-1;r>0;r--){const i=(r*7+n*3+5)%(r+1);[a[r],a[i]]=[a[i],a[r]]}t.push(...a)}return t}const Om=(e,t)=>({width:"0.9rem",height:"0.9rem",borderRadius:2,background:e?"var(--ink)":"transparent",border:`1px ${e?"solid":"dashed"} ${e?"var(--ink)":t?"var(--ink-dim)":"var(--ink-faint)"}`,transition:"background 120ms"});function $m(){const[e,t]=x.useState(4),[n,a]=x.useState(0),r=x.useMemo(()=>Am(e),[e]);x.useEffect(()=>{a(0);const c=setInterval(()=>a(d=>d>=Ae+6?0:d+1),160);return()=>clearInterval(c)},[e]);const i=new Set(r.slice(0,Math.min(n,Ae))),o=n<Ae?Math.floor(r[n]/e):-1,s=Array.from({length:Ae/e},(c,d)=>d),l=e===1?`${Ae} blocks of 1 token: every term is an exact next-token log-prob (plain autoregressive)`:e===Ae?`1 block of ${Ae} tokens: the whole sequence needs the estimate (pure diffusion)`:`${Ae/e} blocks: exact chain rule across them, only ${e} tokens at a time need the estimate`;return u.jsxs("div",{className:"mt-demo",children:[u.jsx("div",{style:{display:"flex",flexWrap:"wrap",alignItems:"center",justifyContent:"center",gap:"0.35rem"},children:s.map(c=>u.jsxs("div",{style:{display:"flex",alignItems:"center",gap:"0.35rem"},children:[c>0&&u.jsx("span",{style:{fontFamily:"var(--mono)",fontSize:"0.75rem",color:"var(--ink-dim)"},children:"→"}),u.jsx("div",{style:{display:"flex",flexWrap:"wrap",gap:3,padding:4,border:`1px solid ${c===o?"var(--line-strong)":"var(--line)"}`,borderRadius:"var(--radius)",maxWidth:e===Ae?"100%":void 0,justifyContent:"center"},children:Array.from({length:e},(d,p)=>c*e+p).map(d=>u.jsx("div",{style:Om(i.has(d),c===o)},d))})]},c))}),u.jsxs("p",{className:"mt-readout",style:{fontSize:"0.8rem"},children:["log π(x) = ",u.jsx("strong",{children:"Σ"}),u.jsx("sub",{children:"blocks"})," log p(block | earlier blocks)",u.jsx("br",{}),u.jsx("span",{className:"mt-dim",children:"→ exact (chain rule) · inside a box: denoised in any order, so ≈ (elbo / quadrature)"})]}),u.jsx("p",{className:"mt-readout",style:{marginTop:"0.5rem"},children:u.jsx("strong",{children:l})}),u.jsx("div",{className:"mt-controls",children:u.jsxs("label",{className:"mt-ctrl",children:[u.jsxs("span",{children:["block size ",u.jsxs("span",{className:"mt-dim",children:["(",Ae," tokens, illustrative)"]})]}),u.jsx("div",{className:"mt-seg",children:Mm.map(c=>u.jsx("button",{className:e===c.b?"on":"",onClick:()=>t(c.b),children:c.label},c.b))})]})})]})}const Dm=["Kofi","Hiroshi","Mateo","Arjun","Dmitri","Tane","Yusuf","Bao","Lior","Emeka","John","Sami"],Fm=["Amara","Ximena","Mei","Priya","Ngozi","Aroha","Leila","Ingrid","Thandi","Yuki","Mary","Noor"],Bm=["Bill","Bob","Tom","Fred","Sam"],Um=["Sue","Jane","Ann","Kim","Liz"],Er=8,ri=e=>e[Math.floor(Math.random()*e.length)];function Wm(){const e=Math.random()<.3?"John":ri(Bm),t=Math.random()<.31?"Mary":ri(Um);return[e,t]}function Bc(e,t){let n=ri(e);for(;n===t;)n=ri(e);return n}const ur={rows:[],total:0,john:0,mary:0};function Uc(e,t){return{rows:t,total:e.total+t.length,john:e.john+t.filter(n=>n[0]==="John").length,mary:e.mary+t.filter(n=>n[1]==="Mary").length}}const Wc=(e,t)=>t?Math.round(100*e/t):0;function Vc({title:e,side:t}){return u.jsxs("div",{className:"mt-panel",children:[u.jsx("div",{className:"mt-panel-cap",children:u.jsx("span",{children:e})}),u.jsxs("div",{style:{fontFamily:"var(--mono)",fontSize:"0.8rem",color:"var(--ink)",minHeight:`${Er*1.45}em`,lineHeight:1.45},children:[t.rows.length===0&&u.jsx("span",{className:"mt-hint",children:"press draw"}),t.rows.map(([n,a],r)=>u.jsxs("div",{children:[u.jsx("span",{style:{color:n==="John"?"var(--ink)":"var(--ink-dim)",fontWeight:n==="John"?600:400},children:n}),u.jsx("span",{className:"mt-dim",children:" thinks "}),u.jsx("span",{style:{color:a==="Mary"?"var(--ink)":"var(--ink-dim)",fontWeight:a==="Mary"?600:400},children:a}),u.jsx("span",{className:"mt-dim",children:" left."})]},r))]}),u.jsxs("div",{className:"mt-readout",style:{textAlign:"left"},children:["john ",u.jsxs("strong",{children:[Wc(t.john,t.total),"%"]})," · mary ",u.jsxs("strong",{children:[Wc(t.mary,t.total),"%"]})]})]})}function Vm(){const[e,t]=x.useState(ur),[n,a]=x.useState(ur),r=()=>{t(i=>Uc(i,Array.from({length:Er},Wm))),a(i=>{var c,d;const o=[];let s=(c=i.rows[i.rows.length-1])==null?void 0:c[0],l=(d=i.rows[i.rows.length-1])==null?void 0:d[1];for(let p=0;p<Er;p++)s=Bc(Dm,s),l=Bc(Fm,l),o.push([s,l]);return Uc(i,o)})};return u.jsxs("div",{className:"mt-demo",children:[u.jsxs("div",{style:{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(13rem, 1fr))",gap:"1.25rem"},children:[u.jsx(Vc,{title:"from memory",side:e}),u.jsx(Vc,{title:"random generator",side:n})]}),u.jsxs("div",{className:"mt-controls",children:[u.jsxs("div",{className:"mt-ctrl-row",children:[u.jsxs("button",{className:"mt-reshuffle",onClick:r,children:["draw ",Er," examples"]}),u.jsx("button",{className:"mt-reshuffle",onClick:()=>{t(ur),a(ur)},children:"reset"})]}),u.jsxs("div",{className:"mt-ctrl",children:[u.jsxs("span",{children:[e.total," sentences so far"]}),u.jsx("span",{className:"mt-dim",children:'illustrative. "from memory" picks John 30% and Mary 31% of the time, the survey rates. the generator draws uniformly from a toy pool of 12 per gender (the real one has over 200 names), never twice in a row.'})]})]})]})}const io=[{key:"pure",label:"lambda=0",sub:"step 500, pure cycle",vals:[.14,1.5,-13]},{key:"anchor",label:"lambda=1",sub:"step 750, anchored",vals:[-.22,.18,-3]},{key:"lora",label:"lora 0.1",sub:"step 750, lora lambda=0.1",vals:[-.11,.1,-1.5]}],Hc=[{name:"pix2struct nll",note:"the critic it trains against",worseSign:1},{name:"blip nll",note:"a captioner it never saw",worseSign:1},{name:"clipscore",note:"image-text match",worseSign:-1}],Hm=e=>(e>0?"+":"")+e.toFixed(Math.abs(e)>=1?1:2);function Qm(){const[e,t]=x.useState(0),n=io[e],a=Hc.map((o,s)=>Math.max(...io.map(l=>Math.abs(l.vals[s])))),r=n.vals[0]<0,i=n.vals[1]>0&&n.vals[2]<0;return u.jsxs("div",{className:"mt-demo",children:[u.jsx("p",{className:"mt-readout",style:{marginTop:0},children:"caption → sd unet → image → pix2struct → nll of the caption"}),u.jsxs("div",{style:{display:"flex",justifyContent:"space-between",fontFamily:"var(--mono)",fontSize:"0.72rem",color:"var(--ink-faint)",margin:"1rem 0 0.4rem"},children:[u.jsx("span",{children:"← better"}),u.jsx("span",{children:"change vs base"}),u.jsx("span",{children:"worse →"})]}),Hc.map((o,s)=>{const l=n.vals[s],c=l*o.worseSign,d=Math.abs(l)/a[s]*50;return u.jsxs("div",{style:{marginBottom:"0.8rem"},children:[u.jsxs("div",{style:{display:"flex",justifyContent:"space-between",fontFamily:"var(--mono)",fontSize:"0.78rem",color:"var(--ink-dim)",marginBottom:"0.25rem",gap:"0.5rem"},children:[u.jsxs("span",{children:[o.name," ",u.jsx("span",{className:"mt-dim",children:o.note})]}),u.jsx("strong",{style:{color:"var(--ink)",fontVariantNumeric:"tabular-nums"},children:Hm(l)})]}),u.jsxs("div",{style:{position:"relative",height:"0.9rem"},children:[u.jsx("div",{style:{position:"absolute",left:"50%",top:"-0.15rem",bottom:"-0.15rem",borderLeft:"1px solid var(--line)"}}),u.jsx("div",{style:{position:"absolute",top:0,bottom:0,left:c>0?"50%":`${50-d}%`,width:`${d}%`,background:c>0?"var(--ink)":"transparent",border:"1px solid var(--ink)",boxSizing:"border-box",transition:"left 0.25s, width 0.25s"}})]})]},o.name)}),u.jsxs("p",{className:"mt-readout",children:[n.sub,":"," ",u.jsx("strong",{children:r&&i?"the critic improves while blip and clip get worse":"everything gets worse, even the critic"})]}),u.jsx("div",{className:"mt-controls",style:{gridTemplateColumns:"1fr"},children:u.jsxs("div",{className:"mt-ctrl",children:[u.jsxs("span",{children:["run ",u.jsx("span",{className:"mt-dim",children:"(numbers from the table above)"})]}),u.jsx("div",{className:"mt-seg",children:io.map((o,s)=>u.jsx("button",{className:e===s?"on":"",onClick:()=>t(s),children:o.label},o.key))})]})})]})}const oo={clean:{label:"clean",before:"When",a:"John",b:"Mary",mid:"went to the store,",end:"gave a drink to",steps:[["find the duplicated name: John",!0],["suppress it",!0],["copy the other name: Mary",!0]],outcome:"answers Mary. the routine works on the sentences it was measured on."},rare:{label:"rare name",before:"When",a:"John",b:"Zubair",mid:"went to the store,",end:"gave a drink to",steps:[["find the duplicated name: John",!0],["suppress it",!0],["copy the other name: Zubair (a rare token, weak pull)",!1]],outcome:"wobbles. name priors beat the syntax, and common names win arguments they shouldn't."},self:{label:"self as object",before:"When",a:"Josh",b:"Mary",mid:"went to the store,",end:"went with",steps:[["find the duplicated name: Josh",!0],["suppress it (only partly)",!1],["copy the other name: Mary",!1]],outcome:"gpt-2 small will happily say Josh. the gpt-neo models mostly learned to punish this."}},Gm=e=>({padding:"0 0.2em",borderRadius:2,color:"var(--ink)",border:e==="io"?"1px solid var(--ink)":"1px dashed var(--ink-faint)"});function Km(){const[e,t]=x.useState("clean"),n=oo[e],a=n.steps.some(([,i])=>!i),r=(i,o)=>u.jsx("span",{style:Gm(o),children:i});return u.jsxs("div",{className:"mt-demo",children:[u.jsx("div",{className:"mt-controls",style:{marginTop:0,paddingTop:0,borderTop:"none"},children:u.jsxs("label",{className:"mt-ctrl",children:[u.jsx("span",{children:"move the prey"}),u.jsx("div",{className:"mt-seg",style:{flexWrap:"wrap"},children:Object.keys(oo).map(i=>u.jsx("button",{className:e===i?"on":"",onClick:()=>t(i),children:oo[i].label},i))})]})}),u.jsxs("p",{style:{fontFamily:"var(--mono)",fontSize:"0.9rem",lineHeight:1.9,margin:"1rem 0",color:"var(--ink-dim)"},children:[n.before," ",r(n.a,"dup")," and ",r(n.b,"io")," ",n.mid," ",r(n.a,"dup")," ",n.end," ",u.jsx("span",{style:{color:"var(--ink-faint)"},children:"___"})]}),u.jsx("ol",{style:{fontFamily:"var(--mono)",fontSize:"0.8rem",margin:0,paddingLeft:"1.4rem",color:"var(--ink-dim)"},children:n.steps.map(([i,o])=>u.jsxs("li",{style:{margin:"0.25rem 0",color:o?"var(--ink-dim)":"var(--ink)"},children:[i," ",u.jsxs("span",{style:{color:o?"var(--ink-faint)":"var(--ink)"},children:["[",o?"holds":"slips","]"]})]},i))}),u.jsxs("p",{className:"mt-readout",style:{textAlign:"left"},children:[u.jsx("strong",{children:a?"routine breaks":"routine holds"}),": ",n.outcome]}),u.jsx("p",{className:"mt-readout mt-hint",style:{textAlign:"left",fontSize:"0.72rem",margin:"0.5rem 0 0"},children:"illustrative: steps from the Wang et al. circuit, outcomes are the qualitative trends above, not logged outputs. dashed = repeated name, solid = indirect object."})]})}const qm=[["gpt-4 (2024)",2.2,!0],["gpt-4 turbo",1.85,!0],["gpt-5.5",1.75,!0],["gpt-6.1 sol",.94,!0],["claude haiku 5.5",.93,!0],["claude opus 5.5",.42,!1],["claude sonnet 5.5",.33,!1]],Ym=2.2,us={fontFamily:"var(--mono)",fontSize:"0.75rem",color:"var(--ink-dim)"};function so({label:e,value:t,max:n,text:a,faint:r}){return u.jsxs("div",{style:{display:"grid",gridTemplateColumns:"minmax(6.5rem, 9rem) 1fr",gap:"0.6rem",alignItems:"center",margin:"0.3rem 0",...us},children:[u.jsx("span",{style:{whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"},children:e}),u.jsxs("div",{style:{display:"flex",alignItems:"center",gap:"0.4rem",borderLeft:"1px solid var(--ink-faint)",minHeight:"1rem"},children:[u.jsx("div",{style:{width:`${t/n*80}%`,height:"0.7rem",background:r?"transparent":"var(--ink)",border:r?"1px dashed var(--ink-dim)":"none"}}),u.jsx("span",{style:{color:"var(--ink)",fontVariantNumeric:"tabular-nums",whiteSpace:"nowrap"},children:a})]})]})}function Xm(){return u.jsxs("div",{className:"mt-demo",children:[u.jsx("div",{style:{...us,marginBottom:"0.4rem"},children:"mentions per character (2024)"}),u.jsx(so,{label:"kids",value:5.66,max:5.66,text:"5.66"}),u.jsx(so,{label:"gpt-4",value:3.15,max:5.66,text:"3.15"}),u.jsx("div",{style:{...us,margin:"1.2rem 0 0.4rem"},children:"gap vs kids, cohen's d (0 = same as the kids)"}),qm.map(([e,t,n])=>u.jsx(so,{label:e,value:t,max:Ym,text:n?t.toFixed(2):`${t.toFixed(2)} n.s.`,faint:!n},e)),u.jsxs("p",{className:"mt-readout",style:{textAlign:"left"},children:["the gap shrinks every generation. ",u.jsx("span",{className:"mt-hint",children:"dashed = not significant. 31 kids, 30 stories per newer model."})]})]})}const ds=[{cmd:!0,text:"whoami"},{cmd:!1,text:"mario peng lee, AI Engineer"},{cmd:!0,text:"cat thoughts/ | tee blog/"}],dr=ds.reduce((e,t)=>e+(t.cmd?t.text.length+1:1),0);function Qc(){var e;return typeof window<"u"&&!!((e=window.matchMedia)!=null&&e.call(window,"(prefers-reduced-motion: reduce)").matches)}function Zm(){const[e,t]=x.useState(()=>Qc()?dr:0),[n,a]=x.useState(0);x.useEffect(()=>{if(Qc())return;t(0);const s=window.setInterval(()=>{t(l=>(l+1>=dr&&window.clearInterval(s),Math.min(l+1,dr)))},70);return()=>window.clearInterval(s)},[n]);let r=e;const i=[];for(const s of ds)if(s.cmd){if(r<0)break;i.push("$ "+s.text.slice(0,r)),r-=s.text.length+1}else{if(r<=0)break;i.push(s.text),r-=1}const o=e>=dr;return o&&i.push("$ "),u.jsxs("div",{className:"mt-demo",children:[u.jsx("pre",{style:{margin:0,minHeight:"7.5em"},"aria-label":ds.map(s=>(s.cmd?"$ ":"")+s.text).join(`
 `),children:u.jsxs("code",{children:[i.join(`
