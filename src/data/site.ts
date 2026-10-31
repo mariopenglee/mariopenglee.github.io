@@ -61,6 +61,14 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
     ],
   },
   {
+    title: 'Seeds share more than their latents admit',
+    desc: 'SOAR 2026: a toy-calibrated transplant test shows 75 to 86% of what two SAE seeds learn is shared, against ~50% matched one-to-one; plus a companion paper on how much of seed dependence is just GPU kernel noise',
+    links: [
+      { name: 'writeup', url: '#/blog/orphan-latents' },
+      { name: 'paper 2', url: '#/blog/same-init-different-dictionary' },
+    ],
+  },
+  {
     title: 'Do SAEs capture concept manifolds?',
     desc: 'open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it',
     links: [
