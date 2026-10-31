@@ -12,6 +12,8 @@ import BeliefRepo from '../components/BeliefRepo';
 import LossWeighting from '../components/LossWeighting';
 import RoleCollapseRates from '../components/RoleCollapseRates';
 import WugTest from '../components/WugTest';
+import SeedTiling from '../components/SeedTiling';
+import NoiseShare from '../components/NoiseShare';
 import './page.css';
 
 // Interactive demos a post can embed by dropping `[[demo:key]]` on its own
@@ -29,6 +31,8 @@ const DEMOS: Record<string, () => JSX.Element> = {
   'loss-weighting': () => <LossWeighting />,
   'role-collapse-rates': () => <RoleCollapseRates />,
   'wug-test': () => <WugTest />,
+  'seed-tiling': () => <SeedTiling />,
+  'noise-share': () => <NoiseShare />,
 };
 
 const DEMO_RE = /<p>\[\[demo:([\w-]+)\]\]<\/p>/;

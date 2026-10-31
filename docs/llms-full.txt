@@ -16,6 +16,8 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - [X](https://x.com/mariopenglee)
 
 ## writing
+- [Same init, different dictionary](https://mariopenglee.com/blog/same-init-different-dictionary.md) (2026-10-31): Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, already leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.
+- [Seeds share more than their latents admit](https://mariopenglee.com/blog/orphan-latents.md) (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds says 75 to 86% of what they learn is shared, and part of the gap is the same manifold cut into different tiles.
 - [Where role collapse happens in diffusion models](https://mariopenglee.com/blog/role-collapse.md) (2026-10-23): Prompt SDXL for a mouse chasing a cat and you usually get a cat chasing a mouse. My first suspect was CLIP reading prompts as a bag of words, but after ruling out the encoder, guidance, and cross-attention, the problem seems to sit in the UNet itself.
 - [Kids vs LLMs at telling a story](https://mariopenglee.com/blog/kids-vs-llm-stories.md) (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.
 - [cyclediffusion: can a picture be a bottleneck?](https://mariopenglee.com/blog/cyclediffusion.md) (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.
@@ -30,6 +32,7 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 
 ## selected work
 - **nexos.heartbeat**: always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model ([writeup](https://mariopenglee.com/blog/heartbeat.md)) ([demo](https://www.youtube.com/watch?v=KoVKYMgw2H0))
+- **Seeds share more than their latents admit**: SOAR 2026: a toy-calibrated transplant test shows 75 to 86% of what two SAE seeds learn is shared, against ~50% matched one-to-one; plus a companion paper on how much of seed dependence is just GPU kernel noise ([writeup](https://mariopenglee.com/blog/orphan-latents.md)) ([paper 2](https://mariopenglee.com/blog/same-init-different-dictionary.md))
 - **Do SAEs capture concept manifolds?**: open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it ([writeup](https://mariopenglee.com/blog/cross-seed-saes.md)) ([code](https://github.com/mariopenglee/cross-seed-manifold-poc))
 - **Where role collapse happens in diffusion models**: why SDXL and SD3.5 draw "a mouse chasing a cat" as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them ([writeup](https://mariopenglee.com/blog/role-collapse.md))
 - **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/))
@@ -49,6 +52,186 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 ## talks
 - [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
 - [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Lithuania)
+
+---
+
+<!-- https://mariopenglee.com/blog/same-init-different-dictionary.md -->
+---
+title: Same init, different dictionary
+date: 2026-10-31
+summary: Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, already leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.
+---
+
+If you flip the last bit of one encoder weight at step 0 and otherwise train
+a sparse autoencoder (SAE) bit for bit the same, how different is the final
+dictionary? On GPT-2 it ends up half as different as a run with a brand new
+seed. That's the main result of our second SOAR 2026 paper, and it reframes
+the [orphan latents](#/blog/orphan-latents) from the first one: much of what
+gets called seed dependence doesn't need a different initialization at all.
+
+The measurement is simple. Let u be the share of live latents left unmatched
+between two seeds, and t the share left unmatched between two runs with the
+same seed and data that differ only in GPU kernel nondeterminism (the order
+of atomic adds in the backward pass). The noise share is
+
+```
+R_N = t / u
+```
+
+which is a ratio of unmatched shares, not a variance decomposition. Across
+TopK SAEs on Pythia-160m, GPT-2 Small and Llama-3.1-8B it lands between .43
+and .85, and on GPT-2 it rises with the learning rate at equal reconstruction
+(.57 to .77) and with the budget (.77 to .85 from 1B to 4B tokens).
+
+[[demo:noise-share]]
+
+## same latents, not just same amount
+
+A ratio alone could mean noise breaks some random other set of latents. It
+doesn't. We cross-tabulate "unmatched by the perturbation" against "unmatched
+by a new seed" and compute a Mantel-Haenszel odds ratio within firing
+frequency deciles, with a threshold of 3 fixed before any result was read.
+Every perturbation clears it (ulp flip, kernel noise, noise dose, document
+order, minibatch composition, a mid-run kernel switch), with odds ratios of
+4.7 to 28 across both matching rules. On Llama, a noise twin leaves unmatched
+56% of the latents a new seed leaves unmatched, against 37% if the two were
+unrelated.
+
+## when it's decided
+
+In full-fp32 GPT-2 the sensitivity is confined to the very start: kernel
+noise injected at any of nine fork points from step 10 onward ends as the
+same SAE (all latents matched). Resetting Adam's moments at 1% of training
+partly reopens it, which seems to me consistent with the optimizer state
+damping late noise, though we haven't pinned a mechanism. The window depends
+on the recipe (under bf16 autocast on Pythia it's still open at 5%).
+
+Seed pairs also aren't relabelings of each other. After permutation
+alignment, the relative barrier on the straight line between them is .16 to
+.22, and it disappears when only the matched latents are interpolated, so
+the barrier sits in the unmatched latents' directions.
+
+My intuition is that this is the part of the orphans the transplant test
+couldn't place, and I'd be curious whether a training recipe that damps those
+first few steps buys more reproducibility than any amount of seed averaging.
+
+
+---
+
+<!-- https://mariopenglee.com/blog/orphan-latents.md -->
+---
+title: Seeds share more than their latents admit
+date: 2026-10-31
+summary: Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds says 75 to 86% of what they learn is shared, and part of the gap is the same manifold cut into different tiles.
+---
+
+Train two sparse autoencoders (SAEs) on the same Llama-3.1-8B activations,
+change only the seed, and match their latents one-to-one. About
+half of them come out with no partner (these are usually called orphans, and
+[Paulo and Belrose](https://arxiv.org/abs/2501.16615) get only 30% shared on
+Llama-3-8B). The usual reading is that each seed learned features the
+other missed, which is bad news if you want SAE latents to be the
+units you interpret a model with. Our SOAR 2026 paper argues that's mostly wrong. Once orphans are tested by what they do rather than where their
+weights point, the share of structure two seeds have in common goes from
+51 / 53 / 42% to **75 / 86 / 82%** across three sites (Llama layer 16 MLP,
+Llama layer 28 residual, Pythia-160m layer 6 MLP). One-to-one matching
+undercounts sharing by 24 to 40 points.
+
+Both views below are real data. The sphere is a toy world
+where the answer is known: one planted sphere, two TopK SAEs of width 32,
+every point coloured by the latent that fires hardest there. Seed A cuts it
+into 9 tiles and seed B into 6, and exactly one tile is matched across seeds,
+yet both reconstruct the sphere. The temperature view is Llama: we sweep
+"It is v degrees outside" from -30 to 60°C and plot each seed's tile-only
+reconstruction on its top three principal components. Seed A uses 6 tiles and
+seed B 4, none has a one-to-one partner, and after an orthogonal rotation the
+two curves line up with R² = .85 (A just splits each end of the range in two).
+
+[[demo:seed-tiling]]
+
+## why matching misses it
+
+The standard rule solves a Hungarian assignment over encoder and decoder
+directions and calls a pair matched if both cosines reach .7. That compares
+latents one at a time. If a manifold is tiled and the tile boundaries depend
+on the seed, no tile of A has to line up with any tile of B, even though
+their union covers the same thing. The toy makes this concrete: in worlds
+where both seeds see every manifold by construction, 61 to 84% of live
+latents are still orphans. Widening the SAE on a single sphere shatters it
+from 4 to 25 tiles, 89 to 99% of them unmatched, while the two seeds' outputs
+on it agree at R² ≥ .98.
+
+## the test
+
+Two steps, neither using weight similarity (orphans already failed
+that). First, pool both seeds' orphans and group them by co-firing,
+with the Ochiai coefficient over their active token sets:
+
+```
+O_ij = |A_i ∩ A_j| / sqrt(|A_i| · |A_j|)
+```
+
+We connect each orphan to its 10 nearest neighbours, partition with Leiden
+CPM (resolution γ = .045 × the median edge weight), and keep only groups
+denser than size-matched groups in 5 degree-preserving shuffles. The method
+was picked from 7 similarities × 32 clusterings, scored against the known
+manifolds of the toy worlds with a rule fixed beforehand.
+
+Second, transplant. For each group we delete the host seed's orphans and
+insert the donor seed's, encoded on the same held-out tokens:
+
+```
+repair = 1 − ΔSSE(donor) / ΔSSE(empty slot)
+```
+
+So 1 means the donor fully stands in, 0 means it's no better than leaving
+the slot empty. A group counts as shared if its repair clears a bar b, and
+we set b by error control: b = .19 is the lowest bar where every control
+donor (firing-matched latents, a different group, random latents) passes for
+at most 1% of orphans in all 16 toy worlds and all 3 real sites. In the toy,
+where every orphan is a false orphan, 86% pass, so that's the test's
+sensitivity s. Grouping, resolution, bar and sensitivity were all fixed on
+the toy before any real model was scored.
+
+## what the real models say
+
+At b = .19, 51 to 65% of grouped orphans transplant, and no control passes
+for more than 0.9%. Correcting for sensitivity, with m the matched share and
+T(b) the share of all orphans in transplanting groups:
+
+```
+shared = m + (1 − m) · T(b) / s
+```
+
+which is where the 75 / 86 / 82% comes from. Temperature is the cleanest
+case. The blind groups find the same pieces the sweep does (9 of 10
+tiles share a group with a tile of the other seed, p < .001), and the
+donor's tiles repair the host where one-to-one partners mostly don't:
+
+```
+donor                 SSE repair (host A / B)   KL repair
+same-concept tiles        +.34 / +.35           +.63 / +.67
+Hungarian partners        +.07 / +.23           +.30 / +.21
+firing-matched            -.32 / -.51           -.20 / -.12
+```
+
+## what it doesn't show
+
+Real orphans transplant partly, not fully. The repair distribution is a broad
+peak around +.2 to +.4 (3 to 6% above .8, against 49% in the toy), so honestly
+"shared" here means "carries much of the same structure", not "the
+same latent in disguise". Groups also aren't a better unit than the failed
+Hungarian partners in real models (.62 to .63 vs .51 to .65), and clean tilings
+like temperature are rare (under 0.1% of orphans). Lowering the matching
+cutoff doesn't rescue anything either: how close an orphan's partner is
+barely predicts whether it transplants (AUC .52 to .58). 
+The open question is the remaining 14 to 25%. Some of it is groups that
+aren't one concept, and some probably is real seed variance, which raised
+the question of how much of that variance needs a different seed at all. We
+answer that in a [companion post](#/blog/same-init-different-dictionary),
+and I'd love to see whether a small learned adapter between seeds turns the
+partial transplants into full ones.
+
 
 ---
 
