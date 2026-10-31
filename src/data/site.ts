@@ -9,7 +9,7 @@ export const SITE = {
 // about paragraphs, markdown. also feeds llms.txt and the no-JS fallback (vite.config.ts)
 export const BIO: string[] = [
   "I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), which compresses what coding agents send to the model so heavy AI workloads cost less (up to about 70% off long sessions, with basically the same output). I'm also CEO of [Pocketful](https://pocketful.ai/), which brings WhatsApp AI agents to restaurant owners in Argentina. Both are basically the same bet, that AI should be cheap and usable enough for everyone.",
-  "My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). Mostly I'm interested in how minds (human and machine) represent things, and my view is that understanding that is how AI gets cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/).",
+  "My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). Mostly I'm interested in how minds (human and machine) represent things, and my view is that understanding that is how AI gets cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/) through SOAR 2026 (its Summer of Open AI Research, about 2% of applicants accepted), lately on how stable sparse autoencoder features are across seeds.",
   'Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), where I built the agent layer, the memory model behind nexos.heartbeat, and a sandboxed code interpreter.',
 ];
 
@@ -62,7 +62,7 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
   },
   {
     title: 'Sparse autoencoder seeds share more than matching shows',
-    desc: 'SOAR 2026 papers: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; a companion paper finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed',
+    desc: 'my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; a companion paper finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed',
     links: [
       { name: 'writeup', url: '#/blog/orphan-latents' },
       { name: 'kernel noise', url: '#/blog/same-init-different-dictionary' },
