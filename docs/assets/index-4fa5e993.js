@@ -737,9 +737,8 @@ unsupervised. Deciding what an agent actually needs in front of it is also
 pretty close to what I work on now at [condense.chat](https://condense.chat/),
 just from the compression side.
 
-The feedback was more skeptical than I expected, which was useful. A
-fair number of people pushed back on the idea at first, but most came
-around to it being a framing problem: the hard part isn't storing more,
+People were skeptical, which was useful, but most came around to it being
+a framing problem: the hard part isn't storing more,
 it's that we keep trying to fit everything into the context window. My view
 is that's the real takeaway, and probably the thing worth testing next is
 how much an agent loses when it only loads a small slice of its history.
