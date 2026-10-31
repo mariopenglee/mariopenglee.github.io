@@ -42,10 +42,10 @@ AI engineer and co-founder of two companies. Team lead of 12 at nexos.ai; led fi
 
 \newcommand{\secEducation}{%
 \section{Education}
-\entry{UCLA}{B.A., Linguistics and Computer Science (joint major) and Psychology}{2020 -- 2024}{Minor in Data Science Engineering. GPA 3.87/4.00. Phi Beta Kappa. Departmental Honors. Dean's Honors List, 10 quarters.}
+\entry{UCLA}{B.A., Linguistics and Computer Science (joint major) and Psychology}{2020 -- 2024}{Minor in Data Science Engineering. GPA 3.87/4.00. Phi Beta Kappa. Departmental Honors.}
 \begin{itemize}
   \item Coursework: Machine Learning, Theory of Computing, Artificial Intelligence, Programming Languages, Computational Linguistics, Linear Algebra, Probability, Mathematical Statistics.
-  \item \href{https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024}{UCLA Newsroom feature}, Commencement 2024, for co-founding AI Safety at UCLA.
+  \item \href{https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024}{UCLA Newsroom feature}, Commencement 2024, recognized as an exceptional student researcher.
 \end{itemize}
 \entry{Stanford Online}{Artificial Intelligence Professional Program (non-degree certificate)}{2022 -- 2023}{NLP (XCS224N), Natural Language Understanding (XCS224U), Multi-Task and Meta-Learning (XCS330).}}
 
@@ -60,9 +60,10 @@ AI engineer and co-founder of two companies. Team lead of 12 at nexos.ai; led fi
 \entry{Computational Vision and Learning Lab, UCLA}{Research Assistant}{Jul 2023 -- Jun 2024}{Co-advised by Hongjing Lu and Keith Holyoak.}
 \begin{itemize}
   \item CycleDiffusion. Designed and trained diffusion model with captioner-based cycle-consistency objective. Result: prompt encoded as texture; cause traced to captioner used as training signal.
+  \item Role collapse in text-to-image models (2026, with Andrew Lee). Result: SD3.5 reverses 72 to 75\% of rare-direction prompts although T5 encodes roles; text encoder, guidance and prompt embeddings ruled out, failure localized to denoiser.
 \end{itemize}
 
-\entry{Language and Cognitive Development Lab, UCLA}{Research Assistant}{Jun 2023 -- Jun 2024}{Advised by Catherine Sandhofer, with Amalia Ionescu and Hunter Priniski.}
+\entry{Language and Cognitive Development Lab, UCLA}{Research Assistant}{Jun 2023 -- Jun 2024}{Advised by Catherine Sandhofer, with Amalia Ionescu and Hunter Priniski (2026 follow-up with the same team).}
 \begin{itemize}
   \item Compared narrative cohesion of 31 children (ages 4 to 6) and GPT-4 on wordless picture book, scored by coreference chains. Result: children ahead in 2024 ($d = 2.2$); gap closes with newer models by 2026.
 \end{itemize}
@@ -72,8 +73,6 @@ AI engineer and co-founder of two companies. Team lead of 12 at nexos.ai; led fi
   \item Perturbation study of GPT-2 indirect-object identification circuit. Result: accuracy drops with rare names; with four entities model picks by proximity.
 \end{itemize}
 
-\entry{Ongoing collaborations}{after graduation}{2024 -- present}{With Andrew Lee: role collapse in text-to-image models. SD3.5 reverses 72 to 75\% of rare-direction prompts although T5 encodes roles; text encoder, guidance and prompt embeddings ruled out, failure localized to denoiser. With Amalia Ionescu and Hunter Priniski: 2026 follow-up of children vs GPT-4 study.}
-
 \entry{Other undergraduate research}{UCLA Language Acquisition Lab; Swarthmore Linguistics}{2022 -- 2024}{Advised by Megha Sundara and Laurel Perkins; Maura O'Leary. Spanish inflection acquisition in children; Diverse Names Generator (LSA 2023).}}
 
 \newcommand{\secIndustry}{%
@@ -81,7 +80,8 @@ AI engineer and co-founder of two companies. Team lead of 12 at nexos.ai; led fi
 \entry{condense.chat}{Co-Founder and Chief Scientist}{May 2026 -- present}{Context compaction for coding agents. Built product from start. Raised \texteuro500k. Selected for a16z speedrun Global Founder Sprint (SF Tech Week 2026).}
 \begin{itemize}
   \item Trained compaction models (Adeline, Helene). Result: up to 70\% smaller context on 20+ turn, 40k+ token sessions; no measured quality loss on Terminal-Bench 2 and internal data.
-  \item Developed block-GRPO, RL for block-autoregressive diffusion LLMs with exact cross-block log-probability. Result: tail reward +0.158 vs +0.017 for vanilla GRPO.
+  \item Developed block-GRPO, RL for block-autoregressive diffusion LLMs with exact cross-block log-probability. Result: significantly higher reward than vanilla GRPO; over 4x throughput vs autoregressive decoding.
+  \item Latest checkpoint: autoregressive LoRA with mixture-of-experts routing.
 \end{itemize}
 
 \entry{nexos.ai}{AI Engineer, promoted to Senior AI Engineer Feb 2026}{Jun 2025 -- Jun 2026}{Enterprise AI platform (raised \texteuro30M), Vilnius. Team lead, 12-person team across backend, frontend and AI.}
@@ -129,20 +129,17 @@ AI engineer and co-founder of two companies. Team lead of 12 at nexos.ai; led fi
 \section{Leadership and Service}
 \begin{itemize}
   \item \textbf{AI Safety at UCLA}, Co-Founder, 2022 -- 2024. Raised about \$150k. Founded and led Alignment Research Team.
-  \item \textbf{LA Blueprint}, Board Member, 2023 -- 2024. Editor, \textbf{\mbox{Undergraduate} Research Journal of Psychology}, 2023.
+  \item \textbf{Undergraduate Research Journal of Psychology}, Editor, 2023.
+  \item \textbf{LA Blueprint}, Board Member, 2023 -- 2024.
 \end{itemize}}
-
-\newcommand{\secSkills}{%
-\section{Skills}
-\textbf{Programming}: Python, PyTorch, Hugging Face, vLLM, TypeScript. \textbf{Languages}: Spanish, English and Chinese (native); Lithuanian, Italian (conversational).}
 
 % ---------- document ----------
 \begin{document}
 \fontsize{10}{12}\selectfont
 \secHeader
 \ifdefined\MENG
-  \secProfile \secIndustry \secLeadership \secEducation \secResearch \secPublications \secTalks \secAwards \secSkills
+  \secProfile \secIndustry \secLeadership \secEducation \secResearch \secPublications \secTalks \secAwards
 \else
-  \secEducation \secResearch \secIndustry \secPublications \secAwards \secTalks \secLeadership \secSkills
+  \secEducation \secResearch \secIndustry \secPublications \secAwards \secTalks \secLeadership
 \fi
 \end{document}
