@@ -47,7 +47,7 @@ export const POSTS: Post[] = Object.entries(raw)
       html: marked.parse(body) as string,
     };
   })
-  .sort((a, b) => (a.date < b.date ? 1 : -1));
+  .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1));
 
 export const getPost = (slug: string): Post | undefined =>
   POSTS.find((p) => p.slug === slug);

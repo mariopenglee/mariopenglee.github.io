@@ -87,3 +87,5 @@ guess (years, colors, days), and see whether the places the seeds diverge are
 where a single SAE was quietly diluting a concept. If pooled-seed agreement
 can flag real manifold structure, it'd be a pretty cheap knob to have, so
 would love to look into it.
+
+(Update: the follow-up on Llama and Pythia is [here](#/blog/orphan-latents).)

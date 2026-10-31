@@ -202,7 +202,7 @@ export default function SeedTiling() {
       </p>
       {view === 'temperature' && (
         <p className="mt-readout" style={{ fontSize: '0.75rem', marginTop: '0.25rem' }}>
-          colour = blind co-firing group: orange holds both seeds' end tiles (A splits each end in two), blue the 3°C tile
+          color = blind co-firing group: orange holds B's two end tiles and three of A's four (A splits each end in two), blue the 3°C tile
         </p>
       )}
     </div>

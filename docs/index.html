@@ -64,7 +64,7 @@
         ]
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-b5090f83.js"></script>
+    <script type="module" crossorigin src="/assets/index-5c09405d.js"></script>
     <link rel="stylesheet" href="/assets/index-f82316d1.css">
   </head>
   <body>
@@ -85,8 +85,8 @@
 </ul>
 <h2>writing</h2>
 <ul>
-<li><a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">Same init, different dictionary</a> (2026-10-31): Two SAE runs with the same seed and the same data, differing only in GPU kernel nondeterminism, leave unmatched .43 to .85 times as many latents as a new seed does, and they break largely the same latents.</li>
-<li><a href="https://mariopenglee.com/blog/orphan-latents.md">SAE seeds share more than matching shows</a> (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds puts the shared share at 75 to 86%, and part of the gap is the same manifold cut into different tiles.</li>
+<li><a href="https://mariopenglee.com/blog/orphan-latents.md">Sparse autoencoder seeds share more than matching shows</a> (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds estimates the real shared share at 75 to 86%.</li>
+<li><a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">Same seed, different SAE: GPU noise and seed dependence</a> (2026-10-31): Rerun a sparse autoencoder with the same seed and data, changing only GPU kernel nondeterminism, and it leaves 43 to 85% as many latents unmatched as a new seed, mostly the same ones.</li>
 <li><a href="https://mariopenglee.com/blog/role-collapse.md">Where role collapse happens in diffusion models</a> (2026-10-23): Prompt SDXL for a mouse chasing a cat and you usually get a cat chasing a mouse. My first suspect was CLIP reading prompts as a bag of words, but after ruling out the encoder, guidance, and cross-attention, the problem seems to sit in the UNet itself.</li>
 <li><a href="https://mariopenglee.com/blog/kids-vs-llm-stories.md">Kids vs LLMs at telling a story</a> (2026-10-18): Give a five year old and a language model the same wordless picture book. In 2024 the kids kept track of the characters far better than GPT-4. Two years of models later, the best ones tell the story just like the kids do.</li>
 <li><a href="https://mariopenglee.com/blog/cyclediffusion.md">cyclediffusion: can a picture be a bottleneck?</a> (2026-10-17): I trained a diffusion model so a captioner could read its pictures back into the original sentence. Instead of inventing a secret visual code, it collapsed into texture, and the reason is the reader you train against.</li>
@@ -102,8 +102,8 @@
 <h2>selected work</h2>
 <ul>
 <li><strong>nexos.heartbeat</strong>: always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model (<a href="https://mariopenglee.com/blog/heartbeat.md">writeup</a>) (<a href="https://www.youtube.com/watch?v=KoVKYMgw2H0">demo</a>)</li>
-<li><strong>Seeds share more than their latents admit</strong>: SOAR 2026: a toy-calibrated transplant test shows 75 to 86% of what two SAE seeds learn is shared, against ~50% matched one-to-one; plus a companion paper on how much of seed dependence is just GPU kernel noise (<a href="https://mariopenglee.com/blog/orphan-latents.md">writeup</a>) (<a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">paper 2</a>)</li>
-<li><strong>Do SAEs capture concept manifolds?</strong>: open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it (<a href="https://mariopenglee.com/blog/cross-seed-saes.md">writeup</a>) (<a href="https://github.com/mariopenglee/cross-seed-manifold-poc">code</a>)</li>
+<li><strong>Sparse autoencoder seeds share more than matching shows</strong>: SOAR 2026 papers: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; a companion paper finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed (<a href="https://mariopenglee.com/blog/orphan-latents.md">writeup</a>) (<a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">kernel noise</a>)</li>
+<li><strong>Do SAEs capture concept manifolds?</strong>: the toy phase, open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it (<a href="https://mariopenglee.com/blog/cross-seed-saes.md">writeup</a>) (<a href="https://github.com/mariopenglee/cross-seed-manifold-poc">code</a>)</li>
 <li><strong>Where role collapse happens in diffusion models</strong>: why SDXL and SD3.5 draw &quot;a mouse chasing a cat&quot; as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them (<a href="https://mariopenglee.com/blog/role-collapse.md">writeup</a>)</li>
 <li><strong>Code Interpreter at nexos.ai</strong>: a sandboxed runtime that lets our agents write and run code safely (<a href="https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/">writeup</a>)</li>
 </ul>
