@@ -21,8 +21,10 @@ summary: One or two sentences shown on the blog index. No em dashes here either.
 ---
 ```
 
-- Headers are optional. If you use them: `##`, lowercase, plain. Never
-  clever or theatrical.
+- Headers are optional. If you use them: `##`, lowercase, and named like a
+  technical writeup ("related work", "approach", "evaluation",
+  "limitations"). No narrative or dramatic headers ("the gap", "what we read
+  first", "what broke").
 - Links: inline markdown, link the project/paper on first mention.
 - Equations are LaTeX, never code blocks: `$$ ... $$` on its own lines for
   display math, `$...$` inline for symbols and variables (`$R_N$`, `$b = .19$`,
@@ -64,7 +66,16 @@ Full guide in CLAUDE.md. Non-negotiables:
 
 ## 3. Shape (freeform)
 
-There is no template. Posts shouldn't all read the same, so don't reach for
+**Research and build posts are centered on existing work.** Most of the post
+is a literature review: what's been published, with linked papers and their
+actual numbers, and what each result implies. Then a shorter part on what we
+built on top of it and what came out. Show we read our books: cite the
+papers our own research reports already used (search the source repo's
+`.claude/reports/` for arXiv ids) and verify every link resolves before
+publishing. Keep our own contribution tight, and trim anything that doesn't
+serve either the related work or the result.
+
+Beyond that there is no template. Posts shouldn't all read the same, so don't reach for
 a fixed skeleton (hook, result, method, limits, forward-looking close) by
 default. Pick the form that fits this particular piece: a short note, a
 story of how something went, a walk through one figure, a list of

@@ -104,7 +104,10 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
   {
     title: 'condense.chat',
     desc: 'cofounder and chief scientist: compresses what coding agents send to the model, up to about 70% off long sessions with basically the same output (a16z speedrun Global Founder Sprint)',
-    links: [{ name: 'site', url: 'https://condense.chat/' }],
+    links: [
+      { name: 'site', url: 'https://condense.chat/' },
+      { name: 'adeline-v2', url: '#/blog/adeline-v2-context-compaction-model' },
+    ],
   },
   {
     title: 'Sparse autoencoder seeds share more than matching shows',

@@ -64,7 +64,7 @@
         ]
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-4d17dd14.js"></script>
+    <script type="module" crossorigin src="/assets/index-4496428c.js"></script>
     <link rel="stylesheet" href="/assets/index-1969a732.css">
   </head>
   <body>
@@ -85,6 +85,7 @@
 </ul>
 <h2>writing</h2>
 <ul>
+<li><a href="https://mariopenglee.com/blog/adeline-v2-context-compaction-model.md">adeline-v2: a fine-tuned MoE for agent context compaction</a> (2026-10-31): condense.chat&#39;s adeline-v2 compaction model removes about 88% of the tokens it compacts and keeps 80% of critical facts on unseen repos, vs about 70% for the base model at about the same compression.</li>
 <li><a href="https://mariopenglee.com/blog/orphan-latents.md">Sparse autoencoder seeds share more than matching shows</a> (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds estimates the real shared share at 75 to 86%.</li>
 <li><a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">Same seed, different SAE: GPU noise and seed dependence</a> (2026-10-31): Rerun a sparse autoencoder with the same seed and data, changing only GPU kernel nondeterminism, and it leaves 43 to 85% as many latents unmatched as a new seed, mostly the same ones.</li>
 <li><a href="https://mariopenglee.com/blog/role-collapse.md">Where role collapse happens in diffusion models</a> (2026-10-23): Prompt SDXL for a mouse chasing a cat and you usually get a cat chasing a mouse. My first suspect was CLIP reading prompts as a bag of words, but after ruling out the encoder, guidance, and cross-attention, the problem seems to sit in the UNet itself.</li>
@@ -107,7 +108,7 @@
 </ul>
 <h2>selected work</h2>
 <ul>
-<li><strong>condense.chat</strong>: cofounder and chief scientist: compresses what coding agents send to the model, up to about 70% off long sessions with basically the same output (a16z speedrun Global Founder Sprint) (<a href="https://condense.chat/">site</a>)</li>
+<li><strong>condense.chat</strong>: cofounder and chief scientist: compresses what coding agents send to the model, up to about 70% off long sessions with basically the same output (a16z speedrun Global Founder Sprint) (<a href="https://condense.chat/">site</a>) (<a href="https://mariopenglee.com/blog/adeline-v2-context-compaction-model.md">adeline-v2</a>)</li>
 <li><strong>Sparse autoencoder seeds share more than matching shows</strong>: EleutherAI SOAR 2026 (about 2% of applicants accepted), supervised by Gonçalo Paulo: one-to-one matching says two SAE seeds share about half their latents, a toy-calibrated transplant test estimates 75 to 86% (<a href="https://mariopenglee.com/blog/orphan-latents.md">writeup</a>) (<a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">kernel noise</a>)</li>
 <li><strong>nexos.heartbeat</strong>: always-on AI twin and nexos.ai&#39;s biggest feature; I built the memory and continuity model (git-backed memory, presented at WIP: Index Ventures x Anthropic) (<a href="https://mariopenglee.com/blog/heartbeat.md">writeup</a>) (<a href="https://mariopenglee.com/blog/infinite-context-agents-wip-london.md">talk</a>) (<a href="https://www.youtube.com/watch?v=KoVKYMgw2H0">demo</a>)</li>
 <li><strong>Code Interpreter at nexos.ai</strong>: a sandboxed runtime that lets agents write and run real code, each run in an isolated, throwaway micro-VM (<a href="https://mariopenglee.com/blog/code-interpreter-nexos.md">writeup</a>)</li>

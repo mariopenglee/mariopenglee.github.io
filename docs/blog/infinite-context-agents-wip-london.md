@@ -37,7 +37,7 @@ bit I like most. It makes an agent's memory something you can diff and
 audit, which seems to me pretty underrated for anything that runs
 unsupervised. Deciding what an agent actually needs in front of it is also
 pretty close to what I work on now at [condense.chat](https://condense.chat/),
-just from the compression side.
+just from the compression side (more on that in the [adeline-v2 post](#/blog/adeline-v2-context-compaction-model)).
 
 People were skeptical, which was useful, and the pushback came down to two
 things. The first was collaboration: what happens when several agents (or
