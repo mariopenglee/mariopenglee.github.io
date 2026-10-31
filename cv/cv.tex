@@ -53,46 +53,46 @@ AI engineer and co-founder of two companies. Team lead for a 12-person team at n
 \section{Research Experience}
 \entry{EleutherAI}{Researcher, Summer of Open AI Research (SOAR 2026)}{Jul 2026 -- present}{Supervised by Gonçalo Paulo. One of 76 selected from about 3,450 applicants.}
 \begin{itemize}
-  \item Do sparse autoencoders learn the same features across seeds? On Llama-3.1-8B and Pythia-160m, one-to-one matching shares about half the latents; a transplant test calibrated on toy worlds estimates 75 to 86\%.
-  \item Self-initiated follow-up, now a second paper: GPU kernel nondeterminism alone leaves 43 to 85\% as many latents unmatched as a new seed.
+  \item Feature stability of sparse autoencoders across random seeds on Llama-3.1-8B and Pythia-160m. One-to-one matching shares about half the latents. A transplant test calibrated on toy worlds estimates 75 to 86\%.
+  \item Effect of GPU kernel nondeterminism alone, same seed and data. It leaves 43 to 85\% as many latents unmatched as a new seed. Started as my side project, in preparation as a paper with Paulo.
 \end{itemize}
 
 \entry{Computational Vision and Learning Lab, UCLA}{Research Assistant}{Jul 2023 -- Jun 2024}{Co-advised by Hongjing Lu and Keith Holyoak.}
 \begin{itemize}
-  \item CycleDiffusion: a diffusion model trained so a captioner can read its images back into the prompt. It collapsed into texture rather than a readable code, most likely because of the captioner.
+  \item CycleDiffusion. Trained a diffusion model so a captioner can read its images back into the prompt. The model encoded the prompt as texture. My guess is the captioner caused this.
 \end{itemize}
 
 \entry{Language and Cognitive Development Lab, UCLA}{Research Assistant}{Jun 2023 -- Jun 2024}{Advised by Catherine Sandhofer, with Amalia Ionescu and Hunter Priniski.}
 \begin{itemize}
-  \item 31 children aged 4 to 6 versus GPT-4 narrating a wordless picture book, scored by coreference chains: children far ahead in 2024 ($d = 2.2$); the gap is no longer significant for the best 2026 models.
+  \item Narrative cohesion of 31 children aged 4 to 6 and GPT-4 on a wordless picture book, scored by coreference chains. Children scored much higher in 2024 ($d = 2.2$). In the 2026 follow-up the difference is not significant for the best models.
 \end{itemize}
 
 \entry{Redwood Research}{Research Intern}{Jun 2022 -- Sep 2022}{Advised by Buck Shlegeris.}
 \begin{itemize}
-  \item Perturbation study of GPT-2's indirect-object identification circuit: rare names destabilize it, and with four entities it falls back on proximity.
+  \item Perturbation study of GPT-2's indirect-object identification circuit. Rare names destabilize it, and with four entities it falls back on proximity.
 \end{itemize}
 
-\entry{Ongoing collaborations}{after graduation}{2024 -- present}{With Andrew Lee: role collapse in text-to-image models (SD3.5 reverses 72 to 75\% of rare-direction prompts although T5 encodes the roles; evidence points to the denoiser). With Amalia Ionescu and Hunter Priniski: the 2026 follow-up to the children versus GPT-4 study.}
+\entry{Ongoing collaborations}{after graduation}{2024 -- present}{With Andrew Lee, role collapse in text-to-image models. SD3.5 reverses 72 to 75\% of rare-direction prompts even though T5 encodes the roles, so the problem seems to be in the denoiser. With Amalia Ionescu and Hunter Priniski, the 2026 follow-up to the children and GPT-4 study.}
 
 \entry{Other undergraduate research}{UCLA Language Acquisition Lab; Swarthmore Linguistics}{2022 -- 2024}{Advised by Megha Sundara and Laurel Perkins; Maura O'Leary. Children's acquisition of Spanish inflection; the Diverse Names Generator (LSA 2023).}}
 
 \newcommand{\secIndustry}{%
 \section{Industry Experience}
-\entry{condense.chat}{Co-Founder and Chief Scientist}{May 2026 -- present}{Context compaction for coding agents. Built from zero; raised \texteuro500k; selected for the a16z speedrun Global Founder Sprint (SF Tech Week 2026).}
+\entry{condense.chat}{Co-Founder and Chief Scientist}{May 2026 -- present}{Context compaction for coding agents. Built the product from the start. Raised \texteuro500k. Selected for the a16z speedrun Global Founder Sprint (SF Tech Week 2026).}
 \begin{itemize}
-  \item Trained the compaction models (Adeline, Helene): up to 70\% smaller context on 20+ turn, 40k+ token sessions, with no measured quality loss on Terminal-Bench 2 and internal data.
-  \item block-GRPO: RL for a block-autoregressive diffusion LLM with the log-probability exact across blocks; tail reward (gain on the hardest prompts) +0.158 vs +0.017 for vanilla GRPO.
+  \item Trained the compaction models (Adeline, Helene). Up to 70\% smaller context on 20+ turn, 40k+ token sessions, with no measured quality loss on Terminal-Bench 2 and internal data.
+  \item block-GRPO, RL for a block-autoregressive diffusion LLM with the log-probability exact across blocks. Tail reward (gain on the hardest prompts) +0.158 against +0.017 for vanilla GRPO.
 \end{itemize}
 
 \entry{nexos.ai}{AI Engineer, promoted to Senior AI Engineer Feb 2026}{Jun 2025 -- Jun 2026}{Enterprise AI platform (raised \texteuro30M), Vilnius. Team lead for a 12-person team spanning backend, frontend and AI.}
 \begin{itemize}
-  \item Memory and continuity model behind nexos.heartbeat, the company's always-on AI twin: a git-backed, versioned model of each user. Presented at WIP: Index Ventures x Anthropic, London.
+  \item Memory and continuity model for nexos.heartbeat, an always-on AI twin. A git-backed, versioned model of each user. Presented at WIP: Index Ventures x Anthropic, London.
   \item Agent layer and sandboxed code interpreter; engineering articles on the RAG rebuild and the code interpreter.
 \end{itemize}
 
 \entry{Pocketful}{Co-Founder; Head of Engineering to Jun 2025, CEO since}{Jun 2024 -- present}{WhatsApp AI agents for restaurant owners in Argentina. Bootstrapped and profitable.}
 \begin{itemize}
-  \item Built the first product solo, then led five engineers; zero to over \$100k ARR.
+  \item Built the first product alone, then led five engineers. Over \$100k ARR.
 \end{itemize}}
 
 \newcommand{\secPublications}{%
@@ -128,7 +128,7 @@ AI engineer and co-founder of two companies. Team lead for a 12-person team at n
 \newcommand{\secLeadership}{%
 \section{Leadership and Service}
 \begin{itemize}
-  \item \textbf{AI Safety at UCLA}, Co-Founder, 2022 -- 2024. Raised about \$150k; founded and led its Alignment Research Team.
+  \item \textbf{AI Safety at UCLA}, Co-Founder, 2022 -- 2024. Raised about \$150k. Founded and led its Alignment Research Team.
   \item \textbf{LA Blueprint}, Board Member, 2023 -- 2024. Editor, \textbf{\mbox{Undergraduate} Research Journal of Psychology}, 2023.
 \end{itemize}}
 
