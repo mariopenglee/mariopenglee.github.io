@@ -15,8 +15,8 @@ voice. Derived from his own writing samples:
 - No "AI-sounding" prose: no mic-drop one-liners, no "Here's the thing",
   no triadic flourishes ("fast, parallel, and terrible"), no staccato
   fragments for drama, no theatrical section headers.
-- Headers are lowercase, plain, and descriptive ("the setup", "what broke"),
-  not clever.
+- Headers are lowercase, plain, and technical ("related work", "approach",
+  "evaluation", "limitations"), not narrative or clever.
 
 **Voice markers (use naturally, not all at once)**
 - First person, thinking out loud: "to be honest", "seems to me",
