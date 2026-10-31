@@ -53,13 +53,13 @@ AI engineer and co-founder of two companies. Team lead for a 12-person team at n
 \section{Research Experience}
 \entry{EleutherAI}{Researcher, Summer of Open AI Research (SOAR 2026)}{Jul 2026 -- present}{Supervised by Gonçalo Paulo. One of 76 selected from about 3,450 applicants.}
 \begin{itemize}
-  \item Feature stability of sparse autoencoders across random seeds on Llama-3.1-8B and Pythia-160m. One-to-one matching shares about half the latents. A transplant test calibrated on toy worlds estimates 75 to 86\%.
-  \item Effect of GPU kernel nondeterminism alone, same seed and data. It leaves 43 to 85\% as many latents unmatched as a new seed. Started as my side project, in preparation as a paper with Paulo.
+  \item Feature stability of sparse autoencoders across random seeds on Llama-3.1-8B and Pythia-160m. About half the latents match one to one. The shared share estimated with a transplant test calibrated on toy worlds is 75 to 86\%.
+  \item Effect of GPU kernel nondeterminism alone, same seed and data. Unmatched latents are 43 to 85\% of the count for a new seed. Started as my side project, in preparation as a paper with Paulo.
 \end{itemize}
 
 \entry{Computational Vision and Learning Lab, UCLA}{Research Assistant}{Jul 2023 -- Jun 2024}{Co-advised by Hongjing Lu and Keith Holyoak.}
 \begin{itemize}
-  \item CycleDiffusion. Trained a diffusion model so a captioner can read its images back into the prompt. The model encoded the prompt as texture. My guess is the captioner caused this.
+  \item CycleDiffusion. Trained a diffusion model so a captioner can read its images back into the prompt. The prompt ended up encoded as texture, probably because of the captioner.
 \end{itemize}
 
 \entry{Language and Cognitive Development Lab, UCLA}{Research Assistant}{Jun 2023 -- Jun 2024}{Advised by Catherine Sandhofer, with Amalia Ionescu and Hunter Priniski.}
@@ -69,7 +69,7 @@ AI engineer and co-founder of two companies. Team lead for a 12-person team at n
 
 \entry{Redwood Research}{Research Intern}{Jun 2022 -- Sep 2022}{Advised by Buck Shlegeris.}
 \begin{itemize}
-  \item Perturbation study of GPT-2's indirect-object identification circuit. Rare names destabilize it, and with four entities it falls back on proximity.
+  \item Perturbation study of GPT-2's indirect-object identification circuit. Accuracy drops with rare names, and with four entities the model picks by proximity.
 \end{itemize}
 
 \entry{Ongoing collaborations}{after graduation}{2024 -- present}{With Andrew Lee, role collapse in text-to-image models. SD3.5 reverses 72 to 75\% of rare-direction prompts even though T5 encodes the roles, so the problem seems to be in the denoiser. With Amalia Ionescu and Hunter Priniski, the 2026 follow-up to the children and GPT-4 study.}
