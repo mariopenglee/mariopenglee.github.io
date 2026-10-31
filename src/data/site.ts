@@ -61,16 +61,16 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
     ],
   },
   {
-    title: 'Seeds share more than their latents admit',
-    desc: 'SOAR 2026: a toy-calibrated transplant test shows 75 to 86% of what two SAE seeds learn is shared, against ~50% matched one-to-one; plus a companion paper on how much of seed dependence is just GPU kernel noise',
+    title: 'Sparse autoencoder seeds share more than matching shows',
+    desc: 'SOAR 2026 papers: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; a companion paper finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed',
     links: [
       { name: 'writeup', url: '#/blog/orphan-latents' },
-      { name: 'paper 2', url: '#/blog/same-init-different-dictionary' },
+      { name: 'kernel noise', url: '#/blog/same-init-different-dictionary' },
     ],
   },
   {
     title: 'Do SAEs capture concept manifolds?',
-    desc: 'open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it',
+    desc: 'the toy phase, open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it',
     links: [
       { name: 'writeup', url: '#/blog/cross-seed-saes' },
       { name: 'code', url: 'https://github.com/mariopenglee/cross-seed-manifold-poc' },

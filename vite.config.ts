@@ -20,7 +20,7 @@ function posts() {
       )
       return { slug: f.replace(/\.md$/, ''), src, ...meta } as Record<string, string>
     })
-    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1))
 }
 
 // static, JS-free copies of the site for LLMs, agents and scrapers:

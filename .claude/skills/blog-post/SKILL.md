@@ -114,3 +114,51 @@ Two engagement checks, read the draft and answer honestly:
 
 Check the blog index order still makes sense after any date change (sorted
 newest first by `date`).
+
+## 6. Review panel (after every new or substantially edited post)
+
+Run these as **independent Opus subagents** (Agent tool, `model: "opus"`),
+all launched in one message so they run in parallel. Do not do the review
+yourself in place of them. Give each one only the post path(s), its role,
+and the files it needs; never your own opinion of the draft. Each returns
+concrete line-level findings with a suggested rewrite.
+
+1. **Fact checker.** Verifies every number, claim, citation and link against
+   the source (for research posts, the source repo, e.g. `../soar-2026`:
+   `CLAIMS.md` allowed/banned wording, paper drafts, run results). Flags
+   overclaims and anything not traceable.
+2. **Anti-AI-slop skeptic.** A technical reader allergic to AI prose and hand
+   waving: the voice rules in CLAUDE.md, undefined terms, claims the evidence
+   doesn't support, drama, filler.
+3. **Personal brand checker.** Reads `src/data/site.ts`, `index.html`, the
+   home page and the other posts in `src/posts/`, and checks the post is on
+   brand with the rest of the site and Mario's work (positioning, tone,
+   consistency of titles/summaries, how it's linked from home/research).
+4. **Recruiter + CS master's admissions reader.** Two hats, one agent: a
+   recruiter and a Stanford CS MS admissions reader scouting top talent. Is
+   Mario's contribution and the impact clear in the first screen? Does it
+   show research judgment (controls, pre-registration, honest limits)?
+
+Apply the fixes you agree with, re-run section 5, and report to the user
+what each reviewer flagged and what you changed or skipped (and why).
+
+## 7. SEO and GEO (every post)
+
+The build already generates `llms.txt`, `llms-full.txt`, `sitemap.xml` and
+a raw `/blog/<slug>.md` copy per post (see `vite.config.ts`). Hash routes are
+invisible to crawlers, so those files plus frontmatter are what search
+engines and AI answer engines see. For each post check:
+
+- **Slug:** descriptive and keyword-bearing (it's the indexed URL).
+- **Title:** contains the terms people would search (e.g. "sparse
+  autoencoder", model names), under ~60 chars, still plain per section 1.
+- **Summary:** a standalone answer with the key number(s), 140-200 chars,
+  since it's what `llms.txt` and snippets quote.
+- **First paragraph:** answers the question on its own, names entities in
+  full once (model names, paper authors, acronyms expanded), so an LLM can
+  quote it without context.
+- **Sources:** link papers and code on first mention (citations help GEO).
+- **Cross-links:** link related posts both ways, and add/update the entry in
+  `src/data/site.ts` if it belongs on the home page.
+- After `npm run build`, confirm the post shows up in `docs/llms.txt` and
+  `docs/sitemap.xml`.
