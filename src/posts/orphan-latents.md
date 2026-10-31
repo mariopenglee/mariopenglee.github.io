@@ -5,30 +5,35 @@ summary: Two sparse autoencoders that differ only in seed match about half their
 ---
 
 Train two sparse autoencoders (SAEs) on the same Llama-3.1-8B activations,
-change only the seed, and match their latents one-to-one. About half come out
-with no partner. These are called orphans
+change nothing but the seed, and match their latents one-to-one. About half
+come out with no partner. People call these orphans
 ([Paulo and Belrose](https://arxiv.org/abs/2501.16615) get 30% shared at 131k
-latents). If seeds learned different features, "the feature for X" would
-depend on the seed. In my SOAR 2026 project (EleutherAI's Summer of Open AI
-Research, supervised by Gonçalo Paulo), I find much of the gap comes from how
-latents are matched. If a latent counts as shared when the other seed's latents can stand in for it,
-the estimated shared share goes from about half to 75 to 86%.
+latents), and if seeds really learned different features, "the feature for X"
+would depend on which seed you happened to train.
 
-[Bhalla et al. (2026)](https://arxiv.org/abs/2604.28119) show a single SAE
-often splits a curved concept (a manifold) into latents that each cover one
-patch, which I'll call tiles. This follows up my
-[earlier toy post](#/blog/cross-seed-saes): seeds seem to cut the same thing
-differently rather than see different things.
+In my SOAR 2026 project (EleutherAI's Summer of Open AI Research, supervised
+by Gonçalo Paulo), I find that much of the gap comes from how latents are
+matched, not from what they learned. If a latent counts as shared when the
+other seed's latents can stand in for it, the estimated shared share goes
+from about half to **75 to 86%**.
 
-Both views come from trained SAEs. The sphere is a toy: one planted sphere, two TopK SAEs of width 32
-(each input uses only its k strongest latents), every point colored by the
-latent that fires hardest there. Seed A cuts it into 9 tiles and seed B into
-6, and exactly one tile is matched across seeds, yet both reconstruct the
-sphere. The temperature view is Llama layer 28: I sweep "It is v degrees
-outside" from -30 to 60°C and plot each seed's tile-only reconstruction on its
-top three principal components. Seed A uses 6 tiles and seed B 4, none is
-matched one-to-one, and after an orthogonal rotation the two curves line up
-with R² = .85 (shuffled temperatures give below -.5).
+The reason, at least in part, is tiling.
+[Bhalla et al. (2026)](https://arxiv.org/abs/2604.28119) show that a single
+SAE often splits a curved concept (a manifold) into latents that each cover
+one patch, which I'll call tiles. Following up my
+[earlier toy post](#/blog/cross-seed-saes), the seeds seem to cut the same
+thing differently rather than see different things.
+
+Both views below come from trained SAEs. The sphere is a toy: one planted
+sphere, two TopK SAEs of width 32 (each input uses only its k strongest
+latents), and every point colored by the latent that fires hardest there.
+Seed A cuts it into 9 tiles, seed B into 6, and exactly one tile is matched
+across seeds, yet both reconstruct the sphere. The temperature view is Llama
+layer 28. I sweep "It is v degrees outside" from −30 to 60°C and plot each
+seed's tile-only reconstruction on its top three principal components. Seed A
+uses 6 tiles and seed B 4, none is matched one-to-one, and after an
+orthogonal rotation the two curves line up with $R^2 = .85$ (shuffled
+temperatures give below −.5).
 
 [[demo:seed-tiling]]
 
@@ -36,79 +41,87 @@ with R² = .85 (shuffled temperatures give below -.5).
 
 The standard rule solves a Hungarian assignment (the best one-to-one pairing
 between two dictionaries) over encoder and decoder directions, and calls a
-pair matched if both cosines reach .7. If tile boundaries
-depend on the seed, no tile of A has to line up with any tile of B. In toy worlds
-(synthetic activations built from planted manifolds), 61 to 84% of live
-latents are orphans although both seeds represent every manifold.
-Wider SAEs make it worse: one sphere goes from 4 tiles to 25, about 99%
-unmatched, while the seeds' outputs agree at R² ≥ .98.
+pair matched if both cosines reach .7. That works for latents that each mean
+one thing. But if tile boundaries depend on the seed, no tile of A has to
+line up with any tile of B.
+
+The toy worlds (synthetic activations built from planted manifolds) show how
+much this matters: 61 to 84% of live latents are orphans, although both seeds
+represent every manifold. Wider SAEs make it worse. One sphere goes from 4
+tiles to 25, about 99% unmatched, while the seeds' outputs agree at
+$R^2 \geq .98$.
 
 ## the test
 
-Neither step uses weight similarity. First, I pool both seeds' orphans and group them by co-firing, using
-the Ochiai coefficient over their active token sets:
+Neither step uses weight similarity. First, I pool both seeds' orphans and
+group them by co-firing, using the Ochiai coefficient over their active token
+sets:
 
-```
-O_ij = |A_i ∩ A_j| / sqrt(|A_i| · |A_j|)
-```
+$$
+O_{ij} = \frac{|A_i \cap A_j|}{\sqrt{|A_i|\,|A_j|}}
+$$
 
-A 10-nearest-neighbor graph and Leiden community detection split them
-into groups, kept only if denser than in degree-preserving shuffles. The recipe was picked on toy worlds under a rule fixed in advance
-(so the risk is that it's tuned to the toy).
+A 10-nearest-neighbor graph and Leiden community detection split them into
+groups, kept only if denser than in degree-preserving shuffles. The recipe
+was picked on toy worlds under a rule fixed in advance (so the risk is that
+it's tuned to the toy).
 
 Second, I transplant. For each group I remove the host seed's orphans and
-insert the donor's, on the same held-out tokens. With ΔSSE(x) the
-rise in the host's reconstruction error when its group is replaced by x:
+insert the donor's, on the same held-out tokens. With $\Delta\mathrm{SSE}(x)$
+the rise in the host's reconstruction error when its group is replaced by $x$:
 
-```
-repair = 1 − ΔSSE(donor) / ΔSSE(empty slot)
-```
+$$
+\mathrm{repair} = 1 - \frac{\Delta\mathrm{SSE}(\text{donor})}{\Delta\mathrm{SSE}(\text{empty slot})}
+$$
 
-1 means the donor fully stands in, 0 means no better than an empty slot. A group counts as shared if its repair
-clears a bar b = .19, the lowest bar at which every control donor
-(firing-matched latents, a different group, random latents) passes for at
-most 1% of orphans in all 16 toy worlds and all 3 real sites. In the toy,
-every orphan should have a stand-in, and 86% pass, which is the test's
-sensitivity s. Grouping and sensitivity were fixed on the toy, and the bar
-only looks at control donors, never at the real groups' own repairs.
+A repair of 1 means the donor fully stands in, and 0 means it's no better
+than an empty slot. A group counts as shared if its repair clears a bar
+$b = .19$, the lowest bar at which every control donor (firing-matched
+latents, a different group, random latents) passes for at most 1% of orphans
+in all 16 toy worlds and all 3 real sites. In the toy, every orphan should
+have a stand-in, and 86% pass, which is the test's sensitivity $s$. Grouping
+and sensitivity were fixed on the toy, and the bar only looks at control
+donors, never at the real groups' own repairs.
 
 ## what the real models say
 
 The sites are Llama layer 16 MLP, Llama layer 28 residual and Pythia-160m
-layer 6 MLP. At b = .19, 51 to 65% of grouped orphans transplant,
-and no control passes for more than 0.9%. With m the matched share and T(b)
-the share of all orphans in transplanting groups:
+layer 6 MLP. At $b = .19$, 51 to 65% of grouped orphans transplant, and no
+control passes for more than 0.9%. With $m$ the matched share and $T(b)$ the
+share of all orphans in transplanting groups:
 
-```
-shared = m + (1 − m) · T(b) / s
-```
+$$
+\mathrm{shared} = m + (1 - m)\,\frac{T(b)}{s}
+$$
 
-This moves the matched 51 / 53 / 42% to 75 / 86 / 82% shared (about
-72 / 81 / 76% before dividing by s). Dividing by s assumes real sensitivity
-matches the toy's, the weakest step, so I'd read these as rough estimates. Temperature is the cleanest case: 9 of 10 tiles share a blind
-group with a tile of the other seed (p < .001), and the donor's tiles repair
-the host much better than its below-cutoff Hungarian partners do. (KL repair
-uses Llama's next-token KL instead of SSE):
+That moves the matched 51 / 53 / 42% to **75 / 86 / 82% shared** (about
+72 / 81 / 76% before dividing by $s$). Dividing by $s$ assumes real
+sensitivity matches the toy's, which is the weakest step, so I'd read these
+as rough estimates.
 
-```
-donor                 SSE repair (host A / B)   KL repair
-same-concept tiles        +.34 / +.35           +.63 / +.67
-Hungarian partners        +.07 / +.23           +.30 / +.21
-firing-matched            -.32 / -.51           -.20 / -.12
-```
+Temperature is the cleanest case. 9 of 10 tiles share a blind group with a
+tile of the other seed ($p < .001$), and the donor's tiles repair the host
+much better than its below-cutoff Hungarian partners do (KL repair uses
+Llama's next-token KL instead of SSE):
+
+| donor | SSE repair (host A / B) | KL repair (host A / B) |
+| --- | --- | --- |
+| same-concept tiles | +.34 / +.35 | +.63 / +.67 |
+| Hungarian partners | +.07 / +.23 | +.30 / +.21 |
+| firing-matched | −.32 / −.51 | −.20 / −.12 |
 
 ## what it doesn't show
 
-Real orphans transplant partly: repairs form a broad peak around +.2 to +.4
-(3 to 6% above .8, against 49% in the toy), so "shared" means much of the same
-structure, not a near-copy. Clean tilings like
-temperature are rare (under 0.1% of orphans), so in real models tiling is
-shown for a few concepts, not as the general story. Outside those,
-groups don't transplant more often than the orphans' Hungarian partners
-(partners .62 to .63, groups .51 to .65), and partner cosine barely predicts
-which orphans transplant (AUC .52 to .58), so lowering the cutoff doesn't
-help. 
-That leaves 14 to 25% unexplained. Some is probably real seed variance, and how
-much of that needs a different initialization at all is the
-[companion post](#/blog/same-init-different-dictionary). I'd also love to see
-whether a learned adapter makes partial transplants full.
+Real orphans transplant partly. Repairs form a broad peak around +.2 to +.4
+(3 to 6% above .8, against 49% in the toy), so "shared" means much of the
+same structure, not a near-copy. Clean tilings like temperature are also rare
+(under 0.1% of orphans), so in real models tiling is shown for a few
+concepts, not as the general story. Outside those, groups don't transplant
+more often than the orphans' Hungarian partners (partners .62 to .63, groups
+.51 to .65), and partner cosine barely predicts which orphans transplant
+(AUC .52 to .58), so lowering the cutoff doesn't help.
+
+That leaves 14 to 25% unexplained. Some of it is probably real seed variance,
+and how much of that needs a different initialization at all is the subject
+of the [companion post](#/blog/same-init-different-dictionary). I'd also love
+to see whether a learned adapter makes partial transplants full.

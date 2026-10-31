@@ -389,3 +389,36 @@
     padding-top: 0;
   }
 }
+
+/* LaTeX (KaTeX) and tables in posts */
+.md .katex-display {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+.md .katex {
+  font-size: 1.05em;
+}
+
+.md table {
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.85rem;
+  display: block;
+  overflow-x: auto;
+}
+
+.md th,
+.md td {
+  border-bottom: 1px solid var(--line);
+  padding: 0.4rem 0.8rem;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.md th {
+  color: var(--ink-dim);
+  font-weight: 500;
+}

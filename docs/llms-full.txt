@@ -32,7 +32,7 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 
 ## selected work
 - **nexos.heartbeat**: always-on AI twin and the biggest feature at nexos, where I built the memory and continuity model ([writeup](https://mariopenglee.com/blog/heartbeat.md)) ([demo](https://www.youtube.com/watch?v=KoVKYMgw2H0))
-- **Sparse autoencoder seeds share more than matching shows**: my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; a companion paper finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed ([writeup](https://mariopenglee.com/blog/orphan-latents.md)) ([kernel noise](https://mariopenglee.com/blog/same-init-different-dictionary.md))
+- **Sparse autoencoder seeds share more than matching shows**: my SOAR 2026 project at EleutherAI (76 of ~3,450 applicants accepted, 32 of 2,126 undergrads), supervised by Gonçalo Paulo: matched one-to-one, two SAE seeds share about half their latents, but a toy-calibrated transplant test estimates 75 to 86%; an independent side project finds GPU kernel noise alone leaves 43 to 85% as many latents unmatched as a new seed ([writeup](https://mariopenglee.com/blog/orphan-latents.md)) ([kernel noise](https://mariopenglee.com/blog/same-init-different-dictionary.md))
 - **Do SAEs capture concept manifolds?**: the toy phase, open-source interpretability research at EleutherAI: pooling sparse autoencoders that differ only in seed tiles a concept manifold back together where one SAE dilutes it ([writeup](https://mariopenglee.com/blog/cross-seed-saes.md)) ([code](https://github.com/mariopenglee/cross-seed-manifold-poc))
 - **Where role collapse happens in diffusion models**: why SDXL and SD3.5 draw "a mouse chasing a cat" as a cat chasing a mouse: the text encoder carries the roles, and the denoiser ignores them ([writeup](https://mariopenglee.com/blog/role-collapse.md))
 - **Code Interpreter at nexos.ai**: a sandboxed runtime that lets our agents write and run code safely ([writeup](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/))
@@ -63,30 +63,35 @@ summary: Two sparse autoencoders that differ only in seed match about half their
 ---
 
 Train two sparse autoencoders (SAEs) on the same Llama-3.1-8B activations,
-change only the seed, and match their latents one-to-one. About half come out
-with no partner. These are called orphans
+change nothing but the seed, and match their latents one-to-one. About half
+come out with no partner. People call these orphans
 ([Paulo and Belrose](https://arxiv.org/abs/2501.16615) get 30% shared at 131k
-latents). If seeds learned different features, "the feature for X" would
-depend on the seed. In my SOAR 2026 project (EleutherAI's Summer of Open AI
-Research, supervised by Gonçalo Paulo), I find much of the gap comes from how
-latents are matched. If a latent counts as shared when the other seed's latents can stand in for it,
-the estimated shared share goes from about half to 75 to 86%.
+latents), and if seeds really learned different features, "the feature for X"
+would depend on which seed you happened to train.
 
-[Bhalla et al. (2026)](https://arxiv.org/abs/2604.28119) show a single SAE
-often splits a curved concept (a manifold) into latents that each cover one
-patch, which I'll call tiles. This follows up my
-[earlier toy post](#/blog/cross-seed-saes): seeds seem to cut the same thing
-differently rather than see different things.
+In my SOAR 2026 project (EleutherAI's Summer of Open AI Research, supervised
+by Gonçalo Paulo), I find that much of the gap comes from how latents are
+matched, not from what they learned. If a latent counts as shared when the
+other seed's latents can stand in for it, the estimated shared share goes
+from about half to **75 to 86%**.
 
-Both views come from trained SAEs. The sphere is a toy: one planted sphere, two TopK SAEs of width 32
-(each input uses only its k strongest latents), every point colored by the
-latent that fires hardest there. Seed A cuts it into 9 tiles and seed B into
-6, and exactly one tile is matched across seeds, yet both reconstruct the
-sphere. The temperature view is Llama layer 28: I sweep "It is v degrees
-outside" from -30 to 60°C and plot each seed's tile-only reconstruction on its
-top three principal components. Seed A uses 6 tiles and seed B 4, none is
-matched one-to-one, and after an orthogonal rotation the two curves line up
-with R² = .85 (shuffled temperatures give below -.5).
+The reason, at least in part, is tiling.
+[Bhalla et al. (2026)](https://arxiv.org/abs/2604.28119) show that a single
+SAE often splits a curved concept (a manifold) into latents that each cover
+one patch, which I'll call tiles. Following up my
+[earlier toy post](#/blog/cross-seed-saes), the seeds seem to cut the same
+thing differently rather than see different things.
+
+Both views below come from trained SAEs. The sphere is a toy: one planted
+sphere, two TopK SAEs of width 32 (each input uses only its k strongest
+latents), and every point colored by the latent that fires hardest there.
+Seed A cuts it into 9 tiles, seed B into 6, and exactly one tile is matched
+across seeds, yet both reconstruct the sphere. The temperature view is Llama
+layer 28. I sweep "It is v degrees outside" from −30 to 60°C and plot each
+seed's tile-only reconstruction on its top three principal components. Seed A
+uses 6 tiles and seed B 4, none is matched one-to-one, and after an
+orthogonal rotation the two curves line up with $R^2 = .85$ (shuffled
+temperatures give below −.5).
 
 [[demo:seed-tiling]]
 
@@ -94,82 +99,90 @@ with R² = .85 (shuffled temperatures give below -.5).
 
 The standard rule solves a Hungarian assignment (the best one-to-one pairing
 between two dictionaries) over encoder and decoder directions, and calls a
-pair matched if both cosines reach .7. If tile boundaries
-depend on the seed, no tile of A has to line up with any tile of B. In toy worlds
-(synthetic activations built from planted manifolds), 61 to 84% of live
-latents are orphans although both seeds represent every manifold.
-Wider SAEs make it worse: one sphere goes from 4 tiles to 25, about 99%
-unmatched, while the seeds' outputs agree at R² ≥ .98.
+pair matched if both cosines reach .7. That works for latents that each mean
+one thing. But if tile boundaries depend on the seed, no tile of A has to
+line up with any tile of B.
+
+The toy worlds (synthetic activations built from planted manifolds) show how
+much this matters: 61 to 84% of live latents are orphans, although both seeds
+represent every manifold. Wider SAEs make it worse. One sphere goes from 4
+tiles to 25, about 99% unmatched, while the seeds' outputs agree at
+$R^2 \geq .98$.
 
 ## the test
 
-Neither step uses weight similarity. First, I pool both seeds' orphans and group them by co-firing, using
-the Ochiai coefficient over their active token sets:
+Neither step uses weight similarity. First, I pool both seeds' orphans and
+group them by co-firing, using the Ochiai coefficient over their active token
+sets:
 
-```
-O_ij = |A_i ∩ A_j| / sqrt(|A_i| · |A_j|)
-```
+$$
+O_{ij} = \frac{|A_i \cap A_j|}{\sqrt{|A_i|\,|A_j|}}
+$$
 
-A 10-nearest-neighbor graph and Leiden community detection split them
-into groups, kept only if denser than in degree-preserving shuffles. The recipe was picked on toy worlds under a rule fixed in advance
-(so the risk is that it's tuned to the toy).
+A 10-nearest-neighbor graph and Leiden community detection split them into
+groups, kept only if denser than in degree-preserving shuffles. The recipe
+was picked on toy worlds under a rule fixed in advance (so the risk is that
+it's tuned to the toy).
 
 Second, I transplant. For each group I remove the host seed's orphans and
-insert the donor's, on the same held-out tokens. With ΔSSE(x) the
-rise in the host's reconstruction error when its group is replaced by x:
+insert the donor's, on the same held-out tokens. With $\Delta\mathrm{SSE}(x)$
+the rise in the host's reconstruction error when its group is replaced by $x$:
 
-```
-repair = 1 − ΔSSE(donor) / ΔSSE(empty slot)
-```
+$$
+\mathrm{repair} = 1 - \frac{\Delta\mathrm{SSE}(\text{donor})}{\Delta\mathrm{SSE}(\text{empty slot})}
+$$
 
-1 means the donor fully stands in, 0 means no better than an empty slot. A group counts as shared if its repair
-clears a bar b = .19, the lowest bar at which every control donor
-(firing-matched latents, a different group, random latents) passes for at
-most 1% of orphans in all 16 toy worlds and all 3 real sites. In the toy,
-every orphan should have a stand-in, and 86% pass, which is the test's
-sensitivity s. Grouping and sensitivity were fixed on the toy, and the bar
-only looks at control donors, never at the real groups' own repairs.
+A repair of 1 means the donor fully stands in, and 0 means it's no better
+than an empty slot. A group counts as shared if its repair clears a bar
+$b = .19$, the lowest bar at which every control donor (firing-matched
+latents, a different group, random latents) passes for at most 1% of orphans
+in all 16 toy worlds and all 3 real sites. In the toy, every orphan should
+have a stand-in, and 86% pass, which is the test's sensitivity $s$. Grouping
+and sensitivity were fixed on the toy, and the bar only looks at control
+donors, never at the real groups' own repairs.
 
 ## what the real models say
 
 The sites are Llama layer 16 MLP, Llama layer 28 residual and Pythia-160m
-layer 6 MLP. At b = .19, 51 to 65% of grouped orphans transplant,
-and no control passes for more than 0.9%. With m the matched share and T(b)
-the share of all orphans in transplanting groups:
+layer 6 MLP. At $b = .19$, 51 to 65% of grouped orphans transplant, and no
+control passes for more than 0.9%. With $m$ the matched share and $T(b)$ the
+share of all orphans in transplanting groups:
 
-```
-shared = m + (1 − m) · T(b) / s
-```
+$$
+\mathrm{shared} = m + (1 - m)\,\frac{T(b)}{s}
+$$
 
-This moves the matched 51 / 53 / 42% to 75 / 86 / 82% shared (about
-72 / 81 / 76% before dividing by s). Dividing by s assumes real sensitivity
-matches the toy's, the weakest step, so I'd read these as rough estimates. Temperature is the cleanest case: 9 of 10 tiles share a blind
-group with a tile of the other seed (p < .001), and the donor's tiles repair
-the host much better than its below-cutoff Hungarian partners do. (KL repair
-uses Llama's next-token KL instead of SSE):
+That moves the matched 51 / 53 / 42% to **75 / 86 / 82% shared** (about
+72 / 81 / 76% before dividing by $s$). Dividing by $s$ assumes real
+sensitivity matches the toy's, which is the weakest step, so I'd read these
+as rough estimates.
 
-```
-donor                 SSE repair (host A / B)   KL repair
-same-concept tiles        +.34 / +.35           +.63 / +.67
-Hungarian partners        +.07 / +.23           +.30 / +.21
-firing-matched            -.32 / -.51           -.20 / -.12
-```
+Temperature is the cleanest case. 9 of 10 tiles share a blind group with a
+tile of the other seed ($p < .001$), and the donor's tiles repair the host
+much better than its below-cutoff Hungarian partners do (KL repair uses
+Llama's next-token KL instead of SSE):
+
+| donor | SSE repair (host A / B) | KL repair (host A / B) |
+| --- | --- | --- |
+| same-concept tiles | +.34 / +.35 | +.63 / +.67 |
+| Hungarian partners | +.07 / +.23 | +.30 / +.21 |
+| firing-matched | −.32 / −.51 | −.20 / −.12 |
 
 ## what it doesn't show
 
-Real orphans transplant partly: repairs form a broad peak around +.2 to +.4
-(3 to 6% above .8, against 49% in the toy), so "shared" means much of the same
-structure, not a near-copy. Clean tilings like
-temperature are rare (under 0.1% of orphans), so in real models tiling is
-shown for a few concepts, not as the general story. Outside those,
-groups don't transplant more often than the orphans' Hungarian partners
-(partners .62 to .63, groups .51 to .65), and partner cosine barely predicts
-which orphans transplant (AUC .52 to .58), so lowering the cutoff doesn't
-help. 
-That leaves 14 to 25% unexplained. Some is probably real seed variance, and how
-much of that needs a different initialization at all is the
-[companion post](#/blog/same-init-different-dictionary). I'd also love to see
-whether a learned adapter makes partial transplants full.
+Real orphans transplant partly. Repairs form a broad peak around +.2 to +.4
+(3 to 6% above .8, against 49% in the toy), so "shared" means much of the
+same structure, not a near-copy. Clean tilings like temperature are also rare
+(under 0.1% of orphans), so in real models tiling is shown for a few
+concepts, not as the general story. Outside those, groups don't transplant
+more often than the orphans' Hungarian partners (partners .62 to .63, groups
+.51 to .65), and partner cosine barely predicts which orphans transplant
+(AUC .52 to .58), so lowering the cutoff doesn't help.
+
+That leaves 14 to 25% unexplained. Some of it is probably real seed variance,
+and how much of that needs a different initialization at all is the subject
+of the [companion post](#/blog/same-init-different-dictionary). I'd also love
+to see whether a learned adapter makes partial transplants full.
 
 
 ---
@@ -184,57 +197,66 @@ summary: Rerun a sparse autoencoder with the same seed and data, changing only G
 Train a sparse autoencoder (SAE) twice with the same seed and the same data,
 so the only difference is GPU kernel nondeterminism (for example the order of
 atomic adds in the backward pass, which changes rounding). Match the two
-dictionaries latent by latent and you get .43 to .85 times as many unmatched
-latents as two different seeds give. Even with fully deterministic training,
-flipping the last bit of one encoder weight at step 0 leaves half as many
-unmatched as a new seed on GPT-2. That's the headline of my second SOAR 2026
-project (EleutherAI's Summer of Open AI Research, supervised by Gonçalo
-Paulo), and it bears on the [orphan latents](#/blog/orphan-latents) from the
-first: much of what gets called seed dependence doesn't need a different
-initialization, so fixing the seed buys less reproducibility than you'd think.
+dictionaries latent by latent, and you get **.43 to .85 times as many
+unmatched latents** as two different seeds give.
+
+It gets stranger with fully deterministic training. Flipping the last bit of
+one encoder weight at step 0 leaves half as many unmatched as a new seed on
+GPT-2.
+
+This was a side project I ran on my own, out of curiosity, and it bears on
+the [orphan latents](#/blog/orphan-latents) from my SOAR project. Much of
+what gets called seed dependence doesn't need a different initialization, so
+fixing the seed buys less reproducibility than you'd think.
 
 The protocol follows [Summers and Dinneen (2021)](https://arxiv.org/abs/2103.04514),
 who asked the same question for supervised networks. I match latents with
-Hungarian assignments over encoder and decoder directions (both cosines ≥ .7)
-and count unmatched live latents. With u the unmatched share between two
-seeds and t the share between two runs that differ only in kernel noise, the
-noise share is
+Hungarian assignments over encoder and decoder directions (both cosines
+$\geq .7$) and count unmatched live latents. With $u$ the unmatched share
+between two seeds and $t$ the share between two runs that differ only in
+kernel noise, the noise share is
 
-```
-R_N = t / u
-```
+$$
+R_N = \frac{t}{u}
+$$
 
-a ratio of unmatched shares, not a variance decomposition. Across TopK SAEs
-on Pythia-160m and Llama-3.1-8B (bf16 autocast) and GPT-2 Small (full fp32) it
-lands between .43 and .85. On GPT-2 it's higher at twice the learning rate,
-at equal reconstruction (.57 vs .77), and with a longer budget (.77 to .85
-from 1B to 4B tokens).
+which is a ratio of unmatched shares, not a variance decomposition. Across
+TopK SAEs on Pythia-160m and Llama-3.1-8B (bf16 autocast) and GPT-2 Small
+(full fp32), it lands between .43 and .85. On GPT-2 it's higher at twice the
+learning rate, at equal reconstruction (.57 vs .77), and with a longer budget
+(.77 to .85 from 1B to 4B tokens).
 
 [[demo:noise-share]]
 
 ## same latents, not just same amount
 
-A ratio alone would be consistent with noise breaking some unrelated set of
-latents, so I cross-tabulate "unmatched by the perturbation" against
+On its own, a ratio would be consistent with noise breaking some unrelated
+set of latents. So I cross-tabulate "unmatched by the perturbation" against
 "unmatched by a new seed" and compute a Mantel-Haenszel odds ratio within
 firing-frequency deciles, with a threshold of 3 fixed before any result was
-read. Every perturbation clears it (the last-bit flip, kernel noise, and as a
+read.
+
+Every perturbation clears it: the last-bit flip, kernel noise, and as a
 looser check, document order, minibatch composition and a mid-run kernel
-switch), with odds ratios of 4.7 to 28 across two matching rules. On Llama, a
+switch. Odds ratios run from 4.7 to 28 across two matching rules. On Llama, a
 noise twin (a run that differs only in kernel noise) leaves unmatched 56% of
 the latents a new seed leaves unmatched, against 37% expected by chance.
 
-## when it's decided
+## the first ten steps
 
 In full-fp32 GPT-2, about 122k steps long, the outcome is basically decided
 in the first 10 steps. If I train deterministically up to a fork point and
 only then let kernel noise in, every one of nine forks from step 10 onward
-ends as the same SAE (all latents matched). Resetting Adam's moments at 1% of
-training partly reopens the sensitivity, which seems to me consistent with
-the optimizer state damping late noise, though I haven't pinned a
-mechanism. It isn't universal: on Pythia at 4k latents it's still open at 5%,
-while GPT-2 under bf16 autocast closes by 1%, so it's probably not the
-precision (width, model and training loop all differ).
+ends as the same SAE (all latents matched).
+
+Resetting Adam's moments at 1% of training partly reopens the sensitivity.
+That seems to me consistent with the optimizer state damping late noise,
+though I haven't pinned a mechanism. It isn't universal either: on Pythia at
+4k latents the window is still open at 5%, while GPT-2 under bf16 autocast
+closes by 1%, so it's probably not the precision (width, model and training
+loop all differ).
+
+## where the two SAEs differ
 
 The unmatched latents are also where the two SAEs really differ. After
 permutation alignment, the largest rise in held-out FVU (fraction of variance
@@ -243,15 +265,13 @@ endpoints' value, against 7% for noise twins, and it disappears when only the
 matched latents are interpolated. This is the linear mode connectivity test
 from [Frankle et al. (2020)](https://arxiv.org/abs/1912.05671).
 
-## what it doesn't show
+A couple of caveats. $R_N$ inherits the .7 cosine cutoff, so it measures how
+often matching breaks, not how far apart the dictionaries are (the transplant
+test in the companion post suggests the functional gap is smaller). And
+Pythia and Llama have one seed pair and one twin pair each, so their ratios
+don't include pair-to-pair spread. I'd read the range as rough.
 
-R_N inherits the .7 cosine cutoff, so it measures how often matching breaks,
-not how far apart the dictionaries are (the transplant test in the companion
-post suggests the functional gap is smaller). Pythia and Llama have one seed
-pair and one twin pair each, so their ratios don't include pair-to-pair
-spread, and I'd read the range as rough.
-
-The natural next step is to join the two papers: are the latents kernel
+The natural next step is to join the two projects: are the latents kernel
 noise breaks the orphans that transplant, or the 14 to 25% that don't? I'd
 also be curious whether a recipe that damps those first few steps buys more
 reproducibility than seed averaging does.
