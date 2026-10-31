@@ -81,7 +81,7 @@ AI engineer and co-founder of two companies. Team lead of 12 at nexos.ai; led fi
 \begin{itemize}
   \item Trained compaction models (Adeline, Helene). Result: up to 70\% smaller context on 20+ turn, 40k+ token sessions; no measured quality loss on Terminal-Bench 2 and internal data.
   \item Developed block-GRPO, RL for block-autoregressive diffusion LLMs with exact cross-block log-probability. Result: significantly higher reward than vanilla GRPO; over 4x throughput vs autoregressive decoding.
-  \item Latest checkpoint: autoregressive LoRA with mixture-of-experts routing.
+  \item \href{https://mariopenglee.com/\#/blog/adeline-v2-context-compaction-model}{adeline-v2}: LoRA fine-tune of a 35B mixture-of-experts model, merged into NVFP4 production weights. Result: keeps 80\% of critical facts on 45 unseen repos vs 67\% for the base, about 40\% fewer lost.
 \end{itemize}
 
 \entry{nexos.ai}{AI Engineer, promoted to Senior AI Engineer Feb 2026}{Jun 2025 -- Jun 2026}{Enterprise AI platform (raised \texteuro30M), Vilnius. Team lead, 12-person team across backend, frontend and AI.}
