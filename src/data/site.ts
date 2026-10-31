@@ -25,11 +25,11 @@ export const NAV: { label: string; path: string }[] = [
   { label: 'blog', path: '/blog' },
 ];
 
-// talks — recordings of me presenting. youtube id + where/when it was given.
-// poster: optional custom still (a frame from the talk) used instead of the
-// default youtube thumbnail. lives in /public.
+// talks. with a youtube id the card plays the recording inline; without one
+// it links out (url) and shows the poster photo, or a text tile if none.
+// poster: optional custom still, lives in /public.
 export const TALKS: {
-  id: string;
+  id?: string;
   title: string;
   meta: string;
   url: string;
@@ -44,9 +44,32 @@ export const TALKS: {
   {
     id: 'PC2wbY8yAbA',
     title: 'Using AI Agents to Navigate Data Chaos',
-    meta: 'nexos.ai · Danske Bank Lithuania',
+    meta: 'nexos.ai · Danske Bank Tech Night, Vilnius, Nov 2025',
     url: 'https://www.youtube.com/watch?v=PC2wbY8yAbA',
     poster: '/talk-data-chaos.jpg',
+  },
+  {
+    title: 'Infinite context agents',
+    meta: 'Anthropic WIP London · AI features showcase',
+    url: '',
+  },
+  {
+    title: 'Levels of representation: psychology for agent design',
+    meta: 'Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger',
+    url: 'https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/',
+    poster: '/talk-tesonet.jpg',
+  },
+  {
+    title: 'On stage for nexos.ai',
+    meta: 'Nord Demo Day, Vilnius, Nov 2025',
+    url: 'https://www.linkedin.com/posts/mariopenglee_honored-to-represent-our-team-on-stage-and-ugcPost-7395414989592956928-noqm/',
+    poster: '/talk-nord-demo-day.jpg',
+  },
+  {
+    title: 'Model-agnostic interpretability and its real-world uses',
+    meta: 'nexos.ai meetup, Jun 2025',
+    url: 'https://www.linkedin.com/posts/mariopenglee_while-shipping-features-and-designing-architectures-ugcPost-7341930268053729280-psTg/',
+    poster: '/talk-nexos-meetup.jpg',
   },
 ];
 
@@ -90,6 +113,25 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
         url: 'https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/',
       },
     ],
+  },
+];
+
+// articles I wrote elsewhere (nexos.ai blog, shared on LinkedIn)
+export const ARTICLES: typeof WORK = [
+  {
+    title: 'Psychology-inspired agentic AI',
+    desc: 'nexos.ai blog, Nov 2025, the write-up of my Tesonet conference talk',
+    links: [{ name: 'read', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7396131461592047616/' }],
+  },
+  {
+    title: 'Context engineering: where AI stops guessing',
+    desc: 'nexos.ai blog, Nov 2025',
+    links: [{ name: 'read', url: 'https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/' }],
+  },
+  {
+    title: "RAG isn't dead, plain RAG is",
+    desc: 'nexos.ai blog, Dec 2025 (with Povilas Nagrockas)',
+    links: [{ name: 'read', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7402240814485348352/' }],
   },
 ];
 
