@@ -23,7 +23,31 @@ export const LINKS: { name: string; key: string; url: string }[] = [
 export const NAV: { label: string; path: string }[] = [
   { label: 'about', path: '/' },
   { label: 'blog', path: '/blog' },
+  { label: 'talks', path: '/talks' },
 ];
+
+// quick proof points under the hero, most impressive first. url optional.
+export const HIGHLIGHTS: { text: string; url?: string }[] = [
+  { text: 'spoke at WIP: Index Ventures x Anthropic, London', url: '#/blog/infinite-context-agents-wip-london' },
+  { text: 'EleutherAI SOAR 2026 (about 2% of applicants accepted)', url: '#/blog/orphan-latents' },
+  { text: 'a16z speedrun Global Founder Sprint, with condense.chat' },
+  {
+    text: 'co-founded AI Safety at UCLA, raised about $150k',
+    url: 'https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024',
+  },
+];
+
+// posts shown under "writing" on the home page, in this order (slugs).
+// everything else is on /blog, newest first.
+export const FEATURED_POSTS = [
+  'orphan-latents',
+  'infinite-context-agents-wip-london',
+  'same-init-different-dictionary',
+  'role-collapse',
+];
+
+// how many talks the home page shows before "all talks"
+export const HOME_TALKS = 2;
 
 // talks. with a youtube id the card plays the recording inline; without one
 // it links out (url) and shows the poster photo, or a text tile if none.
@@ -37,14 +61,14 @@ export const TALKS: {
 }[] = [
   {
     title: 'Infinite context agents',
-    meta: 'WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs',
-    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/',
+    meta: 'nexos.ai · WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs',
+    url: '#/blog/infinite-context-agents-wip-london',
     poster: '/talk-anthropic-wip.jpg',
   },
   {
-    title: 'Levels of representation: psychology for agent design',
-    meta: 'Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger',
-    url: 'https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/',
+    title: 'Psychology for agent design',
+    meta: 'nexos.ai · Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger',
+    url: '#/blog/psychology-for-agent-design-tesonet',
     poster: '/talk-tesonet.jpg',
   },
   {
@@ -69,7 +93,7 @@ export const TALKS: {
   {
     title: 'Model-agnostic interpretability and its real-world uses',
     meta: 'nexos.ai meetup, Jun 2025',
-    url: 'https://www.linkedin.com/posts/mariopenglee_while-shipping-features-and-designing-architectures-ugcPost-7341930268053729280-psTg/',
+    url: '#/blog/gpt2-ioi',
     poster: '/talk-nexos-meetup.jpg',
   },
 ];
@@ -111,7 +135,7 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
     links: [
       {
         name: 'writeup',
-        url: 'https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf/',
+        url: '#/blog/code-interpreter-nexos',
       },
     ],
   },
@@ -120,19 +144,39 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
 // articles I wrote elsewhere (nexos.ai blog, shared on LinkedIn)
 export const ARTICLES: typeof WORK = [
   {
-    title: 'Psychology-inspired agentic AI',
-    desc: 'nexos.ai blog, Nov 2025, the write-up of my Tesonet conference talk',
-    links: [{ name: 'read', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7396131461592047616/' }],
-  },
-  {
-    title: 'Context engineering: where AI stops guessing',
-    desc: 'nexos.ai blog, Nov 2025',
-    links: [{ name: 'read', url: 'https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/' }],
+    title: 'Code interpreter: how we built it ourselves',
+    desc: 'nexos.ai, Jan 2026: letting the model run real code in an isolated micro-VM instead of guessing',
+    links: [
+      { name: 'read', url: '#/blog/code-interpreter-nexos' },
+      { name: 'original', url: 'https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf' },
+    ],
   },
   {
     title: "RAG isn't dead, plain RAG is",
-    desc: 'nexos.ai blog, Dec 2025 (with Povilas Nagrockas)',
-    links: [{ name: 'read', url: 'https://www.linkedin.com/feed/update/urn:li:activity:7402240814485348352/' }],
+    desc: 'nexos.ai, Dec 2025, with Povilas Nagrockas: organize the knowledge before you retrieve it',
+    links: [
+      { name: 'read', url: '#/blog/rethinking-rag' },
+      { name: 'original', url: 'https://www.linkedin.com/pulse/rethinking-rag-why-knowledge-organization-new-competitive-advantage-kxkze' },
+    ],
+  },
+  {
+    title: 'Context engineering: where AI stops guessing',
+    desc: 'LinkedIn, Nov 2025: getting the right context in front of the model, not a bigger model',
+    links: [
+      { name: 'read', url: '#/blog/context-engineering' },
+      {
+        name: 'original',
+        url: 'https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/',
+      },
+    ],
+  },
+  {
+    title: 'Psychology-inspired agentic AI',
+    desc: 'nexos.ai, Nov 2025, the long version of my Tesonet talk',
+    links: [
+      { name: 'read', url: '#/blog/psychology-inspired-agentic-ai' },
+      { name: 'original', url: 'https://www.linkedin.com/pulse/psychology-inspired-agentic-ai-nexos-ai-vi0le' },
+    ],
   },
 ];
 

@@ -19,7 +19,9 @@ export default function TalkCard({
   // no recording: a photo (or text tile) that links out, if there's a link
   if (!id) {
     const Tag = url ? 'a' : 'div';
-    const linkProps = url ? { href: url, target: '_blank', rel: 'noopener noreferrer' } : {};
+    // internal pages (#/blog/...) open in place; external links in a new tab
+    const ext = url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+    const linkProps = url ? { href: url, ...ext } : {};
     return (
       <div className="talk">
         <div className="talk-frame">
@@ -34,7 +36,7 @@ export default function TalkCard({
         </div>
         <div className="talk-info">
           {url ? (
-            <a className="talk-title" href={url} target="_blank" rel="noopener noreferrer">
+            <a className="talk-title" href={url} {...ext}>
               {title}
             </a>
           ) : (

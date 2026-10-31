@@ -39,6 +39,15 @@ summary: One or two sentences shown on the blog index. No em dashes here either.
   both themes and at phone width. Use only numbers that appear in the post;
   a toy simulation must say it's a toy.
 
+**Mirrored articles.** Pieces first published elsewhere (nexos.ai blog,
+LinkedIn) are kept here as a copy in case the original disappears: verbatim
+text, original date, a first line `*Originally published by X on Y, date
+([original](url)). Mirrored here so it stays available.*`, and the cover
+image instead of a demo. Note anything cut (e.g. a closing product pitch).
+They're exempt from the voice rules and the demo requirement. In
+`src/data/site.ts` ARTICLES, link `read` to the mirror and `original` to the
+source.
+
 ## 2. Voice (hard rules)
 
 Full guide in CLAUDE.md. Non-negotiables:
@@ -88,7 +97,7 @@ word count to the user after writing or editing a post.
 ```bash
 grep -n '—' src/posts/*.md                 # must be empty (prose; mock terminal output excepted)
 grep -rnP '[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}]' src/posts/   # must be empty
-grep -L '\[\[demo:' src/posts/*.md       # must be empty (every post has a visual)
+grep -L '\[\[demo:\|^\*Originally p' src/posts/*.md   # must be empty (every post has a visual; mirrors exempt)
 npm run build                              # must pass (tsc + vite)
 ```
 

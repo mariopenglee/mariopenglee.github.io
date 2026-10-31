@@ -2,13 +2,26 @@ import { Link } from 'react-router-dom';
 import Denoise from '../components/Denoise';
 import TalkCard from '../components/TalkCard';
 import { marked } from 'marked';
-import { SITE, BIO, LINKS, TALKS, WORK, ARTICLES, RESEARCH, LEADERSHIP } from '../data/site';
+import { SITE, BIO, LINKS, TALKS, WORK, RESEARCH, LEADERSHIP, HIGHLIGHTS, FEATURED_POSTS, HOME_TALKS } from '../data/site';
 import { POSTS } from '../data/posts';
 import './page.css';
 
-const FEATURED = POSTS.slice(0, 3);
+// curated order from site.ts; falls back to newest if a slug is missing
+const FEATURED = FEATURED_POSTS.map((slug) => POSTS.find((p) => p.slug === slug)).filter(
+  (p): p is (typeof POSTS)[number] => !!p,
+);
 
-function WorkSection({ title, items }: { title: string; items: typeof WORK }) {
+export function TalkGrid({ talks }: { talks: typeof TALKS }) {
+  return (
+    <div className="talk-list">
+      {talks.map((t) => (
+        <TalkCard key={t.title} id={t.id} title={t.title} meta={t.meta} poster={t.poster} url={t.url} />
+      ))}
+    </div>
+  );
+}
+
+export function WorkSection({ title, items }: { title: string; items: typeof WORK }) {
   return (
     <section className="section">
       <p className="section-title">{title}</p>
@@ -58,29 +71,27 @@ export default function Home() {
         </ul>
       </header>
 
+      {HIGHLIGHTS.length > 0 && (
+        <ul className="highlights">
+          {HIGHLIGHTS.map((h) => (
+            <li key={h.text}>
+              {h.url ? (
+                <a href={h.url} {...(h.url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                  {h.text}
+                </a>
+              ) : (
+                h.text
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="bio">
         {BIO.map((p) => (
           <p key={p} dangerouslySetInnerHTML={{ __html: marked.parseInline(p) as string }} />
         ))}
       </div>
-
-      {TALKS.length > 0 && (
-        <section className="section">
-          <p className="section-title">talks</p>
-          <div className="talk-list">
-            {TALKS.map((t) => (
-              <TalkCard
-                key={t.id}
-                id={t.id}
-                title={t.title}
-                meta={t.meta}
-                poster={t.poster}
-                url={t.url}
-              />
-            ))}
-          </div>
-        </section>
-      )}
 
       {FEATURED.length > 0 && (
         <section className="section">
@@ -98,17 +109,27 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          {POSTS.length > FEATURED.length && (
+          <p className="section-more">
+            <Link to="/blog">all writing →</Link>
+          </p>
+        </section>
+      )}
+
+      <WorkSection title="selected work" items={WORK} />
+
+      {TALKS.length > 0 && (
+        <section className="section">
+          <p className="section-title">talks</p>
+          <TalkGrid talks={TALKS.slice(0, HOME_TALKS)} />
+          {TALKS.length > HOME_TALKS && (
             <p className="section-more">
-              <Link to="/blog">all writing →</Link>
+              <Link to="/talks">all {TALKS.length} talks and articles →</Link>
             </p>
           )}
         </section>
       )}
 
-      <WorkSection title="selected work" items={WORK} />
       <WorkSection title="research" items={RESEARCH} />
-      <WorkSection title="articles" items={ARTICLES} />
       <WorkSection title="leadership" items={LEADERSHIP} />
     </div>
   );
