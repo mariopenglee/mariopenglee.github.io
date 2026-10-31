@@ -1316,8 +1316,9 @@ deeper) and feeds summaries forward.
 
 The team level had the clearest number. In one evaluation I cited, splitting
 a coding agent into an architect, developers, QA and DevOps, each with
-context and skills for its role, took a coding benchmark score from 38.5 to
-69.2 over one generalist agent. It's a single comparison, so I'd read the
+context and skills for its role, took a
+[SWE-bench](https://www.swebench.com/) score from 38.5 to 69.2 over one
+generalist agent. It's a single comparison, so I'd read the
 gap as directional. Organizational psychology points the same way: small
 teams with clear roles do better, and the rule of thumb is to stay around 5
 to 8 agents, since past that more hierarchy mostly adds confusion (like too
