@@ -44,6 +44,11 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 - **child language and concept acquisition**: experiments on how kids pick up words and concepts, at the Language and Development Lab
 - **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary and Rainey Williams) ([writeup](https://mariopenglee.com/blog/diverse-names.md)) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
 
+## articles
+- **Psychology-inspired agentic AI**: nexos.ai blog, Nov 2025, the write-up of my Tesonet conference talk ([read](https://www.linkedin.com/feed/update/urn:li:activity:7396131461592047616/))
+- **Context engineering: where AI stops guessing**: nexos.ai blog, Nov 2025 ([read](https://www.linkedin.com/posts/mariopenglee_the-real-challenge-in-enterprise-ai-today-share-7396873975009751040-niZ9/))
+- **RAG isn't dead, plain RAG is**: nexos.ai blog, Dec 2025 (with Povilas Nagrockas) ([read](https://www.linkedin.com/feed/update/urn:li:activity:7402240814485348352/))
+
 ## leadership
 - **AI Safety at UCLA**: co-founded it, raised about $150k, and led its alignment research team ([feature](https://newsroom.ucla.edu/stories/mario-peng-lee-artificial-intelligence-safety-ucla-commencement-2024))
 - **a16z speedrun Global Founder Sprint**: selected with condense.chat, SF Tech Week 2026
@@ -51,4 +56,8 @@ Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), whe
 
 ## talks
 - [nexos.heartbeat: an AI engine that works while you sleep](https://www.youtube.com/watch?v=KoVKYMgw2H0) (nexos.ai · product demo)
-- [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Lithuania)
+- [Using AI Agents to Navigate Data Chaos](https://www.youtube.com/watch?v=PC2wbY8yAbA) (nexos.ai · Danske Bank Tech Night, Vilnius, Nov 2025)
+- Infinite context agents (Anthropic WIP London · AI features showcase)
+- [Levels of representation: psychology for agent design](https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/) (Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger)
+- [On stage for nexos.ai](https://www.linkedin.com/posts/mariopenglee_honored-to-represent-our-team-on-stage-and-ugcPost-7395414989592956928-noqm/) (Nord Demo Day, Vilnius, Nov 2025)
+- [Model-agnostic interpretability and its real-world uses](https://www.linkedin.com/posts/mariopenglee_while-shipping-features-and-designing-architectures-ugcPost-7341930268053729280-psTg/) (nexos.ai meetup, Jun 2025)

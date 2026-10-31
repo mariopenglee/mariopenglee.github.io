@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { marked } from 'marked'
 import fs from 'node:fs'
 import path from 'node:path'
-import { SITE, BIO, LINKS, TALKS, WORK, RESEARCH, LEADERSHIP } from './src/data/site'
+import { SITE, BIO, LINKS, TALKS, WORK, ARTICLES, RESEARCH, LEADERSHIP } from './src/data/site'
 
 const ORIGIN = 'https://mariopenglee.com'
 
@@ -44,8 +44,9 @@ function agentFiles(): Plugin {
         `## writing\n${all.map((p) => `- [${p.title}](${ORIGIN}/blog/${p.slug}.md) (${p.date}): ${p.summary}`).join('\n')}`,
         `## selected work\n${list(WORK)}`,
         `## research\n${list(RESEARCH)}`,
+        `## articles\n${list(ARTICLES)}`,
         `## leadership\n${list(LEADERSHIP)}`,
-        `## talks\n${TALKS.map((t) => `- [${t.title}](${t.url}) (${t.meta})`).join('\n')}`,
+        `## talks\n${TALKS.map((t) => (t.url ? `- [${t.title}](${t.url}) (${t.meta})` : `- ${t.title} (${t.meta})`)).join('\n')}`,
       ].join('\n\n')
 
       fs.writeFileSync(`${out}/llms.txt`, home + '\n')

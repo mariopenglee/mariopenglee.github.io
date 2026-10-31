@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Denoise from '../components/Denoise';
 import TalkCard from '../components/TalkCard';
 import { marked } from 'marked';
-import { SITE, BIO, LINKS, TALKS, WORK, RESEARCH, LEADERSHIP } from '../data/site';
+import { SITE, BIO, LINKS, TALKS, WORK, ARTICLES, RESEARCH, LEADERSHIP } from '../data/site';
 import { POSTS } from '../data/posts';
 import './page.css';
 
@@ -75,6 +75,7 @@ export default function Home() {
                 title={t.title}
                 meta={t.meta}
                 poster={t.poster}
+                url={t.url}
               />
             ))}
           </div>
@@ -107,6 +108,7 @@ export default function Home() {
 
       <WorkSection title="selected work" items={WORK} />
       <WorkSection title="research" items={RESEARCH} />
+      <WorkSection title="articles" items={ARTICLES} />
       <WorkSection title="leadership" items={LEADERSHIP} />
     </div>
   );

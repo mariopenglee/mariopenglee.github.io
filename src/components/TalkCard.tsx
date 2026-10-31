@@ -7,13 +7,44 @@ export default function TalkCard({
   title,
   meta,
   poster,
+  url,
 }: {
-  id: string;
+  id?: string;
   title: string;
   meta: string;
   poster?: string;
+  url: string;
 }) {
   const [playing, setPlaying] = useState(false);
+  // no recording: a photo (or text tile) that links out, if there's a link
+  if (!id) {
+    const Tag = url ? 'a' : 'div';
+    const linkProps = url ? { href: url, target: '_blank', rel: 'noopener noreferrer' } : {};
+    return (
+      <div className="talk">
+        <div className="talk-frame">
+          <Tag
+            {...linkProps}
+            className={`talk-facade${poster ? '' : ' talk-tile'}`}
+            style={poster ? { backgroundImage: `url(${poster})` } : undefined}
+            aria-label={title}
+          >
+            {!poster && <span className="talk-tile-text">{meta.split(' · ')[0]}</span>}
+          </Tag>
+        </div>
+        <div className="talk-info">
+          {url ? (
+            <a className="talk-title" href={url} target="_blank" rel="noopener noreferrer">
+              {title}
+            </a>
+          ) : (
+            <span className="talk-title">{title}</span>
+          )}
+          <span className="talk-meta dim">{meta}</span>
+        </div>
+      </div>
+    );
+  }
   // prefer a hand-picked frame from the talk; fall back to youtube's thumbnail
   const thumb = poster ?? `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
