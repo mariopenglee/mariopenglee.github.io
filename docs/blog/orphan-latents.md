@@ -7,11 +7,11 @@ summary: Two sparse autoencoders that differ only in seed match about half their
 Train two sparse autoencoders (SAEs) on the same Llama-3.1-8B activations,
 change only the seed, and match their latents one-to-one. About half come out
 with no partner. These are called orphans
-([Paulo and Belrose](https://arxiv.org/abs/2501.16615) get only 30% shared at
-131k latents on Llama 3 8B). If each seed really learned different features,
-"the feature for X" would depend on the seed. Our SOAR
-2026 paper finds that much of the gap comes from how latents are matched. If a
-latent counts as shared when the other seed's latents can stand in for it,
+([Paulo and Belrose](https://arxiv.org/abs/2501.16615) get 30% shared at 131k
+latents). If seeds learned different features, "the feature for X" would
+depend on the seed. In my SOAR 2026 project (EleutherAI's Summer of Open AI
+Research, supervised by Gonçalo Paulo), I find much of the gap comes from how
+latents are matched. If a latent counts as shared when the other seed's latents can stand in for it,
 the estimated shared share goes from about half to 75 to 86%.
 
 [Bhalla et al. (2026)](https://arxiv.org/abs/2604.28119) show a single SAE
@@ -20,11 +20,11 @@ patch, which I'll call tiles. This follows up my
 [earlier toy post](#/blog/cross-seed-saes): seeds seem to cut the same thing
 differently rather than see different things.
 
-Both views come from trained SAEs. The sphere is a toy world: one planted sphere, two TopK SAEs of width 32
+Both views come from trained SAEs. The sphere is a toy: one planted sphere, two TopK SAEs of width 32
 (each input uses only its k strongest latents), every point colored by the
 latent that fires hardest there. Seed A cuts it into 9 tiles and seed B into
 6, and exactly one tile is matched across seeds, yet both reconstruct the
-sphere. The temperature view is Llama layer 28: we sweep "It is v degrees
+sphere. The temperature view is Llama layer 28: I sweep "It is v degrees
 outside" from -30 to 60°C and plot each seed's tile-only reconstruction on its
 top three principal components. Seed A uses 6 tiles and seed B 4, none is
 matched one-to-one, and after an orthogonal rotation the two curves line up
@@ -45,7 +45,7 @@ unmatched, while the seeds' outputs agree at R² ≥ .98.
 
 ## the test
 
-Neither step uses weight similarity. First, we pool both seeds' orphans and group them by co-firing, using
+Neither step uses weight similarity. First, I pool both seeds' orphans and group them by co-firing, using
 the Ochiai coefficient over their active token sets:
 
 ```
@@ -56,7 +56,7 @@ A 10-nearest-neighbor graph and Leiden community detection split them
 into groups, kept only if denser than in degree-preserving shuffles. The recipe was picked on toy worlds under a rule fixed in advance
 (so the risk is that it's tuned to the toy).
 
-Second, we transplant. For each group we remove the host seed's orphans and
+Second, I transplant. For each group I remove the host seed's orphans and
 insert the donor's, on the same held-out tokens. With ΔSSE(x) the
 rise in the host's reconstruction error when its group is replaced by x:
 
@@ -111,4 +111,4 @@ help.
 That leaves 14 to 25% unexplained. Some is probably real seed variance, and how
 much of that needs a different initialization at all is the
 [companion post](#/blog/same-init-different-dictionary). I'd also love to see
-whether a small learned adapter turns partial transplants into full ones.
+whether a learned adapter makes partial transplants full.
