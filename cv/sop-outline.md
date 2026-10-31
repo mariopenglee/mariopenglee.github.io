@@ -97,3 +97,66 @@ End on curiosity about the open question, not on a claim.
   why.
 - The commitment paragraph exists and is specific.
 - Read it aloud once. Cut any sentence that sounds like a committee wrote it.
+
+## what each letter needs to say (from two package reviews)
+
+Send each recommender a one-page brief with these points. Letters are
+written from what is in front of the writer.
+
+Paulo (EleutherAI)
+- Rank against the 76 SOAR fellows, not the 3,450 applicants.
+- Split credit with Tianai Ye: who designed the transplant test and the toy
+  calibration.
+- State what is new relative to Paulo and Belrose's own prior overlap result,
+  and that the kernel-noise study was Mario's idea.
+- Say he delivered during SOAR while co-founding condense. This is the one
+  third-party answer to the commitment question.
+
+Sandhofer (UCLA LCD lab)
+- What "led" meant: study design, the coreference coding scheme, the
+  analysis, not just running sessions.
+- Rank among undergraduates supervised.
+- Where the 2026 follow-up is headed (CogSci or journal) and his role in it.
+- Whether he could carry a cognitive-science thesis alone (Symbolic Systems
+  is asking exactly this).
+
+Lu (UCLA CVL lab)
+- Present the CycleDiffusion negative result as diagnostic skill: traced the
+  failure to the captioner used as training signal.
+- As a statistics professor, vouch for quantitative ability. This is the
+  counterweight to the C in Algorithms.
+- Be exact about the role-collapse work with Andrew Lee: involved, or aware
+  of it. Do not imply supervision that did not happen. Holyoak co-signs.
+
+## SOP, additions from the package reviews
+
+- The condense plan has to be checkable: hours per week, who runs it, role
+  title, whether investors know. "Addressed" is not enough with 500k and
+  a16z printed on the CV.
+- Drop "concurrency is a pattern". It argues the committee's worry for them.
+  Say what was delivered under load and what stops on enrollment.
+- Cut "usable by everyone, safely" as a closer. Replace with the open
+  research question.
+- Compress the Redwood to condense chronology to two sentences.
+- The Algorithms sentence should point at one specific derivation, such as
+  the exact cross-block log-probability in block-GRPO.
+- Opening hook: lead with the kernel-noise floor, not "half the latents
+  match", since prior work already showed low cross-seed overlap. Candidate
+  line a committee would quote: if kernel noise alone produces much of the
+  disagreement between two SAE seeds, a feature explanation is a claim about
+  one training run, not about the model.
+- Per program: Symbolic Systems leads with the children vs GPT-4 thread, MLT
+  with the linguistics, Princeton with named faculty and how the CS core
+  gets covered. Berkeley MEng needs a separate statement about the capstone
+  and leadership, and ideally one industry letter.
+
+## things to verify before sending (raised by reviewers)
+
+- Redwood dates. CV says Jun to Sep 2022; the IOI paper went public Nov
+  2022. Confirm the dates and whether the IOI study was done there or later.
+- SOAR end date. "Jul 2026 to present" for a summer program; give the real
+  end date if it has one.
+- 150k for AI Safety at UCLA vs about 48k in grants listed on the CV.
+  Expect the question; have the breakdown ready.
+- GPT-4 sample size behind d = 2.2.
+- Both "Writeup" links should open to something paper-quality by review time.
