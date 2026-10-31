@@ -36,10 +36,16 @@ export const TALKS: {
   poster?: string;
 }[] = [
   {
-    id: 'KoVKYMgw2H0',
-    title: 'nexos.heartbeat: an AI engine that works while you sleep',
-    meta: 'nexos.ai · product demo',
-    url: 'https://www.youtube.com/watch?v=KoVKYMgw2H0',
+    title: 'Infinite context agents',
+    meta: 'WIP: Index Ventures x Anthropic, London, Apr 2026 · with Anthropic, Revolut, Wiz, ElevenLabs',
+    url: 'https://www.linkedin.com/feed/update/urn:li:activity:7451194940912463872/',
+    poster: '/talk-anthropic-wip.jpg',
+  },
+  {
+    title: 'Levels of representation: psychology for agent design',
+    meta: 'Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger',
+    url: 'https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/',
+    poster: '/talk-tesonet.jpg',
   },
   {
     id: 'PC2wbY8yAbA',
@@ -49,15 +55,10 @@ export const TALKS: {
     poster: '/talk-data-chaos.jpg',
   },
   {
-    title: 'Infinite context agents',
-    meta: 'Anthropic WIP London · AI features showcase',
-    url: '',
-  },
-  {
-    title: 'Levels of representation: psychology for agent design',
-    meta: 'Tesonet AI-Focused Conference, Vilnius, Nov 2025 · with Amazon, Google Cloud Security, Hostinger',
-    url: 'https://www.linkedin.com/posts/mariopenglee_had-the-chance-to-speak-alongside-an-exceptionally-ugcPost-7395744131563577344-EdWu/',
-    poster: '/talk-tesonet.jpg',
+    id: 'KoVKYMgw2H0',
+    title: 'nexos.heartbeat: an AI engine that works while you sleep',
+    meta: 'nexos.ai · product demo',
+    url: 'https://www.youtube.com/watch?v=KoVKYMgw2H0',
   },
   {
     title: 'On stage for nexos.ai',
