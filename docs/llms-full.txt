@@ -2,11 +2,11 @@
 
 > cofounder of condense.chat. making powerful AI accessible to everyone, and safe when it gets there.
 
-I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), which compresses what coding agents send to the model so heavy AI workloads cost less (up to about 70% off long sessions, with basically the same output). I'm also CEO of [Pocketful](https://pocketful.ai/), which brings WhatsApp AI agents to restaurant owners in Argentina. Both are basically the same bet, that AI should be cheap and usable enough for everyone.
+I started out studying human minds, mostly how kids learn language and concepts, through linguistics, computer science and psychology at UCLA (Phi Beta Kappa). Around then the cognitive side and NLP started converging pretty fast, and once GPT-style large language models (LLMs) showed up I ended up asking the same questions of them. That meant mechanistic interpretability, first on GPT-2's circuits with Buck Shlegeris, then co-founding AI Safety at UCLA, and these days open-source work at [EleutherAI](https://www.eleuther.ai/) through SOAR 2026 (about 2% of applicants accepted) on how stable sparse autoencoder features are across seeds.
 
-My background is in linguistics, computer science and psychology (UCLA, Phi Beta Kappa). Mostly I'm interested in how minds (human and machine) represent things, and my view is that understanding that is how AI gets cheaper and safer. These days that means open-source interpretability research at [EleutherAI](https://www.eleuther.ai/) through SOAR 2026 (its Summer of Open AI Research, about 2% of applicants accepted), lately on how stable sparse autoencoder features are across seeds.
+Agents became the other interest, and I graduated already building them: [Pocketful](https://pocketful.ai/) runs WhatsApp AI agents for restaurant owners in Argentina (I'm CEO now). Then I did the same at much larger scale at [nexos.ai](https://nexos.ai/), where as a senior AI engineer I built the agent layer, a sandboxed code interpreter, and the memory model behind nexos.heartbeat, an always-on agent that keeps working while you sleep.
 
-Before condense I was a senior AI engineer at [nexos.ai](https://nexos.ai/), where I built the agent layer, the memory model behind nexos.heartbeat, and a sandboxed code interpreter.
+What I kept running into with long-running agents is that most of the context they carry isn't needed, and you pay for all of it. So now I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), working out what context is essential and what isn't, which cuts long coding-agent sessions by up to about 70% with basically the same output. Honestly it's the same story as always, getting this tech to everyone, just with a much better sense now of why it has to be done safely (and my guess is interpretability is a big part of how).
 
 ## links
 - [linkedin](https://www.linkedin.com/in/mariopenglee/)
