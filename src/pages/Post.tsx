@@ -17,6 +17,7 @@ import NoiseShare from '../components/NoiseShare';
 import Layers from '../components/Layers';
 import AdelineRetention from '../components/AdelineRetention';
 import CompactorFunnel from '../components/CompactorFunnel';
+import LengthTagger from '../components/LengthTagger';
 import './page.css';
 
 // Interactive demos a post can embed by dropping `[[demo:key]]` on its own
@@ -38,6 +39,7 @@ const DEMOS: Record<string, () => JSX.Element> = {
   'noise-share': () => <NoiseShare />,
   'adeline-retention': () => <AdelineRetention />,
   'compactor-funnel': () => <CompactorFunnel />,
+  'length-tagger': () => <LengthTagger />,
   'memgit-stack': () => (
     <Layers
       caption="the agent context stack, rebuilt from git on every heartbeat (simplified from the slide)"

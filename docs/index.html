@@ -64,7 +64,7 @@
         ]
       }
     </script>
-    <script type="module" crossorigin src="/assets/index-4496428c.js"></script>
+    <script type="module" crossorigin src="/assets/index-79f0c82a.js"></script>
     <link rel="stylesheet" href="/assets/index-1969a732.css">
   </head>
   <body>
@@ -85,6 +85,7 @@
 </ul>
 <h2>writing</h2>
 <ul>
+<li><a href="https://mariopenglee.com/blog/pos-tagging-strictly-local-grammar.md">My strictly local grammar POS tagger ignored the words</a> (2026-11-13): My 2022 POS tagger, a strictly local grammar of tags, got 9 to 22% on the Brown corpus because it never sees the words. Rerun as a bigram HMM it reaches 60% on 20 training sentences and 90% on 2,000.</li>
 <li><a href="https://mariopenglee.com/blog/adeline-v2-context-compaction-model.md">adeline-v2: a fine-tuned MoE for agent context compaction</a> (2026-10-31): condense.chat&#39;s adeline-v2 compaction model removes about 88% of the tokens it compacts and keeps 80% of critical facts on unseen repos, vs about 70% for the base model at about the same compression.</li>
 <li><a href="https://mariopenglee.com/blog/orphan-latents.md">Sparse autoencoder seeds share more than matching shows</a> (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds estimates the real shared share at 75 to 86%.</li>
 <li><a href="https://mariopenglee.com/blog/same-init-different-dictionary.md">Same seed, different SAE: GPU noise and seed dependence</a> (2026-10-31): Rerun a sparse autoencoder with the same seed and data, changing only GPU kernel nondeterminism, and it leaves 43 to 85% as many latents unmatched as a new seed, mostly the same ones.</li>
@@ -123,6 +124,7 @@
 <li><strong>PhoneTic5</strong>: independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023) (<a href="https://mariopenglee.com/blog/phonetic5.md">writeup</a>) (<a href="https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view">preprint</a>) (<a href="https://phonetic5.streamlit.app/">demo</a>)</li>
 <li><strong>child language and concept acquisition</strong>: experiments on how kids pick up words and concepts, at the Language and Development Lab</li>
 <li><strong>The Diverse Names Generator</strong>: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O&#39;Leary and Rainey Williams) (<a href="https://mariopenglee.com/blog/diverse-names.md">writeup</a>) (<a href="https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541">paper</a>) (<a href="https://diversenamesgenerator.com/">live</a>)</li>
+<li><strong>POS tagging with a strictly local grammar</strong>: experiment: a word-blind tag bigram stays near 20% on the Brown corpus, adding the word term (a bigram HMM) brings it to 60%, and 90% with more data (<a href="https://mariopenglee.com/blog/pos-tagging-strictly-local-grammar.md">writeup</a>) (<a href="/code/pos-tagger-rerun.py">code</a>)</li>
 </ul>
 <h2>articles</h2>
 <ul>

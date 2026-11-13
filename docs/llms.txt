@@ -16,6 +16,7 @@ What I kept running into with long-running agents is that most of the context th
 - [X](https://x.com/mariopenglee)
 
 ## writing
+- [My strictly local grammar POS tagger ignored the words](https://mariopenglee.com/blog/pos-tagging-strictly-local-grammar.md) (2026-11-13): My 2022 POS tagger, a strictly local grammar of tags, got 9 to 22% on the Brown corpus because it never sees the words. Rerun as a bigram HMM it reaches 60% on 20 training sentences and 90% on 2,000.
 - [adeline-v2: a fine-tuned MoE for agent context compaction](https://mariopenglee.com/blog/adeline-v2-context-compaction-model.md) (2026-10-31): condense.chat's adeline-v2 compaction model removes about 88% of the tokens it compacts and keeps 80% of critical facts on unseen repos, vs about 70% for the base model at about the same compression.
 - [Sparse autoencoder seeds share more than matching shows](https://mariopenglee.com/blog/orphan-latents.md) (2026-10-31): Two sparse autoencoders that differ only in seed match about half their latents one-to-one. A transplant test calibrated on toy worlds estimates the real shared share at 75 to 86%.
 - [Same seed, different SAE: GPU noise and seed dependence](https://mariopenglee.com/blog/same-init-different-dictionary.md) (2026-10-31): Rerun a sparse autoencoder with the same seed and data, changing only GPU kernel nondeterminism, and it leaves 43 to 85% as many latents unmatched as a new seed, mostly the same ones.
@@ -52,6 +53,7 @@ What I kept running into with long-running agents is that most of the context th
 - **PhoneTic5**: independent project: a T5 grapheme-to-phoneme model, published in the UCLA Undergraduate Science Journal (2023) ([writeup](https://mariopenglee.com/blog/phonetic5.md)) ([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)) ([demo](https://phonetic5.streamlit.app/))
 - **child language and concept acquisition**: experiments on how kids pick up words and concepts, at the Language and Development Lab
 - **The Diverse Names Generator**: a diverse and gender-neutral name generator for linguistic examples, published at LSA 2023 (with Maura O'Leary and Rainey Williams) ([writeup](https://mariopenglee.com/blog/diverse-names.md)) ([paper](https://journals.linguisticsociety.org/proceedings/index.php/PLSA/article/view/5541)) ([live](https://diversenamesgenerator.com/))
+- **POS tagging with a strictly local grammar**: experiment: a word-blind tag bigram stays near 20% on the Brown corpus, adding the word term (a bigram HMM) brings it to 60%, and 90% with more data ([writeup](https://mariopenglee.com/blog/pos-tagging-strictly-local-grammar.md)) ([code](/code/pos-tagger-rerun.py))
 
 ## articles
 - **Code interpreter: how we built it ourselves**: nexos.ai, Jan 2026: letting the model run real code in an isolated micro-VM instead of guessing ([read](https://mariopenglee.com/blog/code-interpreter-nexos.md)) ([original](https://www.linkedin.com/pulse/code-interpreter-how-weve-built-ourselves-nexos-ai-hgckf))

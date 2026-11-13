@@ -226,6 +226,14 @@ export const RESEARCH: typeof WORK = [
       { name: 'live', url: 'https://diversenamesgenerator.com/' },
     ],
   },
+  {
+    title: 'POS tagging with a strictly local grammar',
+    desc: 'experiment: a word-blind tag bigram stays near 20% on the Brown corpus, adding the word term (a bigram HMM) brings it to 60%, and 90% with more data',
+    links: [
+      { name: 'writeup', url: '#/blog/pos-tagging-strictly-local-grammar' },
+      { name: 'code', url: '/code/pos-tagger-rerun.py' },
+    ],
+  },
 ];
 
 export const LEADERSHIP: typeof WORK = [

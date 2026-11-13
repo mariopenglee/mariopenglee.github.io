@@ -68,3 +68,5 @@ The paper was published in the *UCLA Undergraduate Science Journal*
 (2023) as "Transformer Phonotactics via IPA G2P Finetuning"
 ([preprint](https://drive.google.com/file/d/1UBAq5x_5ZNalz5k98V0eq55oVT-PO4VP/view)),
 and you can try the model in the [demo](https://phonetic5.streamlit.app/).
+
+Another linguistics project of mine is a [POS tagger built from a strictly local grammar](#/blog/pos-tagging-strictly-local-grammar), an experiment I started in 2022 and recently reran.
