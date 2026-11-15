@@ -30,3 +30,7 @@ dist
 .claude/
 cv/private.tex
 cv/cv-2024-original.tex
+
+# local-only notes
+cv/
+TODO.md
