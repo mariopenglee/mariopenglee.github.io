@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'mario peng lee',
-  role: 'cofounder',
+  role: 'chief scientist',
   company: 'condense.chat',
   tagline: 'making powerful AI accessible to everyone, and safe when it gets there.',
   companyUrl: 'https://condense.chat/',
@@ -9,7 +9,7 @@ export const SITE = {
 // about paragraphs, markdown. also feeds llms.txt and the no-JS fallback (vite.config.ts)
 export const BIO: string[] = [
   "I started out studying human minds, mostly how kids learn language and concepts, through linguistics, computer science and psychology at UCLA (Phi Beta Kappa). Around then the cognitive side and NLP started converging pretty fast, and once GPT-style large language models (LLMs) showed up I ended up asking the same questions of them. That meant mechanistic interpretability, first on GPT-2's circuits with Buck Shlegeris, then co-founding AI Safety at UCLA, and these days open-source work at [EleutherAI](https://www.eleuther.ai/) through SOAR 2026 (about 2% of applicants accepted) on how stable sparse autoencoder features are across seeds.",
-  "Agents became the other interest, and I graduated already building them: [Pocketful](https://pocketful.ai/) runs WhatsApp AI agents for restaurant owners in Argentina (I'm CEO now). Then I did the same at much larger scale at [nexos.ai](https://nexos.ai/), where as a senior AI engineer I built the agent layer, a sandboxed code interpreter, and the memory model behind nexos.heartbeat, an always-on agent that keeps working while you sleep.",
+  "Agents became the other interest, and I graduated already building them: [Pocketful](https://pocketful.ai/) runs WhatsApp AI agents for restaurant owners in Argentina. I built the first version and ran engineering for a year, and since mid-2025 I've only been an advisor (my co-founder runs it as CEO, and it pretty much runs itself). Then I did the same at much larger scale at [nexos.ai](https://nexos.ai/), where as a senior AI engineer I built the agent layer, a sandboxed code interpreter, and the memory model behind nexos.heartbeat, an always-on agent that keeps working while you sleep.",
   "What I kept running into with long-running agents is that most of the context they carry isn't needed, and you pay for all of it. So now I'm cofounder and chief scientist at [condense.chat](https://condense.chat/), working out what context is essential and what isn't, which cuts long coding-agent sessions by up to about 70% with basically the same output. Honestly it's the same story as always, getting this tech to everyone, just with a much better sense now of why it has to be done safely (and my guess is interpretability is a big part of how).",
 ];
 
@@ -133,7 +133,7 @@ export const WORK: { title: string; desc: string; links: { name: string; url: st
   },
   {
     title: 'Pocketful',
-    desc: 'CEO: WhatsApp AI agents for restaurant owners in Argentina',
+    desc: 'co-founder, advisor since mid-2025 (ran engineering before that): WhatsApp AI agents for restaurant owners in Argentina',
     links: [{ name: 'site', url: 'https://pocketful.ai/' }],
   },
   {
