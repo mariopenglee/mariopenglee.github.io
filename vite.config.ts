@@ -69,11 +69,13 @@ function agentFiles(): Plugin {
           .join('\n')}\n</urlset>\n`,
       )
 
-      // React's createRoot replaces this on load; non-JS readers see it as is
+      // noscript so JS browsers never paint it (it flashed unstyled before React mounted); non-JS readers still get it
       const index = `${out}/index.html`
       fs.writeFileSync(
         index,
-        fs.readFileSync(index, 'utf8').replace('<div id="root"></div>', `<div id="root">${marked.parse(home)}</div>`),
+        fs
+          .readFileSync(index, 'utf8')
+          .replace('<div id="root"></div>', `<div id="root"><noscript><main class="screen">${marked.parse(home)}</main></noscript></div>`),
       )
     },
   }
